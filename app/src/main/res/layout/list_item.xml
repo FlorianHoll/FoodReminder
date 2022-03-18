@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/item_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?attr/textAppearanceHeadline5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Banane"
+            />
+
+        <TextView
+            android:id="@+id/item_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/edit_item"
+            android:paddingTop="10dp"
+            tools:text="Regal"
+            />
+
+        <TextView
+            android:id="@+id/item_days_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/item_title"
+            app:layout_constraintStart_toEndOf="@id/calendar_item"
+            android:paddingTop="10dp"
+            tools:text="2 Tage"
+            android:text="@string/itemDaysLeft"
+            />
+
+        <ImageView
+            android:id="@+id/edit_item"
+            android:layout_width="37dp"
+            android:layout_height="37dp"
+            app:srcCompat="@drawable/ic_edit_item"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/primary_variant_dark"
+            android:contentDescription="@string/contentDescriptionEdit"/>
+
+        <ImageView
+            android:id="@+id/delete_item"
+            android:layout_width="45dp"
+            android:layout_height="41dp"
+            app:srcCompat="@drawable/ic_delete_item"
+            app:layout_constraintEnd_toStartOf="@id/edit_item"
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="@string/contentDescriptionDelete"
+            app:tint="@color/primary_variant_dark"
+            android:paddingEnd="15dp"/>
+
+        <ImageView
+            android:id="@+id/item_eaten"
+            android:layout_width="45dp"
+            android:layout_height="41dp"
+            app:srcCompat="@drawable/ic_item_eaten"
+            app:layout_constraintEnd_toStartOf="@id/delete_item"
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="@string/contentDescriptionDelete"
+            app:tint="@color/primary_variant_dark"
+            android:paddingEnd="15dp"/>
+
+        <ImageView
+            android:id="@+id/calendar_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_calendar_item"
+            app:layout_constraintTop_toBottomOf="@id/item_title"
+            app:layout_constraintEnd_toStartOf="@id/item_days_left"
+            app:layout_constraintStart_toStartOf="parent"
+            android:paddingTop="6dp"
+            app:tint="@color/primary_variant_dark"
+            android:paddingEnd="10dp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

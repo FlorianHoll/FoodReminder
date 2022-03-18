@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">FoodReminderApp</string>
+    <string name="itemDaysLeft">%s Tage</string>
+
+    <string name="contentDescriptionAddItem">Item hinzufügen</string>
+    <string name="contentDescriptionEdit">Item bearbeiten</string>
+    <string name="contentDescriptionDelete">Item löschen</string>
+    <string name="contentDescriptionCalendar">Wie viele Tage ist Artikel noch haltbar?</string>
+</resources>
