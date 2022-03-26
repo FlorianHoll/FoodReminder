@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".CreateEditItem"
+    android:layout_margin="15dp">
+
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginBottom="15dp"
+        android:text="@string/createEditSave"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/createEditDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="50dp"
+        android:ems="10"
+        android:inputType="date"
+        android:textSize="15sp"
+        android:text="@string/createEditDaysLeft"
+        app:layout_constraintStart_toStartOf="@id/createEditItemName"
+        app:layout_constraintTop_toBottomOf="@id/createEditItemName" />
+
+    <EditText
+        android:id="@+id/createEditItemName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="200dp"
+        android:textSize="15sp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="@string/createEditName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/createEditLocation"
+        android:layout_width="match_parent"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="50dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:textSize="15sp"
+        android:text="@string/createEditLocation"
+        app:layout_constraintTop_toBottomOf="@id/createEditDate"
+        app:layout_constraintStart_toStartOf="@id/createEditDate"
+        />
+
+    <TextView
+        android:id="@+id/createEditItemTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/createEditTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_margin="15dp"
+        android:textSize="25sp"
+        android:textColor="@color/primary"
+        android:gravity="center_horizontal"
+         />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
