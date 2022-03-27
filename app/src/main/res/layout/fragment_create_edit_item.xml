@@ -4,12 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".CreateEditItem"
+    tools:context=".CreateEditItemFragment"
     android:layout_margin="15dp">
 
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btnSaveFoodItem"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginBottom="15dp"
@@ -18,21 +18,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <EditText
-        android:id="@+id/createEditDate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginTop="50dp"
-        android:ems="10"
-        android:inputType="date"
-        android:textSize="15sp"
-        android:text="@string/createEditDaysLeft"
-        app:layout_constraintStart_toStartOf="@id/createEditItemName"
-        app:layout_constraintTop_toBottomOf="@id/createEditItemName" />
-
-    <EditText
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/createEditItemName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -42,36 +28,67 @@
         android:textSize="15sp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="@string/createEditName"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/createEditLocation"
-        android:layout_width="match_parent"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginTop="50dp"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:textSize="15sp"
-        android:text="@string/createEditLocation"
-        app:layout_constraintTop_toBottomOf="@id/createEditDate"
-        app:layout_constraintStart_toStartOf="@id/createEditDate"
-        />
-
-    <TextView
-        android:id="@+id/createEditItemTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/createEditTitle"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_margin="15dp"
-        android:textSize="25sp"
-        android:textColor="@color/primary"
-        android:gravity="center_horizontal"
-         />
+        app:endIconMode="clear_text"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox" >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/createEditItemName_editText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/createEditName"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/createEditDaysLeft"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="30dp"
+        android:textSize="15sp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        app:layout_constraintTop_toBottomOf="@id/createEditItemName"
+        app:layout_constraintStart_toStartOf="@id/createEditItemName"
+        app:endIconMode="clear_text"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox" >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/createEditDaysLeft_editText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/createEditDaysLeft"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/createEditLocation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="30dp"
+        android:textSize="15sp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        app:layout_constraintTop_toBottomOf="@id/createEditDaysLeft"
+        app:layout_constraintStart_toStartOf="@id/createEditDaysLeft"
+        app:endIconMode="clear_text"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox" >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/createEditLocation_editText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/createEditLocation"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
