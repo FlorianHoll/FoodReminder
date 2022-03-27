@@ -19,15 +19,15 @@
         android:name="com.example.foodreminderapp.CreateEditItem"
         android:label="@string/createEditTitle"
         tools:layout="@layout/fragment_create_edit_item">
-        <argument
-            android:name="name"
-            app:argType="string" />
-        <argument
-            android:name="days"
-            app:argType="string" />
-        <argument
-            android:name="location"
-            app:argType="string" />
+<!--        <argument-->
+<!--            android:name="name"-->
+<!--            app:argType="string" />-->
+<!--        <argument-->
+<!--            android:name="days"-->
+<!--            app:argType="string" />-->
+<!--        <argument-->
+<!--            android:name="location"-->
+<!--            app:argType="string" />-->
         <action
             android:id="@+id/action_createEditFragment_to_listFragment"
             app:destination="@id/foodItemsList" />

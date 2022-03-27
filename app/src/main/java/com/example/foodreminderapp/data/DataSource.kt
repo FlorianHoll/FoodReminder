@@ -13,7 +13,9 @@ class DataSource {
             FoodItem("Soja-Bällchen", 23, "kuehlschrank"),
             FoodItem("Curry von gestern", 1, "kuehlschrank"),
             FoodItem("Paprika", 23, "kuehlschrank"),
-
+            FoodItem("test", 22, "hm, weiß auch nicht"),
+            FoodItem("Brot", 5, "Regal"),
+            FoodItem("Bio-Roggenbrot", 12399, "Regal")
         )
     }
 
