@@ -14,6 +14,14 @@ import androidx.navigation.fragment.findNavController
 
 class FoodItemListFragment : Fragment() {
 
+    companion object {
+        val ITEM_LIST_NAME = "itemListName"
+        val ITEM_LIST_DAYS_LEFT = "itemListDaysLeft"
+        val ITEM_LIST_LOCATION = "itemListLocation"
+        val ITEM_LIST_NEW_ITEM = "itemListNewItem"
+        val ITEM_LIST_POSITION = "itemListPosition"
+    }
+
     private var _binding: FragmentItemListBinding? = null
 
     private val binding get() = _binding!!
@@ -40,7 +48,7 @@ class FoodItemListFragment : Fragment() {
         val addButton = binding.buttonAddItem
         addButton.setOnClickListener {
             val navigationAction = FoodItemListFragmentDirections
-                .actionListFragmentToCreateEditFragment("", "", "")
+                .actionListFragmentToCreateEditFragment("Banane", "", "")
             findNavController().navigate(navigationAction)
         }
 

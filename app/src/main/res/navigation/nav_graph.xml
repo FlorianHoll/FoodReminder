@@ -10,6 +10,21 @@
         android:name="com.example.foodreminderapp.FoodItemListFragment"
         android:label="@string/app_name"
         tools:layout="@layout/fragment_item_list">
+        <argument
+            android:name="itemListName"
+            app:argType="string" />
+        <argument
+            android:name="itemListDaysLeft"
+            app:argType="string" />
+        <argument
+            android:name="itemListLocation"
+            app:argType="string" />
+        <argument
+            android:name="itemListNewItem"
+            app:argType="boolean" />
+        <argument
+            android:name="itemListPosition"
+            app:argType="integer" />
         <action
             android:id="@+id/action_listFragment_to_createEditFragment"
             app:destination="@id/createEditFragment" />
