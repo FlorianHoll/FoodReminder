@@ -37,7 +37,9 @@ class FoodItemAdapter(
     override fun onBindViewHolder(holder: FoodItemViewHolder, position: Int) {
         val currentFoodItem = foodItems[position]
         val currentTitle = currentFoodItem.title
-        val currentDaysLeft = currentFoodItem.days_left.toString()
+        val currentDaysLeft = context.getString(
+            R.string.itemDaysLeft, currentFoodItem.days_left.toString()
+        )
         val currentStorage = currentFoodItem.storage
 
         // display title, storage etc.

@@ -2,11 +2,11 @@
     <string name="app_name">FoodReminderApp</string>
 
     <!-- Strings for main activity -->
-    <string name="itemDaysLeft">%s Tage</string>
+    <string name="itemDaysLeft">%1$s Tage</string>
 
     <!-- Strings for creating or editing an item -->
     <string name="createEditName">Name des Lebensmittels (bspw. Banane)</string>
-    <string name="createEditDaysLeft">Haltbarkeit in Tagen (bspw. 3 Tage)</string>
+    <string name="createEditDaysLeft">Haltbarkeit in Tagen (bspw. 3)</string>
     <string name="createEditLocation">Aufbewahrungsort</string>
     <string name="createEditSave">Speichern</string>
     <string name="createEditTitle">Lebensmittel erstellen oder ändern</string>

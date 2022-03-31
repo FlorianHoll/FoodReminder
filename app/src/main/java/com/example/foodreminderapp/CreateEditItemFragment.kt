@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.example.foodreminderapp.databinding.FragmentCreateEditItemBinding
 
@@ -45,9 +46,7 @@ class CreateEditItemFragment : Fragment() {
     }
 
     private fun createOrUpdateFoodItem() {
-        // check if all fields are filled
-
-
+        // get information to carry over to the list
         val foodItemName = binding.createEditItemNameEditText.text.toString()
         val foodItemDays = binding.createEditDaysLeftEditText.text.toString()
         val foodItemLocation = when(
@@ -58,24 +57,48 @@ class CreateEditItemFragment : Fragment() {
             else -> "Tiefkühlschrank"
         }
 
-        Log.d(
-            TAG, "Food Item Name: $foodItemName, " +
-                    "Days: $foodItemDays, " +
-                    "Location:$foodItemLocation"
-        )
+        // check if all fields are filled; if so, display toast to fill them, else, continue
+        if (arrayOf(foodItemDays, foodItemName).any { it.isEmpty() }) {
+            Toast.makeText(
+                context, "Alle Felder müssen ausgefüllt werden.", Toast.LENGTH_SHORT
+            ).show()
+        } else {
+            // catch error if days is not numeric
+            try {
+                foodItemDays.toInt()
 
-        // navigate back to list with new information
-        val navigationAction = CreateEditItemFragmentDirections
-            .actionCreateEditFragmentToListFragment(
-                itemListName = foodItemName,
-                itemListDaysLeft = foodItemDays,
-                itemListLocation = foodItemLocation,
-                itemListEdited = arguments?.getBoolean(CREATE_EDIT_IS_EDITED)!!,
-                itemListPosition = arguments?.getInt(CREATE_EDIT_POSITION)!!,
-                itemListNewItemAdded = !arguments?.getBoolean(CREATE_EDIT_IS_EDITED)!!,
-            )
-            findNavController().navigate(navigationAction)
+                Log.d(
+                    TAG, "Food Item Name: $foodItemName, " +
+                            "Days: $foodItemDays, " +
+                            "Location:$foodItemLocation"
+                )
+
+                // show toast
+                val edited = arguments?.getBoolean(CREATE_EDIT_IS_EDITED)!!
+                val toastText = if (edited) "Item aktualisiert" else "Item hinzugefügt"
+                Toast.makeText(context, toastText, Toast.LENGTH_SHORT).show()
+
+                // navigate back to list with new information
+                val navigationAction = CreateEditItemFragmentDirections
+                    .actionCreateEditFragmentToListFragment(
+                        itemListName = foodItemName,
+                        itemListDaysLeft = foodItemDays,
+                        itemListLocation = foodItemLocation,
+                        itemListEdited = edited,
+                        itemListPosition = arguments?.getInt(CREATE_EDIT_POSITION)!!,
+                        itemListNewItemAdded = !edited
+                    )
+                findNavController().navigate(navigationAction)
+
+            } catch (exception: NumberFormatException) {
+                Toast.makeText(
+                    context,
+                    "Haltbarkeit in Tagen muss eine Zahl sein.",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
         }
+    }
 
     private fun getFragmentArguments(): Array<String> {
         val foodName = arguments?.getString(CREATE_EDIT_NAME).toString()
@@ -96,26 +119,6 @@ class CreateEditItemFragment : Fragment() {
         binding.createEditLocation.check(checkedItemId)
 
     }
-
-//
-//    private fun argumentsAreEmpty(): Boolean {
-//        // if arguments are empty, the item is not edited; else it is.
-//        val arguments = getFragmentArguments()
-//        return arguments.all { it.isEmpty() }
-//    }
-//
-//    private fun preFillTextFields() {
-//
-//        val (foodName, foodDaysLeft, foodLocation) = getFragmentArguments()
-//
-//        // if item is edited, pre-fill text fields
-//        if (!argumentsAreEmpty()) {
-//            binding.createEditItemNameEditText.setText(foodName)
-//            binding.createEditDaysLeftEditText.setText(foodDaysLeft)
-//            binding.createEditLocationEditText.setText(foodLocation)
-//        }
-//
-//    }
 
     override fun onDestroyView() {
         super.onDestroyView()

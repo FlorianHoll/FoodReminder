@@ -18,5 +18,4 @@ class DataSource {
             FoodItem("Bio-Roggenbrot", 12399, "Regal")
         )
     }
-
 }

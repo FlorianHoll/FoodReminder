@@ -72,8 +72,6 @@ class FoodItemListFragment : Fragment() {
                 .actionListFragmentToCreateEditFragment()
             findNavController().navigate(navigationAction)
         }
-
-        // foodItemRecyclerView.setHasFixedSize(true)
     }
 
     override fun onDestroyView() {
