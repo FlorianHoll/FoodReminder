@@ -2,32 +2,33 @@ package com.example.foodreminderapp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.recyclerview.widget.RecyclerView
-import com.example.foodreminderapp.adapter.FoodItemAdapter
-import com.example.foodreminderapp.data.DataSource
-import com.example.foodreminderapp.model.FoodItem
-import com.google.android.material.floatingactionbutton.FloatingActionButton
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupActionBarWithNavController
+import com.example.foodreminderapp.databinding.ActivityMainBinding
 
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var foodItemAdapter: FoodItemAdapter
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
 
-        val myDataset = DataSource().loadItems()
-        val recyclerView = findViewById<RecyclerView>(R.id.rvFoodItems)
+        val binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        foodItemAdapter = FoodItemAdapter(this, myDataset)
-        recyclerView.adapter = foodItemAdapter
-        recyclerView.setHasFixedSize(true)
-
-        val addButton = findViewById<FloatingActionButton>(R.id.buttonAddItem)
-        addButton.setOnClickListener {
-            val newFoodItem = FoodItem("Success", 2, "shelf")
-            foodItemAdapter.addFoodItem(newFoodItem)
-        }
+        // Get the navigation host fragment from this Activity
+        val navHostFragment = supportFragmentManager
+            .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        // Instantiate the navController using the NavHostFragment
+        navController = navHostFragment.navController
+        // Make sure actions in the ActionBar get propagated to the NavController
+        setupActionBarWithNavController(navController)
     }
+
+    override fun onSupportNavigateUp(): Boolean {
+        return navController.navigateUp() || super.onSupportNavigateUp()
+    }
+
 }
