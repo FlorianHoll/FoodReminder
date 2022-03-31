@@ -20,8 +20,13 @@
             android:name="itemListLocation"
             app:argType="string" />
         <argument
-            android:name="itemListNewItem"
-            app:argType="boolean" />
+            android:name="itemListEdited"
+            app:argType="boolean"
+            android:defaultValue="false" />
+        <argument
+            android:name="itemListNewItemAdded"
+            app:argType="boolean"
+            android:defaultValue="false" />
         <argument
             android:name="itemListPosition"
             app:argType="integer" />
@@ -36,13 +41,24 @@
         tools:layout="@layout/fragment_create_edit_item">
         <argument
             android:name="name"
-            app:argType="string" />
+            app:argType="string"
+            android:defaultValue="" />
         <argument
             android:name="days"
-            app:argType="string" />
+            app:argType="string"
+            android:defaultValue="" />
         <argument
             android:name="location"
-            app:argType="string" />
+            app:argType="string"
+            android:defaultValue="Kühlschrank" />
+        <argument
+            android:name="position"
+            app:argType="integer"
+            android:defaultValue="0" />
+        <argument
+            android:name="edited"
+            app:argType="boolean"
+            android:defaultValue="false" />
         <action
             android:id="@+id/action_createEditFragment_to_listFragment"
             app:destination="@id/foodItemListFragment" />

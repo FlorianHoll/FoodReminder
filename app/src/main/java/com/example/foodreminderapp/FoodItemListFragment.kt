@@ -10,6 +10,7 @@ import com.example.foodreminderapp.adapter.FoodItemAdapter
 import com.example.foodreminderapp.data.DataSource
 import com.example.foodreminderapp.databinding.FragmentItemListBinding
 import androidx.navigation.fragment.findNavController
+import com.example.foodreminderapp.model.FoodItem
 
 
 class FoodItemListFragment : Fragment() {
@@ -18,8 +19,9 @@ class FoodItemListFragment : Fragment() {
         val ITEM_LIST_NAME = "itemListName"
         val ITEM_LIST_DAYS_LEFT = "itemListDaysLeft"
         val ITEM_LIST_LOCATION = "itemListLocation"
-        val ITEM_LIST_NEW_ITEM = "itemListNewItem"
+        val ITEM_LIST_EDITED = "itemListEdited"
         val ITEM_LIST_POSITION = "itemListPosition"
+        val ITEM_LIST_NEW_ITEM = "itemListNewItemAdded"
     }
 
     private var _binding: FragmentItemListBinding? = null
@@ -44,11 +46,30 @@ class FoodItemListFragment : Fragment() {
         val foodItemAdapter = FoodItemAdapter(requireActivity(), myDataset)
         foodItemRecyclerView.adapter = foodItemAdapter
 
+        // Update item if it was edited
+        val edited = arguments?.getBoolean(ITEM_LIST_EDITED)!!
+        val (foodName, foodDaysLeft, foodLocation) = getFragmentArguments()
+        if (edited) {
+            foodItemAdapter.updateFoodItem(
+                position = arguments?.getInt(ITEM_LIST_POSITION)!!,
+                foodName = foodName,
+                foodDays = foodDaysLeft,
+                foodLocation = foodLocation
+            )
+        }
+
+        // Add new item if new item was added
+        val newItemAdded = arguments?.getBoolean(ITEM_LIST_NEW_ITEM)!!
+        if (newItemAdded) {
+            val newFoodItem = FoodItem(foodName, foodDaysLeft.toInt(), foodLocation)
+            foodItemAdapter.addFoodItem(newFoodItem)
+        }
+
         // Navigate to create/edit screen if plus is clicked
         val addButton = binding.buttonAddItem
         addButton.setOnClickListener {
             val navigationAction = FoodItemListFragmentDirections
-                .actionListFragmentToCreateEditFragment("Banane", "", "")
+                .actionListFragmentToCreateEditFragment()
             findNavController().navigate(navigationAction)
         }
 
@@ -58,6 +79,13 @@ class FoodItemListFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun getFragmentArguments(): Array<String> {
+        val foodName = arguments?.getString(ITEM_LIST_NAME).toString()
+        val foodDaysLeft = arguments?.getString(ITEM_LIST_DAYS_LEFT).toString()
+        val foodLocation = arguments?.getString(ITEM_LIST_LOCATION).toString()
+        return arrayOf(foodName, foodDaysLeft, foodLocation)
     }
 
 //

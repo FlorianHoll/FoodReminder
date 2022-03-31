@@ -7,9 +7,12 @@
     <!-- Strings for creating or editing an item -->
     <string name="createEditName">Name des Lebensmittels (bspw. Banane)</string>
     <string name="createEditDaysLeft">Haltbarkeit in Tagen (bspw. 3 Tage)</string>
-    <string name="createEditLocation">Aufbewahrungsort (bspw. Regal)</string>
+    <string name="createEditLocation">Aufbewahrungsort</string>
     <string name="createEditSave">Speichern</string>
     <string name="createEditTitle">Lebensmittel erstellen oder ändern</string>
+    <string name="createEditRegal">Regal</string>
+    <string name="createEditTiefkuehlschrank">Tiefkühlschrank</string>
+    <string name="createEditKuehlschrank">Kühlschrank</string>
 
     <!-- Strings for content descriptions -->
     <string name="contentDescriptionAddItem">Item hinzufügen</string>
