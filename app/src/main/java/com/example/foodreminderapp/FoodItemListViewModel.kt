@@ -63,25 +63,8 @@ class FoodItemListViewModel(private val itemDao: FoodItemDao) : ViewModel() {
      */
     fun isEntryValid(itemName: String, itemDaysLeft: String): Boolean {
         return !(itemName.isEmpty() or itemDaysLeft.isEmpty())
-//
-//        if (itemName.isBlank() || itemDaysLeft.isBlank()) {
-//            return false
-//        }
-//        return true
     }
 }
-
-
-//    /**
-//     * Decreases the stock by one unit and updates the database.
-//     */
-//    fun sellItem(item: Item) {
-//        if (item.quantityInStock > 0) {
-//            // Decrease the quantity by 1
-//            val newItem = item.copy(quantityInStock = item.quantityInStock - 1)
-//            updateItem(newItem)
-//        }
-//    }
 
 
 /**
