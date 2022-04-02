@@ -1,9 +1,29 @@
 <resources>
     <string name="app_name">FoodReminderApp</string>
-    <string name="itemDaysLeft">%s Tage</string>
 
+    <!-- Strings for main activity -->
+    <string name="itemDaysLeft">%1$s Tage</string>
+
+    <!-- Strings for creating or editing an item -->
+    <string name="createEditName">Name des Lebensmittels (bspw. Banane)</string>
+    <string name="createEditDaysLeft">Haltbarkeit in Tagen (bspw. 3)</string>
+    <string name="createEditLocation">Aufbewahrungsort</string>
+    <string name="createEditSave">Speichern</string>
+    <string name="createEditTitle">Lebensmittel erstellen oder ändern</string>
+    <string name="createEditRegal">Regal</string>
+    <string name="createEditTiefkuehlschrank">Tiefkühlschrank</string>
+    <string name="createEditKuehlschrank">Kühlschrank</string>
+
+    <!-- Strings for content descriptions -->
     <string name="contentDescriptionAddItem">Item hinzufügen</string>
     <string name="contentDescriptionEdit">Item bearbeiten</string>
     <string name="contentDescriptionDelete">Item löschen</string>
     <string name="contentDescriptionCalendar">Wie viele Tage ist Artikel noch haltbar?</string>
+
+    <!-- Strings for delete action -->
+    <string name="itemDeleteTitle">Item löschen</string>
+    <string name="itemDeleteText">Möchten Sie das Item wirklich löschen?</string>
+    <string name="itemDeleteYes">Ja</string>
+    <string name="itemDeleteNo">Nein</string>
+
 </resources>
