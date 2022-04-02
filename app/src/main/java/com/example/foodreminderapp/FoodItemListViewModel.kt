@@ -18,6 +18,7 @@ class FoodItemListViewModel(private val itemDao: FoodItemDao) : ViewModel() {
     // Cache all items form the database using LiveData.
     val allItems: LiveData<List<FoodItem>> = itemDao.getItems().asLiveData()
 
+    // Update an existing item in the database.
     fun updateItem(
         itemId: Int,
         itemName: String,
@@ -33,9 +34,7 @@ class FoodItemListViewModel(private val itemDao: FoodItemDao) : ViewModel() {
         updateItem(updatedItem)
     }
 
-    /**
-     * Inserts the new Item into database.
-     */
+    // Insert a new item into the database.
     fun addNewItem(itemName: String, itemDaysLeft: Int, itemLocation: String) {
         val newItem = FoodItem(
             itemName = itemName, daysLeft = itemDaysLeft, location = itemLocation
@@ -63,7 +62,7 @@ class FoodItemListViewModel(private val itemDao: FoodItemDao) : ViewModel() {
      * Returns true if the EditTexts are not empty
      */
     fun isEntryValid(itemName: String, itemDaysLeft: String): Boolean {
-        return !(itemName.isEmpty() and itemDaysLeft.isEmpty())
+        return !(itemName.isEmpty() or itemDaysLeft.isEmpty())
 //
 //        if (itemName.isBlank() || itemDaysLeft.isBlank()) {
 //            return false

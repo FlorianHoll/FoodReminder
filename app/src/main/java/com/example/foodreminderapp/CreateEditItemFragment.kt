@@ -223,15 +223,8 @@ class CreateEditItemFragment : Fragment() {
                 itemDaysLeft = binding.daysLeft.text.toString().toInt(),
                 itemLocation = getCheckedLocation()
             )
-            val action = CreateEditItemFragmentDirections
-                .actionCreateEditFragmentToListFragment()
-            findNavController().navigate(action)
-        } else {
-            Toast.makeText(
-                context, "Alle Felder müssen ausgefüllt werden.", Toast.LENGTH_LONG
-            ).show()
-
-        }
+            navigateBackToList()
+        } else { hintAllFieldsRequired() }
     }
 
     /**
@@ -245,22 +238,28 @@ class CreateEditItemFragment : Fragment() {
                 itemDaysLeft = binding.daysLeft.text.toString().toInt(),
                 itemLocation = getCheckedLocation()
             )
-            val action = CreateEditItemFragmentDirections
-                .actionCreateEditFragmentToListFragment()
-            findNavController().navigate(action)
-        }
+            navigateBackToList()
+        } else { hintAllFieldsRequired() }
     }
 
-    /**
-     * Called when the view is created.
-     * The itemId Navigation argument determines the edit item  or add new item.
-     * If the itemId is positive, this method retrieves the information from the database and
-     * allows the user to update it.
-     */
+    private fun navigateBackToList() {
+        val action = CreateEditItemFragmentDirections
+            .actionCreateEditFragmentToListFragment()
+        findNavController().navigate(action)
+    }
+
+    private fun hintAllFieldsRequired() {
+        Toast.makeText(
+            context, "Alle Felder müssen ausgefüllt werden.", Toast.LENGTH_LONG
+        ).show()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val id = navigationArgs.itemId
+        // The default id that is passed is -1;
+        // therefore, if an id is passed, it is not a new ite.
         if (id > 0) {
             viewModel.retrieveItem(id).observe(this.viewLifecycleOwner) { selectedItem ->
                 item = selectedItem
@@ -273,12 +272,9 @@ class CreateEditItemFragment : Fragment() {
         }
     }
 
-    /**
-     * Called before fragment is destroyed.
-     */
     override fun onDestroyView() {
         super.onDestroyView()
-        // Hide keyboard.
+        // Hide keyboard
         val inputMethodManager = requireActivity().getSystemService(INPUT_METHOD_SERVICE) as
                 InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(requireActivity().currentFocus?.windowToken, 0)

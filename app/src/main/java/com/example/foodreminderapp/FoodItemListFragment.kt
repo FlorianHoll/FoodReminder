@@ -106,6 +106,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.example.foodreminderapp.data.FoodItem
 import com.example.foodreminderapp.databinding.FragmentItemListBinding
 
 /**
@@ -133,11 +134,13 @@ class FoodItemListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = FoodItemListAdapter {
-            val action = FoodItemListFragmentDirections
-                .actionListFragmentToCreateEditFragment(it.id)
-            this.findNavController().navigate(action)
-        }
+        val adapter = FoodItemListAdapter(requireActivity(), viewModel)
+
+//        {
+//            val action = FoodItemListFragmentDirections
+//                .actionListFragmentToCreateEditFragment(it.id)
+//            this.findNavController().navigate(action)
+//        }
 //        binding.rvFoodItems.layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.HORIZONTAL, false)
 //        binding.rvFoodItems.setHasFixedSize(true)
         binding.rvFoodItems.adapter = adapter
