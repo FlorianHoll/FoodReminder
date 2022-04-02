@@ -19,7 +19,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/createEditItemName"
+        android:id="@+id/ItemNameLayout"
         android:layout_width="320dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
@@ -35,7 +35,7 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox" >
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/createEditItemName_editText"
+            android:id="@+id/item_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/createEditName"
@@ -44,7 +44,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/createEditDaysLeft"
+        android:id="@+id/item_days_left_layout"
         android:layout_width="320dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
@@ -53,15 +53,16 @@
         android:textSize="15sp"
         android:ems="10"
         android:inputType="textPersonName"
-        app:layout_constraintTop_toBottomOf="@id/createEditItemName"
+        app:layout_constraintTop_toBottomOf="@id/ItemNameLayout"
         app:layout_constraintStart_toEndOf="@id/iv_fridge"
         app:endIconMode="clear_text"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox" >
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/createEditDaysLeft_editText"
+            android:id="@+id/days_left"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
             android:hint="@string/createEditDaysLeft"
             />
 
@@ -72,7 +73,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toEndOf="@id/iv_fridge"
-        app:layout_constraintTop_toBottomOf="@id/createEditDaysLeft"
+        app:layout_constraintTop_toBottomOf="@id/item_days_left_layout"
         android:text="@string/createEditLocation"
         android:layout_marginTop="30dp"
         android:layout_marginStart="5dp"
@@ -80,7 +81,7 @@
         />
 
         <RadioGroup
-            android:id="@+id/createEditLocation"
+            android:id="@+id/location"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checkedButton="@id/option_kuehlschrank"
@@ -129,8 +130,8 @@
         android:layout_width="30dp"
         android:layout_height="30dp"
         app:srcCompat="@drawable/ic_calendar_item"
-        app:layout_constraintBottom_toBottomOf="@id/createEditDaysLeft"
-        app:layout_constraintTop_toTopOf="@id/createEditDaysLeft"
+        app:layout_constraintBottom_toBottomOf="@id/item_days_left_layout"
+        app:layout_constraintTop_toTopOf="@id/item_days_left_layout"
         app:layout_constraintStart_toStartOf="parent"
         app:tint="@color/primary_variant_dark"
         />
@@ -140,8 +141,8 @@
         android:layout_width="30dp"
         android:layout_height="30dp"
         app:srcCompat="@drawable/ic_food_name"
-        app:layout_constraintBottom_toBottomOf="@id/createEditItemName"
-        app:layout_constraintTop_toTopOf="@id/createEditItemName"
+        app:layout_constraintBottom_toBottomOf="@id/ItemNameLayout"
+        app:layout_constraintTop_toTopOf="@id/ItemNameLayout"
         app:layout_constraintStart_toStartOf="parent"
         app:tint="@color/primary_variant_dark"
         />

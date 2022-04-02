@@ -20,4 +20,10 @@
     <string name="contentDescriptionDelete">Item löschen</string>
     <string name="contentDescriptionCalendar">Wie viele Tage ist Artikel noch haltbar?</string>
 
+    <!-- Strings for delete action -->
+    <string name="itemDeleteTitle">Item löschen</string>
+    <string name="itemDeleteText">Möchten Sie das Item wirklich löschen?</string>
+    <string name="itemDeleteYes">Ja</string>
+    <string name="itemDeleteNo">Nein</string>
+
 </resources>
