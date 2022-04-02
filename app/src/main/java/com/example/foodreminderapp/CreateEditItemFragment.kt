@@ -13,6 +13,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.foodreminderapp.data.FoodItem
+import com.example.foodreminderapp.data.getDaysLeft
 import com.example.foodreminderapp.databinding.FragmentCreateEditItemBinding
 
 /**
@@ -58,7 +59,7 @@ class CreateEditItemFragment : Fragment() {
 //        val price = "%.2f".format(item.itemPrice)
         binding.apply {
             itemName.setText(item.itemName, TextView.BufferType.SPANNABLE)
-            daysLeft.setText(item.daysLeft.toString(), TextView.BufferType.SPANNABLE)
+            daysLeft.setText(item.getDaysLeft(), TextView.BufferType.SPANNABLE)
             val checkedItemId = when (item.location) {
                 "Regal" -> R.id.option_regal
                 "Kühlschrank" -> R.id.option_kuehlschrank
