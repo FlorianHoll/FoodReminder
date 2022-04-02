@@ -17,8 +17,8 @@ data class FoodItem(
     val daysLeft: Int,
     @ColumnInfo(name = "location")
     val location: String,
-    @ColumnInfo(name = "co2")
-    val co2: Float
+//    @ColumnInfo(name = "co2")
+//    val co2: Float
 )
 
 ///**
