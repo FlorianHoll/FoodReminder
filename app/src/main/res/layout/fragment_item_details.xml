@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".CreateEditItemFragment"
+    android:layout_margin="15dp">
+
+
+    <Button
+        android:id="@+id/btnSaveFoodItem"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginBottom="15dp"
+        android:text="@string/createEditSave"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        app:layout_constraintTop_toTopOf="@id/iv_ramen"
+        app:layout_constraintBottom_toBottomOf="@id/iv_ramen"
+        app:layout_constraintStart_toEndOf="@id/iv_ramen"
+        android:textAppearance="?attr/textAppearanceHeadline4"
+        tools:text="Banane" />
+
+    <TextView
+        android:id="@+id/tv_days_left_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/iv_calendar"
+        app:layout_constraintTop_toTopOf="@id/iv_calendar"
+        app:layout_constraintBottom_toBottomOf="@id/iv_calendar"
+        android:text="@string/itemDetailsDaysLeftDate"
+        android:layout_marginStart="10dp"
+        android:textSize="20sp"
+        />
+
+
+    <TextView
+        android:id="@+id/tv_days_left_in_days"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/iv_calendar"
+        app:layout_constraintTop_toBottomOf="@id/tv_days_left_date"
+        android:text="@string/itemDetailsDaysLeftInDays"
+        android:layout_marginStart="10dp"
+        android:textSize="20sp"
+        />
+
+    <TextView
+        android:id="@+id/tv_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/iv_fridge"
+        app:layout_constraintTop_toTopOf="@id/iv_fridge"
+        app:layout_constraintBottom_toBottomOf="@id/iv_fridge"
+        android:text="@string/createEditLocation"
+        android:layout_marginStart="10dp"
+        android:textSize="20sp"
+        />
+
+
+    <ImageView
+        android:id="@+id/iv_fridge"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="30dp"
+        app:srcCompat="@drawable/ic_fridge"
+        app:layout_constraintStart_toStartOf="@id/iv_calendar"
+        app:layout_constraintTop_toBottomOf="@id/tv_days_left_in_days"
+        app:tint="@color/primary_variant_dark"
+        />
+
+    <ImageView
+        android:id="@+id/iv_calendar"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="30dp"
+        app:srcCompat="@drawable/ic_calendar_item"
+        app:layout_constraintTop_toBottomOf="@id/iv_ramen"
+        app:layout_constraintStart_toStartOf="@id/iv_ramen"
+        app:tint="@color/primary_variant_dark"
+        />
+
+    <ImageView
+        android:id="@+id/iv_ramen"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:srcCompat="@drawable/ic_food_name"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="50dp"
+        android:layout_marginStart="20dp"
+        app:tint="@color/primary_variant_dark"
+        />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

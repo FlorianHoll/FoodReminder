@@ -45,7 +45,6 @@ class FoodItemListAdapter(
 
         // go to editing fragment when edit button is pressed
         holder.btnEditItem.setOnClickListener {
-            Toast.makeText(context, "Edit item", Toast.LENGTH_LONG).show()
             val action = FoodItemListFragmentDirections
                 .actionListFragmentToCreateEditFragment(current.id)
             it.findNavController().navigate(action)
