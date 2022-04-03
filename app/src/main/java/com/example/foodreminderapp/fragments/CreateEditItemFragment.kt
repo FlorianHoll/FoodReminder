@@ -1,4 +1,4 @@
-package com.example.foodreminderapp
+package com.example.foodreminderapp.fragments
 
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.os.Bundle
@@ -12,6 +12,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.example.foodreminderapp.FoodItemListApplication
+import com.example.foodreminderapp.FoodItemListViewModel
+import com.example.foodreminderapp.FoodItemViewModelFactory
+import com.example.foodreminderapp.R
 import com.example.foodreminderapp.data.FoodItem
 import com.example.foodreminderapp.data.getDaysLeft
 import com.example.foodreminderapp.databinding.FragmentCreateEditItemBinding

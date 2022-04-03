@@ -5,7 +5,7 @@
     android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FoodItemListFragment"
+    tools:context=".fragments.FoodItemListFragment"
     android:padding="5dp">
 
     <androidx.recyclerview.widget.RecyclerView

@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.foodreminderapp.data.FoodItem
 import com.example.foodreminderapp.data.getDaysLeft
 import com.example.foodreminderapp.databinding.ListItemBinding
+import com.example.foodreminderapp.fragments.FoodItemListFragmentDirections
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 private const val TAG = "FoodItemListAdapter"
@@ -86,9 +87,9 @@ class FoodItemListAdapter(
         val btnItemEaten: ImageView = binding.itemEaten
 
         fun bind(item: FoodItem) {
-            binding.itemTitle.text = item.itemName
-            binding.itemDaysLeft.text = item.getDaysLeft()
-            binding.itemLocation.text = item.location
+            itemTitle.text = item.itemName
+            itemDaysLeft.text = item.getDaysLeft()
+            itemLocation.text = item.location
         }
     }
 

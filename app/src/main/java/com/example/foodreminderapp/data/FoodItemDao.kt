@@ -20,6 +20,9 @@ interface FoodItemDao {
     @Query("SELECT * from fooditem WHERE id = :id")
     fun getItem(id: Int): Flow<FoodItem>
 
+    @Query("SELECT * from fooditem WHERE best_before < :date")
+    fun getItemsForNextDays(date: String): Flow<FoodItem>
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(item: FoodItem)
 
