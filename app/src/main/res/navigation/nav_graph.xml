@@ -33,7 +33,7 @@
             android:id="@+id/action_createEditFragment_to_listFragment"
             app:destination="@id/foodItemListFragment" />
     </fragment>
-    <fragment
+    <dialog
         android:id="@+id/itemDetailFragment"
         android:name="com.example.foodreminderapp.fragments.ItemDetailFragment"
         android:label="@string/itemDetailsTitle"
@@ -49,7 +49,7 @@
             android:id="@+id/action_detailFragment_to_editCreateFragment"
             app:destination="@id/createEditFragment" />
 
-    </fragment>
+    </dialog>
     <fragment
         android:id="@+id/hasToGoFragment"
         android:name="com.example.foodreminderapp.fragments.HasToGoFragment"

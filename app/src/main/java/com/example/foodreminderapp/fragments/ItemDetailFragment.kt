@@ -2,30 +2,29 @@ package com.example.foodreminderapp.fragments
 
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import android.widget.Toast
-import androidx.fragment.app.Fragment
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.foodreminderapp.FoodItemListApplication
 import com.example.foodreminderapp.FoodItemListViewModel
 import com.example.foodreminderapp.FoodItemViewModelFactory
+import com.example.foodreminderapp.R
 import com.example.foodreminderapp.data.FoodItem
 import com.example.foodreminderapp.data.getDaysLeft
 import com.example.foodreminderapp.databinding.FragmentItemDetailsBinding
-
-private const val TAG = "ItemDetailFragment"
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 /**
  * Fragment to see item details.
  */
-class ItemDetailFragment : Fragment() {
+class ItemDetailFragment : DialogFragment() {
 
     private val viewModel: FoodItemListViewModel by activityViewModels {
         FoodItemViewModelFactory(
@@ -99,13 +98,6 @@ class ItemDetailFragment : Fragment() {
         val action = ItemDetailFragmentDirections
             .actionDetailFragmentToListFragment()
         findNavController().navigate(action)
-    }
-
-    // Display toast that all input fields are required.
-    private fun hintAllFieldsRequired() {
-        Toast.makeText(
-            context, "Alle Felder müssen ausgefüllt werden.", Toast.LENGTH_LONG
-        ).show()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
