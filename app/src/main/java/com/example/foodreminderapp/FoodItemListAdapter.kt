@@ -1,6 +1,7 @@
 package com.example.foodreminderapp
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -14,6 +15,8 @@ import com.example.foodreminderapp.data.FoodItem
 import com.example.foodreminderapp.data.getDaysLeft
 import com.example.foodreminderapp.databinding.ListItemBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+
+private const val TAG = "FoodItemListAdapter"
 
 
 class FoodItemListAdapter(
@@ -33,6 +36,13 @@ class FoodItemListAdapter(
         val current = getItem(position)
 
         holder.bind(current)
+
+        holder.itemView.setOnClickListener {
+            val action = FoodItemListFragmentDirections
+                .actionListFragmentToItemDetailsFragment(current.id)
+            Log.d(TAG, "Navigated with ID ${current.id}.")
+            it.findNavController().navigate(action)
+        }
 
         // delete when delete button is clicked
         holder.btnDeleteItem.setOnClickListener {

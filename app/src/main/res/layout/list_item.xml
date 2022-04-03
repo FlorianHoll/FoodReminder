@@ -39,7 +39,7 @@
             app:layout_constraintTop_toTopOf="@id/calendar_item"
             app:layout_constraintBottom_toBottomOf="@id/calendar_item"
             app:layout_constraintStart_toEndOf="@id/calendar_item"
-            android:textSize="17dp"
+            android:textSize="17sp"
             android:text="@string/itemDaysLeft"
             />
 

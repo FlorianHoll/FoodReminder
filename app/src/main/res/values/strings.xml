@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">FoodReminderApp</string>
 
+    <string name="mainScreenTitle">Alle Lebensmittel</string>
+
     <!-- Strings for main activity -->
     <string name="itemDaysLeft">%1$s Tage</string>
 
@@ -21,6 +23,7 @@
     <string name="itemDeleteNo">Nein</string>
 
     <!-- Strings for item detail fragment -->
+    <string name="itemDetailsTitle">Details</string>
     <string name="itemDetailsName">Name des Items</string>
     <string name="itemDetailsDaysLeftDate">Haltbar bis %1$s</string>
     <string name="itemDetailsDaysLeftInDays">(noch %1$s Tage)</string>

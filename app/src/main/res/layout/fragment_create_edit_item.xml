@@ -28,7 +28,7 @@
         android:textSize="15sp"
         android:ems="10"
         android:inputType="textPersonName"
-        app:layout_constraintStart_toEndOf="@id/tv_item_name"
+        app:layout_constraintStart_toEndOf="@id/iv_ramen"
         app:layout_constraintTop_toTopOf="parent"
 
         app:endIconMode="clear_text"
