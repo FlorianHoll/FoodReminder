@@ -1,61 +1,56 @@
 package com.example.foodreminderapp
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.foodreminderapp.data.FoodItem
 import com.example.foodreminderapp.data.getDaysLeft
-import com.example.foodreminderapp.databinding.ListItemBinding
-import com.example.foodreminderapp.fragments.FoodItemListFragmentDirections
+import com.example.foodreminderapp.databinding.HasToGoListItemBinding
+import com.example.foodreminderapp.fragments.HasToGoFragmentDirections
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
-private const val TAG = "FoodItemListAdapter"
+private const val TAG = "HasToGoListAdapter"
 
 
-class FoodItemListAdapter(
+class HasToGoListAdapter(
     private val context: Context,
     private val viewModel: FoodItemListViewModel
-    ) : ListAdapter<FoodItem, FoodItemListAdapter.ItemViewHolder>(DiffCallback) {
+) : ListAdapter<FoodItem, HasToGoListAdapter.ItemViewHolder>(DiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         return ItemViewHolder(
-            ListItemBinding.inflate(
+            HasToGoListItemBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
             )
         )
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-        val current = getItem(position)
+        val item = getItem(position)
 
-        holder.bind(current)
+        holder.bind(item)
 
         holder.itemView.setOnClickListener {
-            val action = FoodItemListFragmentDirections
-                .actionListFragmentToItemDetailsFragment(current.id)
+            val action = HasToGoFragmentDirections
+                .actionHasToGoToItemDetailFragment(item.id)
+            Log.d(TAG, "Navigated with ID ${item.id}.")
             it.findNavController().navigate(action)
         }
 
-        // delete when delete button is clicked
+        // delete (with warning) when item was thrown away
         holder.btnDeleteItem.setOnClickListener {
-            confirmDeleteAction(current)
+            confirmDeleteAction(item)
         }
 
+        // delete (without warning) when item was eaten
         holder.btnItemEaten.setOnClickListener {
-            confirmDeleteAction(current)
-        }
-
-        // go to editing fragment when edit button is pressed
-        holder.btnEditItem.setOnClickListener {
-            val action = FoodItemListFragmentDirections
-                .actionListFragmentToCreateEditFragment(current.id)
-            it.findNavController().navigate(action)
+            viewModel.deleteItem(item)
         }
 
     }
@@ -73,20 +68,17 @@ class FoodItemListAdapter(
             .show()
     }
 
-    class ItemViewHolder(private var binding: ListItemBinding) :
+    class ItemViewHolder(private var binding: HasToGoListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-
-        val itemTitle: TextView = binding.itemTitle
-        val itemDaysLeft: TextView = binding.itemDaysLeft
-        val itemLocation: TextView = binding.itemLocation
         val btnDeleteItem: ImageView = binding.deleteItem
-        val btnEditItem: ImageView = binding.editItem
         val btnItemEaten: ImageView = binding.itemEaten
 
         fun bind(item: FoodItem) {
-            itemTitle.text = item.itemName
-            itemDaysLeft.text = item.getDaysLeft()
-            itemLocation.text = item.location
+            binding.apply {
+                itemTitle.text = item.itemName
+                itemDaysLeft.text = item.getDaysLeft()
+            }
+
         }
     }
 

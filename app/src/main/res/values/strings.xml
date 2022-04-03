@@ -5,6 +5,7 @@
 
     <!-- Strings for main activity -->
     <string name="itemDaysLeft">%1$s Tage</string>
+    <string name="HasToGo">Muss bald weg</string>
 
     <!-- Strings for creating or editing an item -->
     <string name="createEditName">Name des Lebensmittels (bspw. Banane)</string>

@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/foodItemListFragment"
-        android:name="com.example.foodreminderapp.FoodItemListFragment"
+        android:name="com.example.foodreminderapp.fragments.FoodItemListFragment"
         android:label="@string/mainScreenTitle"
         tools:layout="@layout/fragment_item_list">
         <action
@@ -16,10 +16,13 @@
         <action
             android:id="@+id/action_listFragment_to_itemDetailsFragment"
             app:destination="@id/itemDetailFragment" />
+        <action
+            android:id="@+id/action_listFragment_to_hasToGoFragment"
+            app:destination="@id/hasToGoFragment" />
     </fragment>
     <fragment
         android:id="@+id/createEditFragment"
-        android:name="com.example.foodreminderapp.CreateEditItemFragment"
+        android:name="com.example.foodreminderapp.fragments.CreateEditItemFragment"
         android:label="@string/createEditTitle"
         tools:layout="@layout/fragment_create_edit_item">
         <argument
@@ -32,7 +35,7 @@
     </fragment>
     <fragment
         android:id="@+id/itemDetailFragment"
-        android:name="com.example.foodreminderapp.ItemDetailFragment"
+        android:name="com.example.foodreminderapp.fragments.ItemDetailFragment"
         android:label="@string/itemDetailsTitle"
         tools:layout="@layout/fragment_item_details" >
 
@@ -45,6 +48,20 @@
         <action
             android:id="@+id/action_detailFragment_to_editCreateFragment"
             app:destination="@id/createEditFragment" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/hasToGoFragment"
+        android:name="com.example.foodreminderapp.fragments.HasToGoFragment"
+        android:label="fragment_has_to_go"
+        tools:layout="@layout/fragment_has_to_go" >
+
+        <action
+            android:id="@+id/action_HasToGo_to_ItemListFragment"
+            app:destination="@id/foodItemListFragment" />
+        <action
+            android:id="@+id/action_HasToGo_to_ItemDetailFragment"
+            app:destination="@id/itemDetailFragment" />
 
     </fragment>
 

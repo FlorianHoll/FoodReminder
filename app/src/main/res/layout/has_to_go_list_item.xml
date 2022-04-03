@@ -5,7 +5,7 @@
     android:layout_margin="5dp"
     app:cardCornerRadius="15dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools" >
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -23,47 +23,25 @@
             />
 
         <TextView
-            android:id="@+id/item_location"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/edit_item"
-            android:paddingTop="10dp"
-            tools:text="Regal"
-            />
-
-        <TextView
             android:id="@+id/item_days_left"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="@id/calendar_item"
-            app:layout_constraintBottom_toBottomOf="@id/calendar_item"
-            app:layout_constraintStart_toEndOf="@id/calendar_item"
-            android:textSize="17sp"
+            android:layout_marginStart="20dp"
+            app:layout_constraintBottom_toBottomOf="@id/item_title"
+            app:layout_constraintEnd_toStartOf="@id/item_eaten"
+            android:textAppearance="?attr/textAppearanceHeadline6"
             android:text="@string/itemDaysLeft"
             />
-
-        <ImageView
-            android:id="@+id/edit_item"
-            android:layout_width="37dp"
-            android:layout_height="37dp"
-            app:srcCompat="@drawable/ic_edit_item"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:tint="@color/primary_variant_dark"
-            android:contentDescription="@string/contentDescriptionEdit"/>
 
         <ImageView
             android:id="@+id/delete_item"
             android:layout_width="45dp"
             android:layout_height="41dp"
             app:srcCompat="@drawable/ic_delete_item"
-            app:layout_constraintEnd_toStartOf="@id/edit_item"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:contentDescription="@string/contentDescriptionDelete"
-            app:tint="@color/primary_variant_dark"
-            android:paddingEnd="15dp"/>
+            app:tint="@color/primary_variant_dark" />
 
         <ImageView
             android:id="@+id/item_eaten"
@@ -73,19 +51,7 @@
             app:layout_constraintEnd_toStartOf="@id/delete_item"
             app:layout_constraintTop_toTopOf="parent"
             android:contentDescription="@string/contentDescriptionDelete"
-            app:tint="@color/primary_variant_dark"
-            android:paddingEnd="15dp"/>
-
-        <ImageView
-            android:id="@+id/calendar_item"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            app:srcCompat="@drawable/ic_calendar_item"
-            app:layout_constraintTop_toBottomOf="@id/item_title"
-            app:layout_constraintEnd_toStartOf="@id/item_days_left"
-            app:layout_constraintStart_toStartOf="parent"
-            app:tint="@color/primary_variant_dark"
-            />
+            app:tint="@color/primary_variant_dark" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

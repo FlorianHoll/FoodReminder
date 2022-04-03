@@ -17,6 +17,9 @@ interface FoodItemDao {
     @Query("SELECT * from fooditem ORDER BY name ASC")
     fun getItems(): Flow<List<FoodItem>>
 
+    @Query("SELECT * from fooditem WHERE best_before <= :date ORDER BY best_before ASC")
+    fun getItemsForNextDays(date: String): Flow<List<FoodItem>>
+
     @Query("SELECT * from fooditem WHERE id = :id")
     fun getItem(id: Int): Flow<FoodItem>
 
