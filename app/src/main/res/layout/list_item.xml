@@ -36,10 +36,10 @@
             android:id="@+id/item_days_left"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/item_title"
+            app:layout_constraintTop_toTopOf="@id/calendar_item"
+            app:layout_constraintBottom_toBottomOf="@id/calendar_item"
             app:layout_constraintStart_toEndOf="@id/calendar_item"
-            android:paddingTop="10dp"
-            tools:text="2 Tage"
+            android:textSize="17dp"
             android:text="@string/itemDaysLeft"
             />
 
@@ -77,15 +77,14 @@
 
         <ImageView
             android:id="@+id/calendar_item"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             app:srcCompat="@drawable/ic_calendar_item"
             app:layout_constraintTop_toBottomOf="@id/item_title"
             app:layout_constraintEnd_toStartOf="@id/item_days_left"
             app:layout_constraintStart_toStartOf="parent"
-            android:paddingTop="6dp"
             app:tint="@color/primary_variant_dark"
-            android:paddingEnd="10dp"/>
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

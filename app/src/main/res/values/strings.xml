@@ -25,6 +25,9 @@
     <string name="itemDetailsDaysLeftDate">Haltbar bis %1$s</string>
     <string name="itemDetailsDaysLeftInDays">(noch %1$s Tage)</string>
     <string name="itemDetailsLocation">Kühlschrank</string>
+    <string name="itemDetailsItemEaten">Aufgegessen</string>
+    <string name="itemDetailsThrownAway">Weggeworfen</string>
+    <string name="itemDetailsEdit">Bearbeiten</string>
 
     <!-- Strings for content descriptions -->
     <string name="contentDescriptionAddItem">Item hinzufügen</string>
