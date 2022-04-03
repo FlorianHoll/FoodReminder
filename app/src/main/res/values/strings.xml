@@ -3,6 +3,12 @@
 
     <string name="mainScreenTitle">Alle Lebensmittel</string>
 
+    <!-- Strings for bottom navigation -->
+    <string name="BottomNavHome">Übersicht</string>
+    <string name="BottomNavHasToGo">Muss weg</string>
+    <string name="BottomNavShoppingList">Einkaufszettel</string>
+    <string name="BottomNavStatistics">Statistiken</string>
+
     <!-- Strings for main activity -->
     <string name="itemDaysLeft">%1$s Tage</string>
     <string name="HasToGo">Muss bald weg</string>
