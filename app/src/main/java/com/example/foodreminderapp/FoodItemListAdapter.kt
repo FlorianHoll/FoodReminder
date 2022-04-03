@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.foodreminderapp.data.FoodItem
+import com.example.foodreminderapp.data.getDaysLeft
 import com.example.foodreminderapp.databinding.ListItemBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
@@ -77,7 +78,7 @@ class FoodItemListAdapter(
 
         fun bind(item: FoodItem) {
             binding.itemTitle.text = item.itemName
-            binding.itemDaysLeft.text = item.daysLeft.toString()
+            binding.itemDaysLeft.text = item.getDaysLeft()
             binding.itemLocation.text = item.location
         }
     }
