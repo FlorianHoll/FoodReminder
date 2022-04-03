@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">FoodReminderApp</string>
 
+    <string name="mainScreenTitle">Alle Lebensmittel</string>
+
     <!-- Strings for main activity -->
     <string name="itemDaysLeft">%1$s Tage</string>
 
@@ -14,16 +16,29 @@
     <string name="createEditTiefkuehlschrank">Tiefkühlschrank</string>
     <string name="createEditKuehlschrank">Kühlschrank</string>
 
+    <!-- Strings for delete action -->
+    <string name="itemDeleteTitle">Item löschen</string>
+    <string name="itemDeleteText">Möchten Sie das Item wirklich löschen?</string>
+    <string name="itemDeleteYes">Ja</string>
+    <string name="itemDeleteNo">Nein</string>
+
+    <!-- Strings for item detail fragment -->
+    <string name="itemDetailsTitle">Details</string>
+    <string name="itemDetailsName">Name des Items</string>
+    <string name="itemDetailsDaysLeftDate">Haltbar bis %1$s</string>
+    <string name="itemDetailsDaysLeftInDays">(noch %1$s Tage)</string>
+    <string name="itemDetailsLocation">Kühlschrank</string>
+    <string name="itemDetailsItemEaten">Aufgegessen</string>
+    <string name="itemDetailsThrownAway">Weggeworfen</string>
+    <string name="itemDetailsEdit">Bearbeiten</string>
+
     <!-- Strings for content descriptions -->
     <string name="contentDescriptionAddItem">Item hinzufügen</string>
     <string name="contentDescriptionEdit">Item bearbeiten</string>
     <string name="contentDescriptionDelete">Item löschen</string>
     <string name="contentDescriptionCalendar">Wie viele Tage ist Artikel noch haltbar?</string>
 
-    <!-- Strings for delete action -->
-    <string name="itemDeleteTitle">Item löschen</string>
-    <string name="itemDeleteText">Möchten Sie das Item wirklich löschen?</string>
-    <string name="itemDeleteYes">Ja</string>
-    <string name="itemDeleteNo">Nein</string>
+
+
 
 </resources>

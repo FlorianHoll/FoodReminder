@@ -17,7 +17,7 @@ import com.example.foodreminderapp.data.getDaysLeft
 import com.example.foodreminderapp.databinding.FragmentCreateEditItemBinding
 
 /**
- * Fragment to add or update an item in the Inventory database.
+ * Fragment to add or update an item in the database.
  */
 class CreateEditItemFragment : Fragment() {
 
@@ -42,9 +42,7 @@ class CreateEditItemFragment : Fragment() {
         return binding.root
     }
 
-    /**
-     * Returns true if the EditTexts are not empty
-     */
+    // Check if entries are valid; if so, returns true.
     private fun isEntryValid(): Boolean {
         return viewModel.isEntryValid(
             binding.itemName.text.toString(),
@@ -52,11 +50,8 @@ class CreateEditItemFragment : Fragment() {
         )
     }
 
-    /**
-     * Binds views with the passed in [item] information.
-     */
+    // Bind views with passed information.
     private fun bind(item: FoodItem) {
-//        val price = "%.2f".format(item.itemPrice)
         binding.apply {
             itemName.setText(item.itemName, TextView.BufferType.SPANNABLE)
             daysLeft.setText(item.getDaysLeft(), TextView.BufferType.SPANNABLE)
@@ -66,11 +61,13 @@ class CreateEditItemFragment : Fragment() {
                 else -> R.id.option_tiefkuehlschrank
             }
             binding.location.check(checkedItemId)
+
             // Update item when save button is clicked.
             btnSaveFoodItem.setOnClickListener { updateItem() }
         }
     }
 
+    // Return which option was checked in the radio group.
     private fun getCheckedLocation(): String {
         val foodItemLocation = when (
             binding.location.checkedRadioButtonId
@@ -82,9 +79,7 @@ class CreateEditItemFragment : Fragment() {
         return foodItemLocation
     }
 
-    /**
-     * Inserts the new Item into database and navigates up to list fragment.
-     */
+    // Insert the new item into the database and navigate back to the list.
     private fun addNewItem() {
         if (isEntryValid()) {
             viewModel.addNewItem(
@@ -96,9 +91,7 @@ class CreateEditItemFragment : Fragment() {
         } else { hintAllFieldsRequired() }
     }
 
-    /**
-     * Updates an existing Item in the database and navigates up to list fragment.
-     */
+    // Update an existing item in the database and navigates back to the list.
     private fun updateItem() {
         if (isEntryValid()) {
             viewModel.updateItem(
@@ -111,12 +104,14 @@ class CreateEditItemFragment : Fragment() {
         } else { hintAllFieldsRequired() }
     }
 
+    // Navigate back to the list fragment.
     private fun navigateBackToList() {
         val action = CreateEditItemFragmentDirections
             .actionCreateEditFragmentToListFragment()
         findNavController().navigate(action)
     }
 
+    // Display toast that all input fields are required.
     private fun hintAllFieldsRequired() {
         Toast.makeText(
             context, "Alle Felder müssen ausgefüllt werden.", Toast.LENGTH_LONG
@@ -131,8 +126,7 @@ class CreateEditItemFragment : Fragment() {
         // therefore, if an id is passed, it is not a new ite.
         if (id > 0) {
             viewModel.retrieveItem(id).observe(this.viewLifecycleOwner) { selectedItem ->
-                item = selectedItem
-                bind(item)
+                bind(selectedItem)
             }
         } else {
             binding.btnSaveFoodItem.setOnClickListener {
