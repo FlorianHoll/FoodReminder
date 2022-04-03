@@ -18,6 +18,11 @@ class FoodItemListViewModel(private val itemDao: FoodItemDao) : ViewModel() {
     // Cache all items form the database using LiveData.
     val allItems: LiveData<List<FoodItem>> = itemDao.getItems().asLiveData()
 
+    private val date = calculateBestBefore(3)
+    val allHasToGoItems: LiveData<List<FoodItem>> = (
+            itemDao.getItemsForNextDays(date).asLiveData()
+            )
+
     // Update an existing item in the database.
     fun updateItem(
         itemId: Int,

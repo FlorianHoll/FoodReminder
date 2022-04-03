@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_listFragment_to_itemDetailsFragment"
             app:destination="@id/itemDetailFragment" />
+        <action
+            android:id="@+id/action_listFragment_to_hasToGoFragment"
+            app:destination="@id/hasToGoFragment" />
     </fragment>
     <fragment
         android:id="@+id/createEditFragment"
@@ -45,6 +48,20 @@
         <action
             android:id="@+id/action_detailFragment_to_editCreateFragment"
             app:destination="@id/createEditFragment" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/hasToGoFragment"
+        android:name="com.example.foodreminderapp.fragments.HasToGoFragment"
+        android:label="fragment_has_to_go"
+        tools:layout="@layout/fragment_has_to_go" >
+
+        <action
+            android:id="@+id/action_HasToGo_to_ItemListFragment"
+            app:destination="@id/foodItemListFragment" />
+        <action
+            android:id="@+id/action_HasToGo_to_ItemDetailFragment"
+            app:destination="@id/itemDetailFragment" />
 
     </fragment>
 

@@ -7,23 +7,20 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import com.example.foodreminderapp.FoodItemListAdapter
-import com.example.foodreminderapp.FoodItemListApplication
-import com.example.foodreminderapp.FoodItemListViewModel
-import com.example.foodreminderapp.FoodItemViewModelFactory
-import com.example.foodreminderapp.databinding.FragmentItemListBinding
+import com.example.foodreminderapp.*
+import com.example.foodreminderapp.databinding.FragmentHasToGoBinding
 
 /**
- * Main fragment displaying details for all items in the database.
+ * Fragment displaying those items that need to go.
  */
-class FoodItemListFragment : Fragment() {
+class HasToGoFragment : Fragment() {
     private val viewModel: FoodItemListViewModel by activityViewModels {
         FoodItemViewModelFactory(
             (activity?.application as FoodItemListApplication).database.foodItemDao()
         )
     }
 
-    private var _binding: FragmentItemListBinding? = null
+    private var _binding: FragmentHasToGoBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -31,34 +28,29 @@ class FoodItemListFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentItemListBinding.inflate(inflater, container, false)
+        _binding = FragmentHasToGoBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = FoodItemListAdapter(requireActivity(), viewModel)
+        val adapter = HasToGoListAdapter(requireActivity(), viewModel)
 
-        binding.rvFoodItems.adapter = adapter
+        binding.rvItemsHaveToGo.adapter = adapter
 
         // Attach an observer on the allItems list to
         // update the UI automatically when the data changes.
-        viewModel.allItems.observe(this.viewLifecycleOwner) { items ->
+        viewModel.allHasToGoItems.observe(this.viewLifecycleOwner) { items ->
             items.let {
                 adapter.submitList(it)
             }
         }
 
-        binding.buttonAddItem.setOnClickListener {
-            val action = FoodItemListFragmentDirections
-                .actionListFragmentToCreateEditFragment()
-            this.findNavController().navigate(action)
-        }
-
-        binding.btnHasToGo.setOnClickListener {
-            val action = FoodItemListFragmentDirections
-                .actionListFragmentToHasToGoFragment()
+        // get back to home screen
+        binding.btnHome.setOnClickListener {
+            val action = HasToGoFragmentDirections
+                .actionHasToGoToItemListFragment()
             this.findNavController().navigate(action)
         }
     }
