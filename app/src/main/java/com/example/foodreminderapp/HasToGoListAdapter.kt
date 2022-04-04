@@ -74,9 +74,10 @@ class HasToGoListAdapter(
         val btnItemEaten: ImageView = binding.itemEaten
 
         fun bind(item: FoodItem) {
+            val daysLeftText = setBestBeforeText(item)
             binding.apply {
                 itemTitle.text = item.itemName
-                itemDaysLeft.text = item.getDaysLeft()
+                itemDaysLeft.text = daysLeftText
             }
 
         }

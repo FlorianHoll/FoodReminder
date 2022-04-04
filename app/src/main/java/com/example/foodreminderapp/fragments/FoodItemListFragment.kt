@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.foodreminderapp.FoodItemListAdapter
 import com.example.foodreminderapp.FoodItemListApplication
 import com.example.foodreminderapp.FoodItemListViewModel
@@ -23,6 +24,8 @@ class FoodItemListFragment : Fragment() {
         )
     }
 
+    private val navigationArgs: FoodItemListFragmentArgs by navArgs()
+
     private var _binding: FragmentItemListBinding? = null
     private val binding get() = _binding!!
 
@@ -38,16 +41,23 @@ class FoodItemListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val location = navigationArgs.itemsLocation
+
         val adapter = FoodItemListAdapter(requireActivity(), viewModel)
 
         binding.rvFoodItems.adapter = adapter
 
         // Attach an observer on the allItems list to
         // update the UI automatically when the data changes.
-        viewModel.allItems.observe(this.viewLifecycleOwner) { items ->
-            items.let {
-                adapter.submitList(it)
+        if (location == "all") {
+            viewModel.allItems.observe(this.viewLifecycleOwner) { items ->
+                items.let { adapter.submitList(it) }
             }
+        } else {
+            viewModel.retrieveItemsByLocation(location)
+                .observe(this.viewLifecycleOwner) { items ->
+                    items.let { adapter.submitList(it) }
+                }
         }
 
         binding.buttonAddItem.setOnClickListener {

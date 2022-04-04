@@ -10,13 +10,16 @@
         android:id="@+id/btn_edit"
         android:layout_width="280dp"
         android:layout_height="50dp"
-        app:layout_constraintStart_toStartOf="@id/iv_fridge"
+        app:layout_constraintStart_toStartOf="@id/iv_location"
         app:layout_constraintTop_toBottomOf="@id/tv_location"
         android:layout_marginTop="30dp"
         app:cornerRadius="100dp"
         android:textAlignment="center"
+        android:textColor="@color/primary_variant_dark"
+        app:strokeColor="@color/primary_variant_dark"
+        app:strokeWidth="2dp"
         android:layout_marginEnd="30dp"
-        android:backgroundTint="@color/primary_variant_dark"
+        style="?attr/materialButtonOutlinedStyle"
         android:text="@string/itemDetailsEdit"
         />
 
@@ -30,7 +33,7 @@
         app:layout_constraintStart_toStartOf="@id/btn_edit"
         android:layout_marginStart="10dp"
         android:translationZ="90dp"
-        app:tint="@color/white" />
+        app:tint="@color/primary_variant_dark" />
 
 
 
@@ -38,12 +41,15 @@
         android:id="@+id/btn_thrown_away"
         android:layout_width="280dp"
         android:layout_height="50dp"
-        app:layout_constraintStart_toStartOf="@id/iv_fridge"
+        app:layout_constraintStart_toStartOf="@id/iv_location"
         app:layout_constraintTop_toBottomOf="@id/btn_edit"
         android:layout_marginTop="10dp"
         app:cornerRadius="100dp"
         android:layout_marginEnd="30dp"
-        android:backgroundTint="@color/primary_variant_dark"
+        android:textColor="@color/primary_variant_dark"
+        app:strokeColor="@color/primary_variant_dark"
+        app:strokeWidth="2dp"
+        style="?attr/materialButtonOutlinedStyle"
         android:text="@string/itemDetailsThrownAway"
         android:textAlignment="center"
         />
@@ -58,7 +64,7 @@
         app:layout_constraintStart_toStartOf="@id/btn_thrown_away"
         android:layout_marginStart="10dp"
         android:translationZ="90dp"
-        app:tint="@color/white" />
+        app:tint="@color/primary_variant_dark" />
 
 
 
@@ -66,7 +72,7 @@
         android:id="@+id/btn_eaten"
         android:layout_width="280dp"
         android:layout_height="50dp"
-        app:layout_constraintStart_toStartOf="@id/iv_fridge"
+        app:layout_constraintStart_toStartOf="@id/iv_location"
         app:layout_constraintTop_toBottomOf="@id/btn_thrown_away"
         android:layout_marginTop="10dp"
         app:cornerRadius="100dp"
@@ -127,9 +133,9 @@
         android:id="@+id/tv_location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@id/iv_fridge"
-        app:layout_constraintTop_toTopOf="@id/iv_fridge"
-        app:layout_constraintBottom_toBottomOf="@id/iv_fridge"
+        app:layout_constraintStart_toEndOf="@id/iv_location"
+        app:layout_constraintTop_toTopOf="@id/iv_location"
+        app:layout_constraintBottom_toBottomOf="@id/iv_location"
         android:text="@string/createEditLocation"
         android:layout_marginStart="10dp"
         android:textSize="20sp"
@@ -137,11 +143,11 @@
 
 
     <ImageView
-        android:id="@+id/iv_fridge"
+        android:id="@+id/iv_location"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginTop="30dp"
-        app:srcCompat="@drawable/ic_fridge"
+        app:srcCompat="@drawable/ic_freezer"
         app:layout_constraintStart_toStartOf="@id/iv_calendar"
         app:layout_constraintTop_toBottomOf="@id/tv_days_left_in_days"
         app:tint="@color/primary_variant_dark"
@@ -174,7 +180,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@id/iv_fridge"
+        app:layout_constraintStart_toEndOf="@id/iv_location"
         app:layout_constraintTop_toBottomOf="@id/btn_eaten"
         android:text=""
         android:layout_marginStart="10dp"
