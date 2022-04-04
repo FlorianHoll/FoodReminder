@@ -55,6 +55,13 @@ class ItemDetailFragment : DialogFragment() {
             tvDaysLeftInDays.setText(item.getDaysLeft(), TextView.BufferType.SPANNABLE)
             tvLocation.setText(item.location, TextView.BufferType.SPANNABLE)
 
+            val imageLocation = when (item.location) {
+                "Kühlschrank" -> R.drawable.ic_fridge
+                "Tiefkühlschrank" -> R.drawable.ic_freezer
+                else -> R.drawable.ic_shelf_small
+            }
+            ivLocation.setImageResource(imageLocation)
+
             // Navigate to edit fragment if button is clicked
             btnEdit.setOnClickListener {
                 val action = ItemDetailFragmentDirections

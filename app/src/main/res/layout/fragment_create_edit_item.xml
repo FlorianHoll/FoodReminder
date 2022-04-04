@@ -111,8 +111,6 @@
 
         </RadioGroup>
 
-
-
     <ImageView
         android:id="@+id/iv_fridge"
         android:layout_width="30dp"
