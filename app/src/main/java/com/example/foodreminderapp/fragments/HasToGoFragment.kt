@@ -35,23 +35,36 @@ class HasToGoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = HasToGoListAdapter(requireActivity(), viewModel)
+        val fridgeAdapter = HasToGoListAdapter(requireActivity(), viewModel)
+        val shelfAdapter = HasToGoListAdapter(requireActivity(), viewModel)
+        val freezerAdapter = HasToGoListAdapter(requireActivity(), viewModel)
 
-        binding.rvItemsHaveToGo.adapter = adapter
+        binding.rvItemsHaveToGoFridge.adapter = fridgeAdapter
+        binding.rvItemsHaveToGoShelf.adapter = shelfAdapter
+        binding.rvItemsHaveToGoFreezer.adapter = freezerAdapter
 
         // Attach an observer on the allItems list to
         // update the UI automatically when the data changes.
-        viewModel.allHasToGoItems.observe(this.viewLifecycleOwner) { items ->
-            items.let {
-                adapter.submitList(it)
+        viewModel.hasToGoByLocation("Kühlschrank")
+            .observe(this.viewLifecycleOwner) { items ->
+                items.let {
+                    fridgeAdapter.submitList(it)
+                }
             }
-        }
 
-        // get back to home screen
-        binding.btnHome.setOnClickListener {
-            val action = HasToGoFragmentDirections
-                .actionHasToGoToItemListFragment()
-            this.findNavController().navigate(action)
-        }
+        viewModel.hasToGoByLocation("Regal")
+            .observe(this.viewLifecycleOwner) { items ->
+                items.let {
+                    shelfAdapter.submitList(it)
+                }
+            }
+
+        viewModel.hasToGoByLocation("Tiefkühlschrank")
+            .observe(this.viewLifecycleOwner) { items ->
+                items.let {
+                    freezerAdapter.submitList(it)
+                }
+            }
+
     }
 }

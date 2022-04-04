@@ -20,9 +20,6 @@
         <action
             android:id="@+id/action_listFragment_to_itemDetailsFragment"
             app:destination="@id/itemDetailFragment" />
-        <action
-            android:id="@+id/action_listFragment_to_hasToGoFragment"
-            app:destination="@id/hasToGoFragment" />
     </fragment>
     <fragment
         android:id="@+id/createEditFragment"
@@ -60,9 +57,6 @@
         android:label="Muss bald weg"
         tools:layout="@layout/fragment_has_to_go" >
 
-        <action
-            android:id="@+id/action_HasToGo_to_ItemListFragment"
-            app:destination="@id/foodItemListFragment" />
         <action
             android:id="@+id/action_HasToGo_to_ItemDetailFragment"
             app:destination="@id/itemDetailFragment" />

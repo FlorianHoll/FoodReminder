@@ -66,10 +66,5 @@ class FoodItemListFragment : Fragment() {
             this.findNavController().navigate(action)
         }
 
-        binding.btnHasToGo.setOnClickListener {
-            val action = FoodItemListFragmentDirections
-                .actionListFragmentToHasToGoFragment()
-            this.findNavController().navigate(action)
-        }
     }
 }

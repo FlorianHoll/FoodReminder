@@ -11,7 +11,6 @@
 
     <!-- Strings for main activity -->
     <string name="itemDaysLeft">%1$s Tage</string>
-    <string name="HasToGo">Muss bald weg</string>
 
     <!-- Strings for choosing list -->
     <string name="chooseListAllItems">Alle Lebensmittel</string>
@@ -19,6 +18,12 @@
     <string name="chooseListFreezer">Tiefkühl-\ntruhe</string>
     <string name="chooseListShelf">Regal</string>
     <string name="chooseListAddItem">Hinzufügen</string>
+
+    <!-- Strings for hasToGo Fragment -->
+    <string name="HasToGoTitle">Muss bald weg</string>
+    <string name="hasToGoFridge">Kühlschrank</string>
+    <string name="hasToGoShelf">Regal</string>
+    <string name="hasToGoFreezer">Tiefkühlschrank</string>
 
     <!-- Strings for creating or editing an item -->
     <string name="createEditName">Name des Lebensmittels (bspw. Banane)</string>

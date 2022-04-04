@@ -29,19 +29,4 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/ic_add_item" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_has_to_go"
-        android:layout_width="200dp"
-        android:layout_height="50dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="30dp"
-        app:cornerRadius="30dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginBottom="10dp"
-        android:backgroundTint="@color/primary_variant_dark"
-        android:text="@string/HasToGo"
-        />
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

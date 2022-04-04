@@ -36,7 +36,6 @@
         android:inputType="textPersonName"
         app:layout_constraintStart_toEndOf="@id/iv_ramen"
         app:layout_constraintTop_toTopOf="parent"
-
         app:endIconMode="clear_text"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox" >
 
