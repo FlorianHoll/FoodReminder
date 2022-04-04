@@ -1,10 +1,12 @@
 package com.example.foodreminderapp
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.fragment.app.FragmentManager
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -13,6 +15,7 @@ import com.example.foodreminderapp.data.FoodItem
 import com.example.foodreminderapp.data.getDaysLeft
 import com.example.foodreminderapp.databinding.ListItemBinding
 import com.example.foodreminderapp.fragments.FoodItemListFragmentDirections
+import com.example.foodreminderapp.fragments.ItemDetailFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 private const val TAG = "FoodItemListAdapter"
@@ -42,7 +45,7 @@ class FoodItemListAdapter(
             it.findNavController().navigate(action)
         }
 
-        // delete when delete button is clicked
+        // delete when delete button is clicked.
         holder.btnDeleteItem.setOnClickListener {
             confirmDeleteAction(current)
         }
@@ -51,7 +54,7 @@ class FoodItemListAdapter(
             confirmDeleteAction(current)
         }
 
-        // go to editing fragment when edit button is pressed
+        // go to editing fragment when edit button is pressed.
         holder.btnEditItem.setOnClickListener {
             val action = FoodItemListFragmentDirections
                 .actionListFragmentToCreateEditFragment(current.id)
@@ -60,7 +63,7 @@ class FoodItemListAdapter(
 
     }
 
-    // Show alert and confirm deletion
+    // Show alert and confirm deletion.
     private fun confirmDeleteAction(item: FoodItem) {
         MaterialAlertDialogBuilder(context)
             .setTitle(R.string.itemDeleteTitle)
@@ -84,8 +87,9 @@ class FoodItemListAdapter(
         val btnItemEaten: ImageView = binding.itemEaten
 
         fun bind(item: FoodItem) {
+            val daysLeftText = setBestBeforeText(item)
             itemTitle.text = item.itemName
-            itemDaysLeft.text = item.getDaysLeft()
+            itemDaysLeft.text = daysLeftText
             itemLocation.text = item.location
         }
     }

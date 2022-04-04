@@ -13,6 +13,13 @@
     <string name="itemDaysLeft">%1$s Tage</string>
     <string name="HasToGo">Muss bald weg</string>
 
+    <!-- Strings for choosing list -->
+    <string name="chooseListAllItems">Alle Lebensmittel</string>
+    <string name="chooseListFridge">Kühlschrank</string>
+    <string name="chooseListFreezer">Tiefkühl-\ntruhe</string>
+    <string name="chooseListShelf">Regal</string>
+    <string name="chooseListAddItem">Hinzufügen</string>
+
     <!-- Strings for creating or editing an item -->
     <string name="createEditName">Name des Lebensmittels (bspw. Banane)</string>
     <string name="createEditDaysLeft">Haltbarkeit in Tagen (bspw. 3)</string>
