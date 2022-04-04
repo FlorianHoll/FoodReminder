@@ -141,7 +141,7 @@ class CreateEditItemFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        // Hide keyboard
+        // Hide keyboard.
         val inputMethodManager = requireActivity().getSystemService(INPUT_METHOD_SERVICE) as
                 InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(requireActivity().currentFocus?.windowToken, 0)

@@ -65,6 +65,10 @@ class FoodItemListViewModel(private val itemDao: FoodItemDao) : ViewModel() {
         return itemDao.getItem(id).asLiveData()
     }
 
+    fun retrieveItemsByLocation(location: String): LiveData<List<FoodItem>> {
+        return itemDao.getItemsByLocation(location).asLiveData()
+    }
+
     /**
      * Returns true if the EditTexts are not empty
      */

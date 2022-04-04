@@ -7,19 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.example.foodreminderapp.FoodItemListApplication
-import com.example.foodreminderapp.FoodItemListViewModel
-import com.example.foodreminderapp.FoodItemViewModelFactory
-import com.example.foodreminderapp.R
+import com.example.foodreminderapp.*
 import com.example.foodreminderapp.data.FoodItem
 import com.example.foodreminderapp.data.getDaysLeft
 import com.example.foodreminderapp.databinding.FragmentItemDetailsBinding
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 /**
  * Fragment to see item details.
@@ -49,12 +44,15 @@ class ItemDetailFragment : DialogFragment() {
 
     // Bind views with passed information.
     private fun bind(item: FoodItem) {
+
+        val daysLeftText = setBestBeforeText(item)
         binding.apply {
             tvItemName.setText(item.itemName, TextView.BufferType.SPANNABLE)
             tvDaysLeftDate.setText(item.bestBefore, TextView.BufferType.SPANNABLE)
-            tvDaysLeftInDays.setText(item.getDaysLeft(), TextView.BufferType.SPANNABLE)
+            tvDaysLeftInDays.setText(daysLeftText, TextView.BufferType.SPANNABLE)
             tvLocation.setText(item.location, TextView.BufferType.SPANNABLE)
 
+            // Set correct image according to storage location.
             val imageLocation = when (item.location) {
                 "Kühlschrank" -> R.drawable.ic_fridge
                 "Tiefkühlschrank" -> R.drawable.ic_freezer
@@ -62,19 +60,19 @@ class ItemDetailFragment : DialogFragment() {
             }
             ivLocation.setImageResource(imageLocation)
 
-            // Navigate to edit fragment if button is clicked
+            // Navigate to edit fragment if button is clicked.
             btnEdit.setOnClickListener {
                 val action = ItemDetailFragmentDirections
                     .actionDetailFragmentToEditCreateFragment(item.id)
                 findNavController().navigate(action)
             }
 
-            // Delete item if eaten
+            // Delete item if eaten.
             btnEaten.setOnClickListener {
                 deleteAndNavigateBack(item)
             }
 
-            // Delete item if thrown away
+            // Delete item if thrown away.
             btnThrownAway.setOnClickListener {
                 deleteAndNavigateBack(item)
             }
@@ -119,7 +117,7 @@ class ItemDetailFragment : DialogFragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        // Hide keyboard
+        // Hide keyboard.
         val inputMethodManager = requireActivity().getSystemService(INPUT_METHOD_SERVICE) as
                 InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(requireActivity().currentFocus?.windowToken, 0)

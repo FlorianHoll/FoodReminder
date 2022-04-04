@@ -23,6 +23,9 @@ interface FoodItemDao {
     @Query("SELECT * from fooditem WHERE id = :id")
     fun getItem(id: Int): Flow<FoodItem>
 
+    @Query("SELECT * from fooditem WHERE location = :location ORDER BY name ASC")
+    fun getItemsByLocation(location: String): Flow<List<FoodItem>>
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(item: FoodItem)
 

@@ -1,5 +1,6 @@
 package com.example.foodreminderapp
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -44,7 +45,7 @@ class FoodItemListAdapter(
             it.findNavController().navigate(action)
         }
 
-        // delete when delete button is clicked
+        // delete when delete button is clicked.
         holder.btnDeleteItem.setOnClickListener {
             confirmDeleteAction(current)
         }
@@ -53,7 +54,7 @@ class FoodItemListAdapter(
             confirmDeleteAction(current)
         }
 
-        // go to editing fragment when edit button is pressed
+        // go to editing fragment when edit button is pressed.
         holder.btnEditItem.setOnClickListener {
             val action = FoodItemListFragmentDirections
                 .actionListFragmentToCreateEditFragment(current.id)
@@ -62,7 +63,7 @@ class FoodItemListAdapter(
 
     }
 
-    // Show alert and confirm deletion
+    // Show alert and confirm deletion.
     private fun confirmDeleteAction(item: FoodItem) {
         MaterialAlertDialogBuilder(context)
             .setTitle(R.string.itemDeleteTitle)
@@ -86,8 +87,9 @@ class FoodItemListAdapter(
         val btnItemEaten: ImageView = binding.itemEaten
 
         fun bind(item: FoodItem) {
+            val daysLeftText = setBestBeforeText(item)
             itemTitle.text = item.itemName
-            itemDaysLeft.text = item.getDaysLeft()
+            itemDaysLeft.text = daysLeftText
             itemLocation.text = item.location
         }
     }
