@@ -69,6 +69,10 @@ class FoodItemListViewModel(private val itemDao: FoodItemDao) : ViewModel() {
         return itemDao.getItemsByLocation(location).asLiveData()
     }
 
+    fun hasToGoByLocation(location: String): LiveData<List<FoodItem>> {
+        return itemDao.hasToGoByLocation(date, location).asLiveData()
+    }
+
     /**
      * Returns true if the EditTexts are not empty
      */

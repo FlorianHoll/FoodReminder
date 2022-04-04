@@ -3,9 +3,14 @@
 
     <string name="mainScreenTitle">Alle Lebensmittel</string>
 
+    <!-- Strings for bottom navigation -->
+    <string name="BottomNavHome">Übersicht</string>
+    <string name="BottomNavHasToGo">Muss weg</string>
+    <string name="BottomNavShoppingList">Einkaufszettel</string>
+    <string name="BottomNavStatistics">Statistiken</string>
+
     <!-- Strings for main activity -->
     <string name="itemDaysLeft">%1$s Tage</string>
-    <string name="HasToGo">Muss bald weg</string>
 
     <!-- Strings for choosing list -->
     <string name="chooseListAllItems">Alle Lebensmittel</string>
@@ -13,6 +18,12 @@
     <string name="chooseListFreezer">Tiefkühl-\ntruhe</string>
     <string name="chooseListShelf">Regal</string>
     <string name="chooseListAddItem">Hinzufügen</string>
+
+    <!-- Strings for hasToGo Fragment -->
+    <string name="HasToGoTitle">Muss bald weg</string>
+    <string name="hasToGoFridge">Kühlschrank</string>
+    <string name="hasToGoShelf">Regal</string>
+    <string name="hasToGoFreezer">Tiefkühlschrank</string>
 
     <!-- Strings for creating or editing an item -->
     <string name="createEditName">Name des Lebensmittels (bspw. Banane)</string>
@@ -39,6 +50,10 @@
     <string name="itemDetailsItemEaten">Aufgegessen</string>
     <string name="itemDetailsThrownAway">Weggeworfen</string>
     <string name="itemDetailsEdit">Bearbeiten</string>
+
+    <!-- Strings for statistics fragment -->
+    <string name="statisticsTitle">Statistiken</string>
+    <string name="statisticsInProgress">Statistik-Fragment. Muss noch aufgebaut werden.</string>
 
     <!-- Strings for content descriptions -->
     <string name="contentDescriptionAddItem">Item hinzufügen</string>

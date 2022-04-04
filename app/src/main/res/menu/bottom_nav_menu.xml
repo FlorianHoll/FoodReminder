@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/hasToGoFragment"
+        android:icon="@drawable/ic_has_to_go"
+        android:title="@string/BottomNavHasToGo" />
+
+    <item
+        android:id="@+id/chooseListFragment"
+        android:icon="@drawable/ic_home"
+        android:title="@string/BottomNavHome" />
+
+    <item
+        android:id="@+id/statisticsFragment"
+        android:icon="@drawable/ic_statistics"
+        android:title="@string/BottomNavStatistics" />
+
+</menu>
