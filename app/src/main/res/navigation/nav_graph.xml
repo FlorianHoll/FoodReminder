@@ -85,5 +85,11 @@
 
     </fragment>
 
+    <fragment
+        android:id="@+id/statisticsFragment"
+        android:name="com.example.foodreminderapp.fragments.StatisticsFragment"
+        android:label="@string/statisticsTitle"
+        tools:layout="@layout/fragment_statistics" />
+
 
 </navigation>

@@ -46,6 +46,10 @@
     <string name="itemDetailsThrownAway">Weggeworfen</string>
     <string name="itemDetailsEdit">Bearbeiten</string>
 
+    <!-- Strings for statistics fragment -->
+    <string name="statisticsTitle">Statistiken</string>
+    <string name="statisticsInProgress">Statistik-Fragment. Muss noch aufgebaut werden.</string>
+
     <!-- Strings for content descriptions -->
     <string name="contentDescriptionAddItem">Item hinzufügen</string>
     <string name="contentDescriptionEdit">Item bearbeiten</string>

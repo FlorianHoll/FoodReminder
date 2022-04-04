@@ -2,23 +2,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/navigation_home"
-        android:icon="@drawable/ic_home"
-        android:title="@string/BottomNavHome" />
-
-    <item
-        android:id="@+id/navigation_has_to_go"
+        android:id="@+id/hasToGoFragment"
         android:icon="@drawable/ic_has_to_go"
         android:title="@string/BottomNavHasToGo" />
 
     <item
-        android:id="@+id/navigation_statistics"
-        android:icon="@drawable/ic_statistics"
-        android:title="@string/BottomNavStatistics" />
+        android:id="@+id/chooseListFragment"
+        android:icon="@drawable/ic_home"
+        android:title="@string/BottomNavHome" />
 
     <item
-        android:id="@+id/navigation_shopping_list"
-        android:icon="@drawable/ic_shopping_list"
-        android:title="@string/BottomNavShoppingList" />
+        android:id="@+id/statisticsFragment"
+        android:icon="@drawable/ic_statistics"
+        android:title="@string/BottomNavStatistics" />
 
 </menu>
