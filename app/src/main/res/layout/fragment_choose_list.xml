@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragments.CreateEditItemFragment"
+    android:layout_margin="15dp">
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_all"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/btn_fridge"
+        app:layout_constraintBottom_toTopOf="@id/btn_shelf"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="5dp"
+        app:cornerRadius="20dp"
+        android:gravity="center_horizontal"
+        android:paddingTop="30dp"
+        app:strokeColor="@color/primary_variant_dark"
+        app:strokeWidth="2dp"
+        style="?attr/materialButtonOutlinedStyle"
+        />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_fridge"
+        style="?attr/materialButtonOutlinedStyle"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="10dp"
+        android:gravity="center_horizontal"
+        android:paddingTop="30dp"
+        app:cornerRadius="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@id/btn_all"
+        app:layout_constraintBottom_toTopOf="@id/btn_freezer"
+        app:strokeColor="@color/primary_variant_dark"
+        app:strokeWidth="2dp" />
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_shelf"
+        style="?attr/materialButtonOutlinedStyle"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="10dp"
+        android:gravity="center_horizontal"
+        android:paddingTop="30dp"
+        android:layout_marginEnd="5dp"
+        app:cornerRadius="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_all"
+        app:layout_constraintEnd_toStartOf="@id/btn_freezer"
+        app:layout_constraintBottom_toTopOf="@id/btn_add_item"
+        app:strokeColor="@color/primary_variant_dark"
+        app:strokeWidth="2dp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_freezer"
+        style="?attr/materialButtonOutlinedStyle"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="10dp"
+        app:cornerRadius="20dp"
+        app:layout_constraintTop_toBottomOf="@id/btn_fridge"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/btn_shelf"
+        app:layout_constraintBottom_toTopOf="@id/btn_add_item"
+        app:strokeColor="@color/primary_variant_dark"
+        app:strokeWidth="2dp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_add_item"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:backgroundTint="@color/primary"
+        android:text="@string/chooseListAddItem"
+        android:textAlignment="center"
+        app:cornerRadius="100dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_freezer" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="@id/btn_all"
+        app:layout_constraintStart_toStartOf="@id/btn_all"
+        app:layout_constraintBottom_toBottomOf="@id/btn_all"
+        android:text="@string/chooseListAllItems"
+        android:textColor="@color/primary_variant_dark" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="@id/btn_fridge"
+        app:layout_constraintStart_toStartOf="@id/btn_fridge"
+        app:layout_constraintBottom_toBottomOf="@id/btn_fridge"
+        android:text="@string/chooseListFridge"
+        android:textColor="@color/primary_variant_dark" />
+
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="@id/btn_shelf"
+        app:layout_constraintStart_toStartOf="@id/btn_shelf"
+        app:layout_constraintBottom_toBottomOf="@id/btn_shelf"
+        android:text="@string/chooseListShelf"
+        android:textColor="@color/primary_variant_dark" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="@id/btn_freezer"
+        app:layout_constraintStart_toStartOf="@id/btn_freezer"
+        app:layout_constraintBottom_toBottomOf="@id/btn_freezer"
+        android:text="@string/chooseListFreezer"
+        android:textColor="@color/primary_variant_dark" />
+
+    <ImageView
+        android:id="@+id/iv_all"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        app:srcCompat="@drawable/ic_all_items"
+        app:layout_constraintTop_toTopOf="@id/btn_all"
+        app:layout_constraintBottom_toBottomOf="@id/btn_all"
+        app:layout_constraintStart_toStartOf="@id/btn_all"
+        app:layout_constraintEnd_toEndOf="@id/btn_all"
+        android:translationZ="90dp"
+        app:tint="@color/primary_variant_dark" />
+
+    <ImageView
+        android:id="@+id/iv_fridge"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        app:srcCompat="@drawable/ic_fridge_"
+        app:layout_constraintTop_toTopOf="@id/btn_fridge"
+        app:layout_constraintBottom_toBottomOf="@id/btn_fridge"
+        app:layout_constraintStart_toStartOf="@id/btn_fridge"
+        app:layout_constraintEnd_toEndOf="@id/btn_fridge"
+        android:translationZ="90dp"
+        app:tint="@color/primary_variant_dark" />
+
+    <ImageView
+        android:id="@+id/iv_shelf"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        app:srcCompat="@drawable/ic_shelf"
+        app:layout_constraintTop_toTopOf="@id/btn_shelf"
+        app:layout_constraintBottom_toBottomOf="@id/btn_shelf"
+        app:layout_constraintStart_toStartOf="@id/btn_shelf"
+        app:layout_constraintEnd_toEndOf="@id/btn_shelf"
+        android:translationZ="90dp"
+        app:tint="@color/primary_variant_dark" />
+
+    <ImageView
+        android:id="@+id/iv_freezer"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:srcCompat="@drawable/ic_freezer"
+        app:layout_constraintTop_toTopOf="@id/btn_freezer"
+        app:layout_constraintBottom_toBottomOf="@id/btn_freezer"
+        app:layout_constraintStart_toStartOf="@id/btn_freezer"
+        app:layout_constraintEnd_toEndOf="@id/btn_freezer"
+        android:translationZ="90dp"
+        app:tint="@color/primary_variant_dark" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

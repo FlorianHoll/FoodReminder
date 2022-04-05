@@ -18,6 +18,11 @@ class FoodItemListViewModel(private val itemDao: FoodItemDao) : ViewModel() {
     // Cache all items form the database using LiveData.
     val allItems: LiveData<List<FoodItem>> = itemDao.getItems().asLiveData()
 
+    private val date = calculateBestBefore(3)
+    val allHasToGoItems: LiveData<List<FoodItem>> = (
+            itemDao.getItemsForNextDays(date).asLiveData()
+            )
+
     // Update an existing item in the database.
     fun updateItem(
         itemId: Int,
@@ -28,7 +33,7 @@ class FoodItemListViewModel(private val itemDao: FoodItemDao) : ViewModel() {
         val updatedItem = FoodItem(
             id = itemId,
             itemName = itemName,
-            daysLeft = itemDaysLeft,
+            bestBefore = calculateBestBefore(itemDaysLeft),
             location = itemLocation
         )
         updateItem(updatedItem)
@@ -37,7 +42,9 @@ class FoodItemListViewModel(private val itemDao: FoodItemDao) : ViewModel() {
     // Insert a new item into the database.
     fun addNewItem(itemName: String, itemDaysLeft: Int, itemLocation: String) {
         val newItem = FoodItem(
-            itemName = itemName, daysLeft = itemDaysLeft, location = itemLocation
+            itemName = itemName,
+            bestBefore = calculateBestBefore(itemDaysLeft),
+            location = itemLocation
         )
         insertItem(newItem)
     }
@@ -56,6 +63,14 @@ class FoodItemListViewModel(private val itemDao: FoodItemDao) : ViewModel() {
 
     fun retrieveItem(id: Int): LiveData<FoodItem> {
         return itemDao.getItem(id).asLiveData()
+    }
+
+    fun retrieveItemsByLocation(location: String): LiveData<List<FoodItem>> {
+        return itemDao.getItemsByLocation(location).asLiveData()
+    }
+
+    fun hasToGoByLocation(location: String): LiveData<List<FoodItem>> {
+        return itemDao.hasToGoByLocation(date, location).asLiveData()
     }
 
     /**

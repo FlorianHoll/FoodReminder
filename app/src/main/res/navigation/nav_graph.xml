@@ -3,26 +3,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph.xml"
-    app:startDestination="@id/foodItemListFragment">
+    app:startDestination="@id/chooseListFragment">
 
     <fragment
         android:id="@+id/foodItemListFragment"
-        android:name="com.example.foodreminderapp.FoodItemListFragment"
-        android:label="@string/app_name"
+        android:name="com.example.foodreminderapp.fragments.FoodItemListFragment"
+        android:label="@string/mainScreenTitle"
         tools:layout="@layout/fragment_item_list">
+        <argument
+            android:name="items_location"
+            app:argType="string"
+            android:defaultValue="all" />
         <action
             android:id="@+id/action_listFragment_to_createEditFragment"
             app:destination="@id/createEditFragment" />
+        <action
+            android:id="@+id/action_listFragment_to_itemDetailsFragment"
+            app:destination="@id/itemDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/createEditFragment"
-        android:name="com.example.foodreminderapp.CreateEditItemFragment"
+        android:name="com.example.foodreminderapp.fragments.CreateEditItemFragment"
         android:label="@string/createEditTitle"
         tools:layout="@layout/fragment_create_edit_item">
-<!--        <argument-->
-<!--            android:name="name"-->
-<!--            app:argType="string"-->
-<!--            android:defaultValue="" />-->
         <argument
             android:name="item_id"
             app:argType="integer"
@@ -31,5 +34,56 @@
             android:id="@+id/action_createEditFragment_to_listFragment"
             app:destination="@id/foodItemListFragment" />
     </fragment>
+    <dialog
+        android:id="@+id/itemDetailFragment"
+        android:name="com.example.foodreminderapp.fragments.ItemDetailFragment"
+        android:label="@string/itemDetailsTitle"
+        tools:layout="@layout/fragment_item_details" >
+
+        <argument
+            android:name="item_id"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_detailFragment_to_listFragment"
+            app:destination="@id/foodItemListFragment" />
+        <action
+            android:id="@+id/action_detailFragment_to_editCreateFragment"
+            app:destination="@id/createEditFragment" />
+
+    </dialog>
+    <fragment
+        android:id="@+id/hasToGoFragment"
+        android:name="com.example.foodreminderapp.fragments.HasToGoFragment"
+        android:label="Muss bald weg"
+        tools:layout="@layout/fragment_has_to_go" >
+
+        <action
+            android:id="@+id/action_HasToGo_to_ItemDetailFragment"
+            app:destination="@id/itemDetailFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/chooseListFragment"
+        android:name="com.example.foodreminderapp.fragments.ChooseListFragment"
+        android:label="Lebensmittel auswählen"
+        tools:layout="@layout/fragment_choose_list" >
+
+        <action
+            android:id="@+id/action_chooseList_to_foodItemList"
+            app:destination="@id/foodItemListFragment" />
+
+        <action
+            android:id="@+id/action_chooseList_to_createEditFragment"
+            app:destination="@id/createEditFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/statisticsFragment"
+        android:name="com.example.foodreminderapp.fragments.StatisticsFragment"
+        android:label="@string/statisticsTitle"
+        tools:layout="@layout/fragment_statistics" />
+
 
 </navigation>

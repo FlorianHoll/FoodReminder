@@ -1,12 +1,19 @@
-package com.example.foodreminderapp
+package com.example.foodreminderapp.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
+import com.example.foodreminderapp.FoodItemListAdapter
+import com.example.foodreminderapp.FoodItemListApplication
+import com.example.foodreminderapp.FoodItemListViewModel
+import com.example.foodreminderapp.FoodItemViewModelFactory
 import com.example.foodreminderapp.databinding.FragmentItemListBinding
 
 /**
@@ -19,6 +26,8 @@ class FoodItemListFragment : Fragment() {
         )
     }
 
+    private val navigationArgs: FoodItemListFragmentArgs by navArgs()
+
     private var _binding: FragmentItemListBinding? = null
     private val binding get() = _binding!!
 
@@ -28,11 +37,19 @@ class FoodItemListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentItemListBinding.inflate(inflater, container, false)
+
+        // Set action bar title
+        val location = navigationArgs.itemsLocation
+        if (location != "all") {
+            (activity as AppCompatActivity).supportActionBar?.title = location
+        }
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val location = navigationArgs.itemsLocation
 
         val adapter = FoodItemListAdapter(requireActivity(), viewModel)
 
@@ -40,10 +57,15 @@ class FoodItemListFragment : Fragment() {
 
         // Attach an observer on the allItems list to
         // update the UI automatically when the data changes.
-        viewModel.allItems.observe(this.viewLifecycleOwner) { items ->
-            items.let {
-                adapter.submitList(it)
+        if (location == "all") {
+            viewModel.allItems.observe(this.viewLifecycleOwner) { items ->
+                items.let { adapter.submitList(it) }
             }
+        } else {
+            viewModel.retrieveItemsByLocation(location)
+                .observe(this.viewLifecycleOwner) { items ->
+                    items.let { adapter.submitList(it) }
+                }
         }
 
         binding.buttonAddItem.setOnClickListener {
@@ -51,5 +73,6 @@ class FoodItemListFragment : Fragment() {
                 .actionListFragmentToCreateEditFragment()
             this.findNavController().navigate(action)
         }
+
     }
 }

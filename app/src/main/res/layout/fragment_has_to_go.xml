@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="5dp"
-    tools:context=".fragments.FoodItemListFragment">
+    tools:context=".fragments.HasToGoFragment">
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/items_fridge_card"
@@ -20,35 +20,29 @@
         app:strokeColor="@color/secondary"
         app:strokeWidth="2dp">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_margin="5dp">
+            android:orientation="vertical">
+
+<!--            <TextView-->
+<!--                android:id="@+id/tv_fridge_items"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_margin="10dp"-->
+<!--                android:text="@string/HasToGoTitle"-->
+<!--                android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"-->
+<!--                android:textColor="@color/secondary" />-->
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvFoodItems"
+                android:id="@+id/rv_items_have_to_go"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="match_parent"
                 android:scrollbars="vertical"
                 app:layoutManager="LinearLayoutManager"
-                tools:listitem="@layout/list_item"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/buttonAddItem"
-                app:layout_constraintStart_toStartOf="parent" />
+                tools:listitem="@layout/has_to_go_list_item" />
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/buttonAddItem"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="15dp"
-                android:contentDescription="@string/contentDescriptionAddItem"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/rvFoodItems"
-                app:srcCompat="@drawable/ic_add_item" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
 
     </com.google.android.material.card.MaterialCardView>
 

@@ -4,19 +4,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".CreateEditItemFragment"
+    tools:context=".fragments.CreateEditItemFragment"
     android:layout_margin="15dp">
 
-
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnSaveFoodItem"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:layout_marginBottom="15dp"
         android:text="@string/createEditSave"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="10dp"
+        app:cornerRadius="100dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="30dp"
+        android:backgroundTint="@color/primary"
+        android:textAlignment="center"
+        />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/ItemNameLayout"
@@ -30,7 +36,6 @@
         android:inputType="textPersonName"
         app:layout_constraintStart_toEndOf="@id/iv_ramen"
         app:layout_constraintTop_toTopOf="parent"
-
         app:endIconMode="clear_text"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox" >
 
@@ -110,8 +115,6 @@
                 android:text="@string/createEditTiefkuehlschrank"/>
 
         </RadioGroup>
-
-
 
     <ImageView
         android:id="@+id/iv_fridge"
