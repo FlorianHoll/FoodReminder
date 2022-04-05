@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -35,6 +37,12 @@ class FoodItemListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentItemListBinding.inflate(inflater, container, false)
+
+        // Set action bar title
+        val location = navigationArgs.itemsLocation
+        if (location != "all") {
+            (activity as AppCompatActivity).supportActionBar?.title = location
+        }
         return binding.root
     }
 
