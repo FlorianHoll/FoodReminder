@@ -39,32 +39,20 @@ class HasToGoFragment : Fragment() {
         val shelfAdapter = HasToGoListAdapter(requireActivity(), viewModel)
         val freezerAdapter = HasToGoListAdapter(requireActivity(), viewModel)
 
-        binding.rvItemsHaveToGoFridge.adapter = fridgeAdapter
-        binding.rvItemsHaveToGoShelf.adapter = shelfAdapter
-        binding.rvItemsHaveToGoFreezer.adapter = freezerAdapter
+        binding.rvItemsHaveToGo.adapter = fridgeAdapter
 
         // Attach an observer on the allItems list to
         // update the UI automatically when the data changes.
-        viewModel.hasToGoByLocation("Kühlschrank")
-            .observe(this.viewLifecycleOwner) { items ->
-                items.let {
-                    fridgeAdapter.submitList(it)
-                }
-            }
-
-        viewModel.hasToGoByLocation("Regal")
-            .observe(this.viewLifecycleOwner) { items ->
-                items.let {
-                    shelfAdapter.submitList(it)
-                }
-            }
-
-        viewModel.hasToGoByLocation("Tiefkühlschrank")
-            .observe(this.viewLifecycleOwner) { items ->
-                items.let {
-                    freezerAdapter.submitList(it)
-                }
-            }
+        viewModel.allHasToGoItems.observe(this.viewLifecycleOwner) { items ->
+            items.let { fridgeAdapter.submitList(it) }
+        }
+//
+//        viewModel.hasToGoByLocation("Kühlschrank")
+//            .observe(this.viewLifecycleOwner) { items ->
+//                items.let {
+//                    fridgeAdapter.submitList(it)
+//                }
+//            }
 
     }
 }
