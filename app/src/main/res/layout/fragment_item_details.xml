@@ -23,6 +23,8 @@
         android:text="@string/itemDetailsEdit"
         />
 
+<!--    TODO: Insert amount as textview-->
+
     <ImageView
         android:id="@+id/iv_edit"
         android:layout_width="30dp"

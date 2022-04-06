@@ -2,6 +2,8 @@ package com.example.foodreminderapp.fragments
 
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.os.Bundle
+import android.text.Editable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,7 +19,6 @@ import com.example.foodreminderapp.FoodItemListViewModel
 import com.example.foodreminderapp.FoodItemViewModelFactory
 import com.example.foodreminderapp.R
 import com.example.foodreminderapp.data.FoodItem
-import com.example.foodreminderapp.data.getDaysLeft
 import com.example.foodreminderapp.databinding.FragmentCreateEditItemBinding
 
 /**
@@ -66,13 +67,32 @@ class CreateEditItemFragment : Fragment() {
             }
             binding.location.check(checkedItemId)
 
+            // TODO: Check if amount is in (1, 2, 5, 10); if yes, check box; if
+            //  no, enter text in field
+
             // Update item when save button is clicked.
             btnSaveFoodItem.setOnClickListener { updateItem() }
         }
     }
 
+    private fun getAmount(): Int {
+
+        val enteredAmount: Editable? = binding.amountElse.text
+        val amount = if (!enteredAmount.isNullOrEmpty()) {
+            enteredAmount.toString().toInt()
+        } else {
+            when (binding.amount.checkedRadioButtonId) {
+                R.id.option_amount_1 -> 1
+                R.id.option_amount_2 -> 2
+                R.id.option_amount_5 -> 5
+                else -> 10
+            }
+        }
+        return amount
+    }
+
     // Return which option was checked in the radio group.
-    private fun getCheckedLocation(): String {
+    private fun getLocation(): String {
         val foodItemLocation = when (
             binding.location.checkedRadioButtonId
         ) {
@@ -89,7 +109,8 @@ class CreateEditItemFragment : Fragment() {
             viewModel.addNewItem(
                 itemName = binding.itemName.text.toString(),
                 itemDaysLeft = binding.daysLeft.text.toString().toInt(),
-                itemLocation = getCheckedLocation()
+                itemLocation = getLocation(),
+                itemAmount = getAmount()
             )
             navigateBackToList()
         } else { hintAllFieldsRequired() }
@@ -102,7 +123,8 @@ class CreateEditItemFragment : Fragment() {
                 itemId = this.navigationArgs.itemId,
                 itemName = this.binding.itemName.text.toString(),
                 itemDaysLeft = binding.daysLeft.text.toString().toInt(),
-                itemLocation = getCheckedLocation()
+                itemLocation = getLocation(),
+                itemAmount = getAmount()
             )
             navigateBackToList()
         } else { hintAllFieldsRequired() }
@@ -127,7 +149,7 @@ class CreateEditItemFragment : Fragment() {
 
         val id = navigationArgs.itemId
         // The default id that is passed is -1;
-        // therefore, if an id is passed, it is not a new ite.
+        // therefore, if an id is passed, it is not a new item.
         if (id > 0) {
             viewModel.retrieveItem(id).observe(this.viewLifecycleOwner) { selectedItem ->
                 bind(selectedItem)

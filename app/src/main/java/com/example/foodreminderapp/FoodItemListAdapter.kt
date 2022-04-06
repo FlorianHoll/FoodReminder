@@ -2,6 +2,7 @@ package com.example.foodreminderapp
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -12,7 +13,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.foodreminderapp.data.FoodItem
-import com.example.foodreminderapp.data.getDaysLeft
 import com.example.foodreminderapp.databinding.ListItemBinding
 import com.example.foodreminderapp.fragments.FoodItemListFragmentDirections
 import com.example.foodreminderapp.fragments.ItemDetailFragment
@@ -79,16 +79,20 @@ class FoodItemListAdapter(
     class ItemViewHolder(private var binding: ListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        val itemTitle: TextView = binding.itemTitle
-        val itemDaysLeft: TextView = binding.itemDaysLeft
-        val itemLocation: TextView = binding.itemLocation
+        private val itemTitle: TextView = binding.itemTitle
+        private val itemDaysLeft: TextView = binding.itemDaysLeft
+        private val itemLocation: TextView = binding.itemLocation
         val btnDeleteItem: ImageView = binding.deleteItem
         val btnEditItem: ImageView = binding.editItem
         val btnItemEaten: ImageView = binding.itemEaten
 
         fun bind(item: FoodItem) {
             val daysLeftText = setBestBeforeText(item)
-            itemTitle.text = item.itemName
+            val displayedItemName = when (item.amount) {
+                1 -> item.itemName
+                else -> "${item.itemName} (${item.amount})"
+            }
+            itemTitle.text = displayedItemName
             itemDaysLeft.text = daysLeftText
             itemLocation.text = item.location
         }

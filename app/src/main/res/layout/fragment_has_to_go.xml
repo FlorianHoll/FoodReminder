@@ -38,6 +38,7 @@
                 android:id="@+id/rv_items_have_to_go"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:paddingTop="15dp"
                 android:scrollbars="vertical"
                 app:layoutManager="LinearLayoutManager"
                 tools:listitem="@layout/has_to_go_list_item" />

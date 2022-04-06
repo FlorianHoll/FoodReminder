@@ -13,7 +13,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.foodreminderapp.*
 import com.example.foodreminderapp.data.FoodItem
-import com.example.foodreminderapp.data.getDaysLeft
 import com.example.foodreminderapp.databinding.FragmentItemDetailsBinding
 
 /**
@@ -51,6 +50,8 @@ class ItemDetailFragment : DialogFragment() {
             tvDaysLeftDate.setText(item.bestBefore, TextView.BufferType.SPANNABLE)
             tvDaysLeftInDays.setText(daysLeftText, TextView.BufferType.SPANNABLE)
             tvLocation.setText(item.location, TextView.BufferType.SPANNABLE)
+
+            // TODO: Set up amount as textview and set it up here.
 
             // Set correct image according to storage location.
             val imageLocation = when (item.location) {
