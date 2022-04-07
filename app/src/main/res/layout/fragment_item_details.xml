@@ -8,22 +8,18 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_edit"
+        style="?attr/materialButtonOutlinedStyle"
         android:layout_width="280dp"
         android:layout_height="50dp"
-        app:layout_constraintStart_toStartOf="@id/iv_location"
-        app:layout_constraintTop_toBottomOf="@id/tv_location"
         android:layout_marginTop="30dp"
-        app:cornerRadius="100dp"
+        android:text="@string/itemDetailsEdit"
         android:textAlignment="center"
         android:textColor="@color/primary_variant_dark"
+        app:cornerRadius="100dp"
+        app:layout_constraintStart_toStartOf="@id/iv_location"
+        app:layout_constraintTop_toBottomOf="@+id/tv_amount"
         app:strokeColor="@color/primary_variant_dark"
-        app:strokeWidth="2dp"
-        android:layout_marginEnd="30dp"
-        style="?attr/materialButtonOutlinedStyle"
-        android:text="@string/itemDetailsEdit"
-        />
-
-<!--    TODO: Insert amount as textview-->
+        app:strokeWidth="2dp" />
 
     <ImageView
         android:id="@+id/iv_edit"
@@ -80,7 +76,7 @@
         app:cornerRadius="100dp"
         android:layout_marginEnd="30dp"
         android:backgroundTint="@color/primary"
-        android:text="@string/itemDetailsItemEaten"
+        android:text="@string/itemDetailsEaten"
         android:textAlignment="center"
         />
 
@@ -154,6 +150,30 @@
         app:layout_constraintTop_toBottomOf="@id/tv_days_left_in_days"
         app:tint="@color/primary_variant_dark"
         />
+
+    <TextView
+        android:id="@+id/tv_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:text="@string/createEditAmount"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_amount"
+        app:layout_constraintStart_toEndOf="@id/iv_amount"
+        app:layout_constraintTop_toTopOf="@id/iv_amount" />
+
+
+    <ImageView
+        android:id="@+id/iv_amount"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="30dp"
+        app:srcCompat="@drawable/ic_amount"
+        app:layout_constraintStart_toStartOf="@id/iv_location"
+        app:layout_constraintTop_toBottomOf="@id/tv_location"
+        app:tint="@color/primary_variant_dark"
+        />
+
 
     <ImageView
         android:id="@+id/iv_calendar"

@@ -75,8 +75,12 @@ class HasToGoListAdapter(
         fun bind(item: FoodItem) {
             val daysLeftText = setBestBeforeText(item)
             binding.apply {
-                itemTitle.text = item.itemName
                 itemDaysLeft.text = daysLeftText
+                val displayedItemName = when (item.amount) {
+                    1 -> item.itemName
+                    else -> "${item.itemName} (${item.amount})"
+                }
+                itemTitle.text = displayedItemName
             }
 
         }

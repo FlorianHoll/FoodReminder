@@ -217,7 +217,16 @@
         app:tint="@color/primary_variant_dark"
         />
 
-
+    <ImageView
+        android:id="@+id/iv_amount"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:srcCompat="@drawable/ic_amount"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_amount"
+        app:layout_constraintBottom_toBottomOf="@id/tv_amount"
+        app:tint="@color/primary_variant_dark"
+        />
 
     <ImageView
         android:id="@+id/iv_calendar"

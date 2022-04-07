@@ -50,8 +50,14 @@ class ItemDetailFragment : DialogFragment() {
             tvDaysLeftDate.setText(item.bestBefore, TextView.BufferType.SPANNABLE)
             tvDaysLeftInDays.setText(daysLeftText, TextView.BufferType.SPANNABLE)
             tvLocation.setText(item.location, TextView.BufferType.SPANNABLE)
-
-            // TODO: Set up amount as textview and set it up here.
+            tvAmount.setText("Menge: ${item.amount}", TextView.BufferType.SPANNABLE)
+            if (item.amount > 1) {
+                btnEaten.text = getString(R.string.itemDetailsOneEaten)
+                btnThrownAway.text = getString(R.string.itemDetailsOneThrownAway)
+            } else {
+                btnEaten.text = getString(R.string.itemDetailsEaten)
+                btnThrownAway.text = getString(R.string.itemDetailsThrownAway)
+            }
 
             // Set correct image according to storage location.
             val imageLocation = when (item.location) {
@@ -70,40 +76,56 @@ class ItemDetailFragment : DialogFragment() {
 
             // Delete item if eaten.
             btnEaten.setOnClickListener {
+                when (item.amount) {
+                    1 -> deleteAndNavigateBack(item)
+                    else -> decreaseAmountAndUpdate(item)
+                }
+            }
+
+            btnEaten.setOnLongClickListener {
                 deleteAndNavigateBack(item)
             }
 
             // Delete item if thrown away.
             btnThrownAway.setOnClickListener {
+                when (item.amount) {
+                    1 -> deleteAndNavigateBack(item)
+                    else -> decreaseAmountAndUpdate(item)
+                }
+            }
+
+            btnThrownAway.setOnLongClickListener {
                 deleteAndNavigateBack(item)
             }
         }
+    }
+
+    private fun decreaseAmountAndUpdate(item: FoodItem) {
+        val newItem = item.copy(amount = item.amount - 1)
+        updateItem(newItem)
+    }
+
+    private fun updateItem(item: FoodItem) {
+        viewModel.updateItem(
+            itemId = item.id,
+            itemName = item.itemName,
+            itemDaysLeft = item.getDaysLeft().toInt(),
+            itemLocation = item.location,
+            itemAmount = item.amount
+        )
     }
 
     private fun deleteItem(item: FoodItem) {
         viewModel.deleteItem(item)
     }
 
-    // TODO: Add logic to decrease amount by 1.
-//    // Update an existing item in the database and navigates back to the list.
-//    private fun updateItem() {
-//        if (isEntryValid()) {
-//            viewModel.updateItem(
-//                itemId = this.navigationArgs.itemId,
-//                itemName = this.binding.itemName.text.toString(),
-//                itemDaysLeft = binding.daysLeft.text.toString().toInt(),
-//                itemLocation = getCheckedLocation()
-//            )
-//            navigateBackToList()
-//        } else { hintAllFieldsRequired() }
-//    }
-
     // Navigate back to the list fragment.
-    private fun deleteAndNavigateBack(item: FoodItem) {
+    private fun deleteAndNavigateBack(item: FoodItem): Boolean {
         deleteItem(item)
         val action = ItemDetailFragmentDirections
             .actionDetailFragmentToListFragment()
         findNavController().navigate(action)
+        return true
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

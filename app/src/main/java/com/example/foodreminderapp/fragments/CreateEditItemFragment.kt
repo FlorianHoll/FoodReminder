@@ -60,15 +60,26 @@ class CreateEditItemFragment : Fragment() {
         binding.apply {
             itemName.setText(item.itemName, TextView.BufferType.SPANNABLE)
             daysLeft.setText(item.getDaysLeft(), TextView.BufferType.SPANNABLE)
-            val checkedItemId = when (item.location) {
+            val checkedLocationId = when (item.location) {
                 "Regal" -> R.id.option_regal
                 "Kühlschrank" -> R.id.option_kuehlschrank
                 else -> R.id.option_tiefkuehlschrank
             }
-            binding.location.check(checkedItemId)
+            location.check(checkedLocationId)
 
-            // TODO: Check if amount is in (1, 2, 5, 10); if yes, check box; if
-            //  no, enter text in field
+            // Check if amount is in list of buttons; if not, enter text in field.
+            if (item.amount in arrayOf(1, 2, 5, 10)) {
+                val checkedAmountId = when(item.amount) {
+                    1 -> R.id.option_amount_1
+                    2 -> R.id.option_amount_2
+                    5 -> R.id.option_amount_5
+                    else -> R.id.option_amount_10
+                }
+                amount.check(checkedAmountId)
+            } else {
+                amount.clearCheck()
+                amountElse.setText(item.amount.toString(), TextView.BufferType.SPANNABLE)
+            }
 
             // Update item when save button is clicked.
             btnSaveFoodItem.setOnClickListener { updateItem() }

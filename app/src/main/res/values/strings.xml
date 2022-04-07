@@ -54,8 +54,10 @@
     <string name="itemDetailsDaysLeftDate">Haltbar bis %1$s</string>
     <string name="itemDetailsDaysLeftInDays">(noch %1$s Tage)</string>
     <string name="itemDetailsLocation">Kühlschrank</string>
-    <string name="itemDetailsItemEaten">Aufgegessen</string>
+    <string name="itemDetailsEaten">Aufgegessen</string>
     <string name="itemDetailsThrownAway">Weggeworfen</string>
+    <string name="itemDetailsOneEaten">Eins aufgegessen</string>
+    <string name="itemDetailsOneThrownAway">Eins weggeworfen</string>
     <string name="itemDetailsEdit">Bearbeiten</string>
 
     <!-- Strings for statistics fragment -->
