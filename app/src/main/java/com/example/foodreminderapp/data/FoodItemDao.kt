@@ -9,7 +9,7 @@ import androidx.room.Update
 import kotlinx.coroutines.flow.Flow
 
 /**
- * Database access object to access the Inventory database
+ * Database access object to access the database
  */
 @Dao
 interface FoodItemDao {

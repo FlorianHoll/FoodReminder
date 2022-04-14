@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.foodreminderapp.data.FoodItem
-import com.example.foodreminderapp.data.getDaysLeft
 import com.example.foodreminderapp.databinding.HasToGoListItemBinding
 import com.example.foodreminderapp.fragments.HasToGoFragmentDirections
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -76,8 +75,16 @@ class HasToGoListAdapter(
         fun bind(item: FoodItem) {
             val daysLeftText = setBestBeforeText(item)
             binding.apply {
-                itemTitle.text = item.itemName
                 itemDaysLeft.text = daysLeftText
+                var itemName = item.itemName
+                if (itemName.length > 9) {
+                    itemName = itemName.take(9).plus("...")
+                }
+                val displayedItemName = when (item.amount) {
+                    1 -> itemName
+                    else -> "$itemName (${item.amount})"
+                }
+                itemTitle.text = displayedItemName
             }
 
         }

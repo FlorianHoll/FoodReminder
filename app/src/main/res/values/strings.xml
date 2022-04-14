@@ -34,6 +34,13 @@
     <string name="createEditRegal">Regal</string>
     <string name="createEditTiefkuehlschrank">Tiefkühlschrank</string>
     <string name="createEditKuehlschrank">Kühlschrank</string>
+    <string name="createEditAmount">Menge</string>
+    <string name="createEditAmount1">1</string>
+    <string name="createEditAmount2">2</string>
+    <string name="createEditAmount5">5</string>
+    <string name="createEditAmount10">10</string>
+    <string name="createEditAmountElse">Andere Menge</string>
+
 
     <!-- Strings for delete action -->
     <string name="itemDeleteTitle">Item löschen</string>
@@ -47,8 +54,10 @@
     <string name="itemDetailsDaysLeftDate">Haltbar bis %1$s</string>
     <string name="itemDetailsDaysLeftInDays">(noch %1$s Tage)</string>
     <string name="itemDetailsLocation">Kühlschrank</string>
-    <string name="itemDetailsItemEaten">Aufgegessen</string>
+    <string name="itemDetailsEaten">Aufgegessen</string>
     <string name="itemDetailsThrownAway">Weggeworfen</string>
+    <string name="itemDetailsOneEaten">Eins aufgegessen</string>
+    <string name="itemDetailsOneThrownAway">Eins weggeworfen</string>
     <string name="itemDetailsEdit">Bearbeiten</string>
 
     <!-- Strings for statistics fragment -->

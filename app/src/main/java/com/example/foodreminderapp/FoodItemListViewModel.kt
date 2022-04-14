@@ -29,22 +29,32 @@ class FoodItemListViewModel(private val itemDao: FoodItemDao) : ViewModel() {
         itemName: String,
         itemDaysLeft: Int,
         itemLocation: String,
+        itemAmount: Int
     ) {
         val updatedItem = FoodItem(
             id = itemId,
             itemName = itemName,
             bestBefore = calculateBestBefore(itemDaysLeft),
-            location = itemLocation
+            location = itemLocation,
+            durability = itemDaysLeft,
+            amount = itemAmount
         )
         updateItem(updatedItem)
     }
 
     // Insert a new item into the database.
-    fun addNewItem(itemName: String, itemDaysLeft: Int, itemLocation: String) {
+    fun addNewItem(
+        itemName: String,
+        itemDaysLeft: Int,
+        itemLocation: String,
+        itemAmount: Int
+    ) {
         val newItem = FoodItem(
             itemName = itemName,
             bestBefore = calculateBestBefore(itemDaysLeft),
-            location = itemLocation
+            location = itemLocation,
+            durability = itemDaysLeft,
+            amount = itemAmount
         )
         insertItem(newItem)
     }

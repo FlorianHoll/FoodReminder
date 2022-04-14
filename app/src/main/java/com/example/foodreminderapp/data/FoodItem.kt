@@ -1,17 +1,9 @@
 package com.example.foodreminderapp.data
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import kotlin.math.abs
-import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.LocalDate.now
-/**
- * Entity data class represents a single row in the database.
- */
+
 @Entity
 data class FoodItem(
     @PrimaryKey(autoGenerate = true)
@@ -22,26 +14,8 @@ data class FoodItem(
     val bestBefore: String,
     @ColumnInfo(name = "location")
     val location: String,
-//    @ColumnInfo(name = "co2")
-//    val co2: Float
+    @ColumnInfo(name = "durability")
+    val durability: Int,
+    @ColumnInfo(name = "amount")
+    val amount: Int = 1
 )
-
-@RequiresApi(Build.VERSION_CODES.O)
-fun FoodItem.getDaysLeft(): String {
-    val dateFormat = SimpleDateFormat("yyyy-MM-dd")
-    // Get date of today and the best before date
-    val dateNow = dateFormat.parse(now().toString())
-    val dateBestBefore = dateFormat.parse(this.bestBefore)
-
-    // calculate the difference and return it as difference in days
-    val difference: Long = abs(dateNow.time - dateBestBefore.time)
-    val differenceDates = difference / (24 * 60 * 60 * 1000)
-
-    return differenceDates.toString()
-}
-
-///**
-// * Returns the passed in price in currency format.
-// */
-//fun FoodItem.getFormattedPrice(): String =
-//    NumberFormat.getCurrencyInstance().format(itemPrice)
