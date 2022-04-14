@@ -229,6 +229,17 @@
         />
 
     <ImageView
+        android:id="@+id/iv_ramen"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:srcCompat="@drawable/ic_food_name"
+        app:layout_constraintBottom_toBottomOf="@id/ItemNameLayout"
+        app:layout_constraintTop_toTopOf="@id/ItemNameLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:tint="@color/primary_variant_dark"
+        />
+
+    <ImageView
         android:id="@+id/iv_calendar"
         android:layout_width="50dp"
         android:layout_height="50dp"
@@ -239,17 +250,6 @@
         app:layout_constraintTop_toTopOf="@id/item_days_left_layout"
         app:srcCompat="@drawable/ic_datepicker"
         app:tint="@color/primary_variant_dark" />
-
-    <ImageView
-        android:id="@+id/iv_ramen"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        app:srcCompat="@drawable/ic_food_name"
-        app:layout_constraintBottom_toBottomOf="@id/ItemNameLayout"
-        app:layout_constraintTop_toTopOf="@id/ItemNameLayout"
-        app:layout_constraintStart_toStartOf="parent"
-        app:tint="@color/primary_variant_dark"
-        />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

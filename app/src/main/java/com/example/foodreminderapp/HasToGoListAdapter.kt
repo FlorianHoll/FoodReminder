@@ -76,9 +76,13 @@ class HasToGoListAdapter(
             val daysLeftText = setBestBeforeText(item)
             binding.apply {
                 itemDaysLeft.text = daysLeftText
+                var itemName = item.itemName
+                if (itemName.length > 9) {
+                    itemName = itemName.take(9).plus("...")
+                }
                 val displayedItemName = when (item.amount) {
-                    1 -> item.itemName
-                    else -> "${item.itemName} (${item.amount})"
+                    1 -> itemName
+                    else -> "$itemName (${item.amount})"
                 }
                 itemTitle.text = displayedItemName
             }

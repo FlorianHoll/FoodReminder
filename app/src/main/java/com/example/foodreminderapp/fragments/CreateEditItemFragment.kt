@@ -1,9 +1,9 @@
 package com.example.foodreminderapp.fragments
 
+import android.app.DatePickerDialog
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.os.Bundle
 import android.text.Editable
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,12 +14,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.example.foodreminderapp.FoodItemListApplication
-import com.example.foodreminderapp.FoodItemListViewModel
-import com.example.foodreminderapp.FoodItemViewModelFactory
-import com.example.foodreminderapp.R
+import com.example.foodreminderapp.*
 import com.example.foodreminderapp.data.FoodItem
 import com.example.foodreminderapp.databinding.FragmentCreateEditItemBinding
+import java.util.*
 
 /**
  * Fragment to add or update an item in the database.
@@ -34,6 +32,7 @@ class CreateEditItemFragment : Fragment() {
     private val navigationArgs: CreateEditItemFragmentArgs by navArgs()
 
     lateinit var item: FoodItem
+    private var selectedDate: String? = null
 
     private var _binding: FragmentCreateEditItemBinding? = null
     private val binding get() = _binding!!
@@ -59,7 +58,7 @@ class CreateEditItemFragment : Fragment() {
     private fun bind(item: FoodItem) {
         binding.apply {
             itemName.setText(item.itemName, TextView.BufferType.SPANNABLE)
-            daysLeft.setText(item.getDaysLeft(), TextView.BufferType.SPANNABLE)
+            daysLeft.setText(getDaysLeft(item.bestBefore).toString(), TextView.BufferType.SPANNABLE)
             val checkedLocationId = when (item.location) {
                 "Regal" -> R.id.option_regal
                 "Kühlschrank" -> R.id.option_kuehlschrank
@@ -69,7 +68,7 @@ class CreateEditItemFragment : Fragment() {
 
             // Check if amount is in list of buttons; if not, enter text in field.
             if (item.amount in arrayOf(1, 2, 5, 10)) {
-                val checkedAmountId = when(item.amount) {
+                val checkedAmountId = when (item.amount) {
                     1 -> R.id.option_amount_1
                     2 -> R.id.option_amount_2
                     5 -> R.id.option_amount_5
@@ -81,9 +80,40 @@ class CreateEditItemFragment : Fragment() {
                 amountElse.setText(item.amount.toString(), TextView.BufferType.SPANNABLE)
             }
 
+            // Enable choosing date based on calendar
+            ivCalendar.setOnClickListener { chooseDate() }
+
             // Update item when save button is clicked.
             btnSaveFoodItem.setOnClickListener { updateItem() }
+
         }
+    }
+
+    private fun chooseDate() {
+        hideKeyboard()
+        val myCalendar = Calendar.getInstance()
+        val year = myCalendar.get(Calendar.YEAR)
+        val month = myCalendar.get(Calendar.MONTH)
+        val day = myCalendar.get(Calendar.DAY_OF_MONTH)
+        DatePickerDialog(
+            requireContext(),
+            { view, selectedYear, selectedMonth, selectedDayOfMonth ->
+                selectedDate = (
+                        "$selectedYear-${selectedMonth + 1}-$selectedDayOfMonth"
+                        )
+                val daysLeft = getDaysLeft(selectedDate!!)
+                Toast.makeText(
+                    requireActivity(),
+                    "Haltbar bis $selectedDayOfMonth.${selectedMonth + 1}.$selectedYear" +
+                            " (noch $daysLeft Tage).",
+                    Toast.LENGTH_LONG
+                ).show()
+                binding.daysLeft.setText(daysLeft.toString(), TextView.BufferType.SPANNABLE)
+            },
+            year,
+            month,
+            day
+        ).show()
     }
 
     private fun getAmount(): Int {
@@ -124,7 +154,9 @@ class CreateEditItemFragment : Fragment() {
                 itemAmount = getAmount()
             )
             navigateBackToList()
-        } else { hintAllFieldsRequired() }
+        } else {
+            hintAllFieldsRequired()
+        }
     }
 
     // Update an existing item in the database and navigates back to the list.
@@ -138,7 +170,9 @@ class CreateEditItemFragment : Fragment() {
                 itemAmount = getAmount()
             )
             navigateBackToList()
-        } else { hintAllFieldsRequired() }
+        } else {
+            hintAllFieldsRequired()
+        }
     }
 
     // Navigate back to the list fragment.
@@ -162,22 +196,32 @@ class CreateEditItemFragment : Fragment() {
         // The default id that is passed is -1;
         // therefore, if an id is passed, it is not a new item.
         if (id > 0) {
-            viewModel.retrieveItem(id).observe(this.viewLifecycleOwner) { selectedItem ->
-                bind(selectedItem)
-            }
+            viewModel
+                .retrieveItem(id)
+                .observe(this.viewLifecycleOwner) { selectedItem ->
+                    bind(selectedItem)
+                }
         } else {
-            binding.btnSaveFoodItem.setOnClickListener {
-                addNewItem()
+            binding.apply {
+                ivCalendar.setOnClickListener { chooseDate() }
+                btnSaveFoodItem.setOnClickListener { addNewItem() }
             }
         }
+    }
+
+    private fun hideKeyboard() {
+        val inputMethodManager = requireActivity()
+            .getSystemService(INPUT_METHOD_SERVICE) as
+                InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(
+            requireActivity().currentFocus?.windowToken, 0
+        )
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         // Hide keyboard.
-        val inputMethodManager = requireActivity().getSystemService(INPUT_METHOD_SERVICE) as
-                InputMethodManager
-        inputMethodManager.hideSoftInputFromWindow(requireActivity().currentFocus?.windowToken, 0)
+        hideKeyboard()
         _binding = null
     }
 }

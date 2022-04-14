@@ -12,6 +12,7 @@
         android:layout_width="280dp"
         android:layout_height="50dp"
         android:layout_marginTop="30dp"
+        android:layout_marginEnd="20dp"
         android:text="@string/itemDetailsEdit"
         android:textAlignment="center"
         android:textColor="@color/primary_variant_dark"
@@ -43,7 +44,7 @@
         app:layout_constraintTop_toBottomOf="@id/btn_edit"
         android:layout_marginTop="10dp"
         app:cornerRadius="100dp"
-        android:layout_marginEnd="30dp"
+        android:layout_marginEnd="20dp"
         android:textColor="@color/primary_variant_dark"
         app:strokeColor="@color/primary_variant_dark"
         app:strokeWidth="2dp"
@@ -74,7 +75,7 @@
         app:layout_constraintTop_toBottomOf="@id/btn_thrown_away"
         android:layout_marginTop="10dp"
         app:cornerRadius="100dp"
-        android:layout_marginEnd="30dp"
+        android:layout_marginEnd="20dp"
         android:backgroundTint="@color/primary"
         android:text="@string/itemDetailsEaten"
         android:textAlignment="center"
@@ -94,12 +95,14 @@
 
     <TextView
         android:id="@+id/tv_item_name"
-        android:layout_width="250dp"
+        android:layout_width="220dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/iv_ramen"
         android:textAppearance="?attr/textAppearanceHeadline4"
         tools:text="Hirtenkäse" />
 
@@ -188,12 +191,13 @@
 
     <ImageView
         android:id="@+id/iv_ramen"
-        android:layout_width="50dp"
-        android:layout_height="30dp"
-        app:srcCompat="@drawable/ic_food_name"
-        app:layout_constraintTop_toTopOf="@id/tv_item_name"
-        app:layout_constraintStart_toEndOf="@id/tv_item_name"
+        android:layout_width="60dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="20dp"
         app:layout_constraintBottom_toBottomOf="@id/tv_item_name"
+        app:layout_constraintStart_toEndOf="@id/tv_item_name"
+        app:layout_constraintTop_toTopOf="@id/tv_item_name"
+        app:srcCompat="@drawable/ic_food_name"
         app:tint="@color/primary_variant_dark"
         android:paddingEnd="20dp"
         tools:ignore="RtlSymmetry" />

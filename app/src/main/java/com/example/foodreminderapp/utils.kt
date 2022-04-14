@@ -13,8 +13,22 @@ fun calculateBestBefore(days: Int): String {
     return dates.format(targetDate!!)
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
+fun getDaysLeft(bestBefore: String): Int {
+    val dateFormat = SimpleDateFormat("yyyy-MM-dd")
+    // Get date of today and the best before date
+    val dateNow = dateFormat.parse(LocalDate.now().toString())
+    val dateBestBefore = dateFormat.parse(bestBefore)
+
+    // calculate the difference and return it as difference in days
+    val difference: Long = dateBestBefore.time - dateNow.time
+    val differenceDates = difference / (24 * 60 * 60 * 1000)
+
+    return differenceDates.toInt()
+}
+
 fun setBestBeforeText(item: FoodItem): String {
-    val daysLeft = item.getDaysLeft().toInt()
+    val daysLeft = getDaysLeft(item.bestBefore)
     val daysLeftText: String = when {
         daysLeft >= 365*2 -> { "${daysLeft / 365} Jahre" }
         (daysLeft < 365*2) and (daysLeft >= 365) -> { "1 Jahr" }

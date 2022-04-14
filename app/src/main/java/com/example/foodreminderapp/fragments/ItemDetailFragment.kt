@@ -109,7 +109,7 @@ class ItemDetailFragment : DialogFragment() {
         viewModel.updateItem(
             itemId = item.id,
             itemName = item.itemName,
-            itemDaysLeft = item.getDaysLeft().toInt(),
+            itemDaysLeft = getDaysLeft(item.bestBefore),
             itemLocation = item.location,
             itemAmount = item.amount
         )
@@ -131,11 +131,10 @@ class ItemDetailFragment : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val id = navigationArgs.itemId
+        val id: Int = navigationArgs.itemId
         viewModel.retrieveItem(id).observe(this.viewLifecycleOwner) { selectedItem ->
             bind(selectedItem)
         }
-
     }
 
     override fun onDestroyView() {
@@ -143,7 +142,10 @@ class ItemDetailFragment : DialogFragment() {
         // Hide keyboard.
         val inputMethodManager = requireActivity().getSystemService(INPUT_METHOD_SERVICE) as
                 InputMethodManager
-        inputMethodManager.hideSoftInputFromWindow(requireActivity().currentFocus?.windowToken, 0)
+        inputMethodManager.hideSoftInputFromWindow(
+            requireActivity().currentFocus?.windowToken,
+            0
+        )
         _binding = null
     }
 }
