@@ -12,7 +12,9 @@ import androidx.navigation.fragment.navArgs
 import com.example.foodreminderapp.*
 import com.example.foodreminderapp.databinding.FragmentItemListBinding
 import com.example.foodreminderapp.current_items.FoodItemListAdapter
-import com.example.foodreminderapp.current_items.FoodItemListApplication
+import com.example.foodreminderapp.FoodReminderApplication
+import com.example.foodreminderapp.current_items.FoodItemListViewModel
+import com.example.foodreminderapp.current_items.FoodItemViewModelFactory
 
 /**
  * Main fragment displaying details for all items in the database.
@@ -20,7 +22,7 @@ import com.example.foodreminderapp.current_items.FoodItemListApplication
 class FoodItemListFragment : Fragment() {
     private val viewModel: FoodItemListViewModel by activityViewModels {
         FoodItemViewModelFactory(
-            (activity?.application as FoodItemListApplication).database.foodItemDao()
+            (activity?.application as FoodReminderApplication).database.foodItemDao()
         )
     }
 

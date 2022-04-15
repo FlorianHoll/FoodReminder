@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface DatabaseItemDao {
 
+    // TODO: Sort by frequency used.
     @Query("SELECT * from itemsdatabase ORDER BY name ASC")
     fun getItems(): Flow<List<DatabaseItem>>
 

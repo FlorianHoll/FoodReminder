@@ -6,9 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import com.example.foodreminderapp.*
+import com.example.foodreminderapp.current_items.FoodItemListViewModel
+import com.example.foodreminderapp.current_items.FoodItemViewModelFactory
 import com.example.foodreminderapp.databinding.FragmentHasToGoBinding
-import com.example.foodreminderapp.current_items.FoodItemListApplication
+import com.example.foodreminderapp.FoodReminderApplication
 import com.example.foodreminderapp.current_items.HasToGoListAdapter
 
 /**
@@ -17,7 +18,7 @@ import com.example.foodreminderapp.current_items.HasToGoListAdapter
 class HasToGoFragment : Fragment() {
     private val viewModel: FoodItemListViewModel by activityViewModels {
         FoodItemViewModelFactory(
-            (activity?.application as FoodItemListApplication).database.foodItemDao()
+            (activity?.application as FoodReminderApplication).database.foodItemDao()
         )
     }
 

@@ -17,7 +17,9 @@ import androidx.navigation.fragment.navArgs
 import com.example.foodreminderapp.*
 import com.example.foodreminderapp.current_items.data.FoodItem
 import com.example.foodreminderapp.databinding.FragmentCreateEditItemBinding
-import com.example.foodreminderapp.current_items.FoodItemListApplication
+import com.example.foodreminderapp.FoodReminderApplication
+import com.example.foodreminderapp.current_items.FoodItemListViewModel
+import com.example.foodreminderapp.current_items.FoodItemViewModelFactory
 import java.util.*
 
 /**
@@ -27,7 +29,7 @@ class CreateEditItemFragment : Fragment() {
 
     private val viewModel: FoodItemListViewModel by activityViewModels {
         FoodItemViewModelFactory(
-            (activity?.application as FoodItemListApplication).database.foodItemDao()
+            (activity?.application as FoodReminderApplication).database.foodItemDao()
         )
     }
     private val navigationArgs: CreateEditItemFragmentArgs by navArgs()

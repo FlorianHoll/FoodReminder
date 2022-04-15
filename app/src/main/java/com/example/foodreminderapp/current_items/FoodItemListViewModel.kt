@@ -1,10 +1,11 @@
-package com.example.foodreminderapp
+package com.example.foodreminderapp.current_items
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import com.example.foodreminderapp.calculateBestBefore
 import com.example.foodreminderapp.current_items.data.FoodItem
 import com.example.foodreminderapp.current_items.data.FoodItemDao
 import kotlinx.coroutines.launch
