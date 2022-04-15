@@ -1,5 +1,6 @@
 package com.example.foodreminderapp.fragments
 
+import android.annotation.SuppressLint
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -61,8 +62,8 @@ class ItemDetailFragment : DialogFragment() {
 
             // Set correct image according to storage location.
             val imageLocation = when (item.location) {
-                "Kühlschrank" -> R.drawable.ic_fridge
-                "Tiefkühlschrank" -> R.drawable.ic_freezer
+                getString(R.string.chooseListFridge) -> R.drawable.ic_fridge
+                getString(R.string.chooseListFreezer) -> R.drawable.ic_freezer
                 else -> R.drawable.ic_shelf_small
             }
             ivLocation.setImageResource(imageLocation)
@@ -121,10 +122,12 @@ class ItemDetailFragment : DialogFragment() {
 
     // Navigate back to the list fragment.
     private fun deleteAndNavigateBack(item: FoodItem): Boolean {
+        findNavController().navigateUp()
+        // findNavController().popBackStack()
         deleteItem(item)
-        val action = ItemDetailFragmentDirections
-            .actionDetailFragmentToListFragment()
-        findNavController().navigate(action)
+//        val action = ItemDetailFragmentDirections
+//            .actionDetailFragmentToListFragment()
+//        findNavController().navigate(action)
         return true
     }
 

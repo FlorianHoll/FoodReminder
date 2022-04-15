@@ -10,10 +10,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.example.foodreminderapp.FoodItemListAdapter
-import com.example.foodreminderapp.FoodItemListApplication
-import com.example.foodreminderapp.FoodItemListViewModel
-import com.example.foodreminderapp.FoodItemViewModelFactory
+import com.example.foodreminderapp.*
 import com.example.foodreminderapp.databinding.FragmentItemListBinding
 
 /**
@@ -40,9 +37,7 @@ class FoodItemListFragment : Fragment() {
 
         // Set action bar title
         val location = navigationArgs.itemsLocation
-        if (location != "all") {
-            (activity as AppCompatActivity).supportActionBar?.title = location
-        }
+        (activity as AppCompatActivity).supportActionBar?.title = location
         return binding.root
     }
 
@@ -50,14 +45,13 @@ class FoodItemListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val location = navigationArgs.itemsLocation
-
         val adapter = FoodItemListAdapter(requireActivity(), viewModel)
 
         binding.rvFoodItems.adapter = adapter
 
         // Attach an observer on the allItems list to
         // update the UI automatically when the data changes.
-        if (location == "all") {
+        if (location == getString(R.string.chooseListAllItems)) {
             viewModel.allItems.observe(this.viewLifecycleOwner) { items ->
                 items.let { adapter.submitList(it) }
             }

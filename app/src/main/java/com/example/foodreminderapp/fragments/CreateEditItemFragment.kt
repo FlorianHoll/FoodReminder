@@ -60,9 +60,9 @@ class CreateEditItemFragment : Fragment() {
             itemName.setText(item.itemName, TextView.BufferType.SPANNABLE)
             daysLeft.setText(getDaysLeft(item.bestBefore).toString(), TextView.BufferType.SPANNABLE)
             val checkedLocationId = when (item.location) {
-                "Regal" -> R.id.option_regal
-                "Kühlschrank" -> R.id.option_kuehlschrank
-                else -> R.id.option_tiefkuehlschrank
+                getString(R.string.chooseListShelf) -> R.id.option_regal
+                getString(R.string.chooseListFridge) -> R.id.option_kuehlschrank
+                else -> R.id.option_tiefkuehltruhe
             }
             location.check(checkedLocationId)
 
@@ -137,9 +137,9 @@ class CreateEditItemFragment : Fragment() {
         val foodItemLocation = when (
             binding.location.checkedRadioButtonId
         ) {
-            R.id.option_kuehlschrank -> "Kühlschrank"
-            R.id.option_regal -> "Regal"
-            else -> "Tiefkühlschrank"
+            R.id.option_kuehlschrank -> getString(R.string.chooseListFridge)
+            R.id.option_regal -> getString(R.string.chooseListShelf)
+            else -> getString(R.string.chooseListFreezer)
         }
         return foodItemLocation
     }
@@ -153,7 +153,7 @@ class CreateEditItemFragment : Fragment() {
                 itemLocation = getLocation(),
                 itemAmount = getAmount()
             )
-            navigateBackToList()
+            findNavController().navigateUp()
         } else {
             hintAllFieldsRequired()
         }
@@ -169,17 +169,10 @@ class CreateEditItemFragment : Fragment() {
                 itemLocation = getLocation(),
                 itemAmount = getAmount()
             )
-            navigateBackToList()
+            findNavController().navigateUp()
         } else {
             hintAllFieldsRequired()
         }
-    }
-
-    // Navigate back to the list fragment.
-    private fun navigateBackToList() {
-        val action = CreateEditItemFragmentDirections
-            .actionCreateEditFragmentToListFragment()
-        findNavController().navigate(action)
     }
 
     // Display toast that all input fields are required.
