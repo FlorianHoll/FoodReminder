@@ -15,8 +15,9 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.foodreminderapp.*
-import com.example.foodreminderapp.data.FoodItem
+import com.example.foodreminderapp.current_items.data.FoodItem
 import com.example.foodreminderapp.databinding.FragmentCreateEditItemBinding
+import com.example.foodreminderapp.current_items.FoodItemListApplication
 import java.util.*
 
 /**

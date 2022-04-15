@@ -5,8 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.foodreminderapp.data.FoodItem
-import com.example.foodreminderapp.data.FoodItemDao
+import com.example.foodreminderapp.current_items.data.FoodItem
+import com.example.foodreminderapp.current_items.data.FoodItemDao
 import kotlinx.coroutines.launch
 
 /**

@@ -1,7 +1,7 @@
-package com.example.foodreminderapp
+package com.example.foodreminderapp.current_items
 
 import android.app.Application
-import com.example.foodreminderapp.data.FoodItemRoomDatabase
+import com.example.foodreminderapp.current_items.data.FoodItemRoomDatabase
 
 
 class FoodItemListApplication : Application() {

@@ -6,12 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.foodreminderapp.*
 import com.example.foodreminderapp.databinding.FragmentItemListBinding
+import com.example.foodreminderapp.current_items.FoodItemListAdapter
+import com.example.foodreminderapp.current_items.FoodItemListApplication
 
 /**
  * Main fragment displaying details for all items in the database.

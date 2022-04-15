@@ -1,4 +1,4 @@
-package com.example.foodreminderapp.data
+package com.example.foodreminderapp.current_items.data
 
 import androidx.room.Dao
 import androidx.room.Delete

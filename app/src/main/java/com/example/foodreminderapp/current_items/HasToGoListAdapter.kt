@@ -1,4 +1,4 @@
-package com.example.foodreminderapp
+package com.example.foodreminderapp.current_items
 
 import android.content.Context
 import android.util.Log
@@ -9,9 +9,12 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.foodreminderapp.data.FoodItem
+import com.example.foodreminderapp.FoodItemListViewModel
+import com.example.foodreminderapp.R
+import com.example.foodreminderapp.current_items.data.FoodItem
 import com.example.foodreminderapp.databinding.HasToGoListItemBinding
 import com.example.foodreminderapp.fragments.HasToGoFragmentDirections
+import com.example.foodreminderapp.setBestBeforeText
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 private const val TAG = "HasToGoListAdapter"

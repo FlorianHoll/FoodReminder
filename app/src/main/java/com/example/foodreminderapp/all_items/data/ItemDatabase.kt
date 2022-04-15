@@ -1,4 +1,4 @@
-package com.example.foodreminderapp.data
+package com.example.foodreminderapp.all_items.data
 
 import android.content.Context
 import androidx.room.Database
@@ -8,22 +8,23 @@ import androidx.room.RoomDatabase
 /**
  * Database class with a singleton INSTANCE object.
  */
-@Database(entities = [FoodItem::class], version = 3, exportSchema = false)
-abstract class FoodItemRoomDatabase : RoomDatabase() {
+@Database(entities = [DatabaseItem::class], version = 1, exportSchema = true)
+abstract class ItemDatabase : RoomDatabase() {
 
-    abstract fun foodItemDao(): FoodItemDao
+    abstract fun itemDatabaseDao(): DatabaseItemDao
 
     companion object {
         @Volatile
-        private var INSTANCE: FoodItemRoomDatabase? = null
+        private var INSTANCE: ItemDatabase? = null
 
-        fun getDatabase(context: Context): FoodItemRoomDatabase {
+        fun getDatabase(context: Context): ItemDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
-                    FoodItemRoomDatabase::class.java,
-                    "food_item_database"
+                    ItemDatabase::class.java,
+                    "item_database"
                 )
+                    .createFromAsset("itemdatabase/all_items.db")
                     .fallbackToDestructiveMigration()
                     .build()
                 INSTANCE = instance

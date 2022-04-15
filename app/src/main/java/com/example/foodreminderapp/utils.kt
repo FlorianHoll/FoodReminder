@@ -2,7 +2,7 @@ package com.example.foodreminderapp
 
 import android.os.Build
 import androidx.annotation.RequiresApi
-import com.example.foodreminderapp.data.FoodItem
+import com.example.foodreminderapp.current_items.data.FoodItem
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 

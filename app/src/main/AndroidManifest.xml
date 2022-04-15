@@ -3,7 +3,7 @@
     package="com.example.foodreminderapp">
 
     <application
-        android:name="com.example.foodreminderapp.FoodItemListApplication"
+        android:name="com.example.foodreminderapp.current_items.FoodItemListApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
