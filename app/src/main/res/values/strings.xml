@@ -15,7 +15,7 @@
     <!-- Strings for choosing list -->
     <string name="chooseListAllItems">Alle Lebensmittel</string>
     <string name="chooseListFridge">Kühlschrank</string>
-    <string name="chooseListFreezer">Tiefkühl-\ntruhe</string>
+    <string name="chooseListFreezer">Tiefkühltruhe</string>
     <string name="chooseListShelf">Regal</string>
     <string name="chooseListAddItem">Hinzufügen</string>
 
@@ -23,7 +23,7 @@
     <string name="HasToGoTitle">Muss bald weg</string>
     <string name="hasToGoFridge">Kühlschrank</string>
     <string name="hasToGoShelf">Regal</string>
-    <string name="hasToGoFreezer">Tiefkühlschrank</string>
+    <string name="hasToGoFreezer">Tiefkühltruhe</string>
 
     <!-- Strings for creating or editing an item -->
     <string name="createEditName">Name des Lebensmittels (bspw. Banane)</string>
@@ -32,7 +32,7 @@
     <string name="createEditSave">Speichern</string>
     <string name="createEditTitle">Lebensmittel erstellen oder ändern</string>
     <string name="createEditRegal">Regal</string>
-    <string name="createEditTiefkuehlschrank">Tiefkühlschrank</string>
+    <string name="createEditTiefkuehlschrank">Tiefkühltruhe</string>
     <string name="createEditKuehlschrank">Kühlschrank</string>
     <string name="createEditAmount">Menge</string>
     <string name="createEditAmount1">1</string>

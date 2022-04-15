@@ -8,12 +8,10 @@
     <fragment
         android:id="@+id/foodItemListFragment"
         android:name="com.example.foodreminderapp.fragments.FoodItemListFragment"
-        android:label="@string/mainScreenTitle"
         tools:layout="@layout/fragment_item_list">
         <argument
             android:name="items_location"
-            app:argType="string"
-            android:defaultValue="all" />
+            app:argType="string" />
         <action
             android:id="@+id/action_listFragment_to_createEditFragment"
             app:destination="@id/createEditFragment" />
@@ -32,7 +30,9 @@
             android:defaultValue="-1" />
         <action
             android:id="@+id/action_createEditFragment_to_listFragment"
-            app:destination="@id/foodItemListFragment" />
+            app:destination="@id/foodItemListFragment"
+            app:popUpTo="@+id/foodItemListFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <dialog
         android:id="@+id/itemDetailFragment"

@@ -1,6 +1,7 @@
 package com.example.foodreminderapp.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.foodreminderapp.FoodItemListApplication
 import com.example.foodreminderapp.FoodItemListViewModel
 import com.example.foodreminderapp.FoodItemViewModelFactory
+import com.example.foodreminderapp.R
 import com.example.foodreminderapp.databinding.FragmentChooseListBinding
 
 /**
@@ -53,10 +55,10 @@ class ChooseListFragment : Fragment() {
 
         binding.apply {
             // Navigate to chosen list.
-            btnAll.setOnClickListener { navigateToList("all") }
-            btnFridge.setOnClickListener { navigateToList("Kühlschrank") }
-            btnShelf.setOnClickListener { navigateToList("Regal") }
-            btnFreezer.setOnClickListener { navigateToList("Tiefkühlschrank") }
+            btnAll.setOnClickListener { navigateToList(getString(R.string.chooseListAllItems)) }
+            btnFridge.setOnClickListener { navigateToList(getString(R.string.chooseListFridge)) }
+            btnShelf.setOnClickListener { navigateToList(getString(R.string.chooseListShelf)) }
+            btnFreezer.setOnClickListener { navigateToList(getString(R.string.chooseListFreezer)) }
 
             // Navigate to new item if the button is clicked.
             btnAddItem.setOnClickListener { navigateToAddItem() }

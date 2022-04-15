@@ -109,7 +109,7 @@
                 android:text="@string/createEditKuehlschrank"/>
 
             <RadioButton
-                android:id="@+id/option_tiefkuehlschrank"
+                android:id="@+id/option_tiefkuehltruhe"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/createEditTiefkuehlschrank"/>
