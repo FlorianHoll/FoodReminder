@@ -8,6 +8,8 @@ import androidx.lifecycle.viewModelScope
 import com.example.foodreminderapp.all_items.data.DatabaseItem
 import com.example.foodreminderapp.all_items.data.DatabaseItemDao
 import kotlinx.coroutines.launch
+import java.time.LocalDate
+import java.util.*
 
 /**
  * View Model to keep a reference to the Inventory repository and an up-to-date list of all items.
@@ -29,7 +31,8 @@ class DatabaseItemListViewModel(private val itemDao: DatabaseItemDao) : ViewMode
             itemName = itemName,
             location = itemLocation,
             durability = itemDaysLeft,
-            defaultAmount = itemAmount
+            defaultAmount = itemAmount,
+            lastAdded = LocalDate.now().toString()
         )
         insertItem(newItem)
     }

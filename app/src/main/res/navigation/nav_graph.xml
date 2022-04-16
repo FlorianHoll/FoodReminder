@@ -87,7 +87,7 @@
         android:id="@+id/chooseNewFragment"
         android:name="com.example.foodreminderapp.fragments.ChooseNewFragment"
         android:label="Neue Items hinzufügen"
-        tools:layout="@layout/fragment_new_item_choose" >
+        tools:layout="@layout/fragment_choose_new" >
 
         <action
             android:id="@+id/action_chooseNew_to_createEditFragment"

@@ -62,7 +62,7 @@
 
     <!-- Strings for choose new item fragment -->
     <string name="chooseNewItem">Neues Item erstellen</string>
-    <string name="chooseNewQueryHint">Nach Lebensmitteln suchen</string>
+    <string name="chooseNewQueryHint">vorhandene durchsuchen</string>
     <string name="chooseNewAddSelected">Ausgewählte übernehmen</string>
     <string name="chooseNewOr">oder</string>
 

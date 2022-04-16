@@ -11,8 +11,9 @@ import com.example.foodreminderapp.all_items.DatabaseItemListAdapter
 import com.example.foodreminderapp.all_items.DatabaseItemListViewModel
 import com.example.foodreminderapp.all_items.DatabaseItemViewModelFactory
 import com.example.foodreminderapp.FoodReminderApplication
-import com.example.foodreminderapp.databinding.FragmentNewItemChooseBinding
-
+import com.example.foodreminderapp.current_items.FoodItemListViewModel
+import com.example.foodreminderapp.current_items.FoodItemViewModelFactory
+import com.example.foodreminderapp.databinding.FragmentChooseNewBinding
 
 class ChooseNewFragment : Fragment() {
 
@@ -22,7 +23,13 @@ class ChooseNewFragment : Fragment() {
         )
     }
 
-    private var _binding: FragmentNewItemChooseBinding? = null
+    private val currentItemsViewModel: FoodItemListViewModel by activityViewModels {
+        FoodItemViewModelFactory(
+            (activity?.application as FoodReminderApplication).database.foodItemDao()
+        )
+    }
+
+    private var _binding: FragmentChooseNewBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -30,7 +37,7 @@ class ChooseNewFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentNewItemChooseBinding.inflate(inflater, container, false)
+        _binding = FragmentChooseNewBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -43,7 +50,7 @@ class ChooseNewFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = DatabaseItemListAdapter(requireActivity(), viewModel)
+        val adapter = DatabaseItemListAdapter(requireActivity(), currentItemsViewModel)
         binding.rvDatabaseItems.adapter = adapter
 
         viewModel.allItems.observe(this.viewLifecycleOwner) { items ->
