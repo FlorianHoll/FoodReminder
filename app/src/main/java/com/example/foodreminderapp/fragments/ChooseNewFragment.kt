@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -15,8 +16,9 @@ import com.example.foodreminderapp.R
 import com.example.foodreminderapp.current_items.FoodItemListViewModel
 import com.example.foodreminderapp.current_items.FoodItemViewModelFactory
 import com.example.foodreminderapp.databinding.FragmentChooseNewBinding
+import com.example.foodreminderapp.onQueryTextChanged
 
-class ChooseNewFragment : Fragment() {
+class ChooseNewFragment : Fragment(), SearchView.OnQueryTextListener {
 
     private val viewModel: DatabaseItemListViewModel by activityViewModels {
         DatabaseItemViewModelFactory(
@@ -32,6 +34,7 @@ class ChooseNewFragment : Fragment() {
 
     private var _binding: FragmentChooseNewBinding? = null
     private val binding get() = _binding!!
+    private lateinit var adapter: DatabaseItemListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,29 +47,37 @@ class ChooseNewFragment : Fragment() {
 
     private fun navigateToAddItem() {
         val action = ChooseListFragmentDirections
-            .actionChooseListToCreateEditFragment()
+            .actionChooseListToCreateEditFragment(fromChoose = true)
         findNavController().navigate(action)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = DatabaseItemListAdapter(
+        adapter = DatabaseItemListAdapter(
             requireActivity(),
             viewModel,
             currentItemsViewModel
         )
+
         binding.rvDatabaseItems.adapter = adapter
 
         viewModel.allItems.observe(this.viewLifecycleOwner) { items ->
             items.let { adapter.submitList(it) }
         }
 
-        binding.btnNewItem.setOnClickListener {
-            val action = ChooseNewFragmentDirections
-                .actionChooseNewToCreateEditFragment(fromChoose = true)
-            this.findNavController().navigate(action)
+        val searchView = binding.searchItems as SearchView
+
+        searchView.onQueryTextChanged {
+
         }
+
+        searchView.setOnQueryTextListener(this)
+
+        binding.btnNewItem.setOnClickListener {
+            navigateToAddItem()
+        }
+
         binding.btnAddSelected.setOnClickListener {
             adapter.addSelectedItems()
             val action = ChooseNewFragmentDirections
@@ -80,4 +91,27 @@ class ChooseNewFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
+    override fun onQueryTextSubmit(query: String?): Boolean {
+        if (query != null) {
+            searchDatabase(query)
+        }
+        return true
+    }
+
+    override fun onQueryTextChange(query: String?): Boolean {
+        if (query != null) {
+            searchDatabase(query)
+        }
+        return true
+    }
+
+    private fun searchDatabase(query: String) {
+        val searchQuery = "%$query%"
+        viewModel.searchDatabase(searchQuery).observe(this
+        ) { list ->
+            list.let { adapter.submitList(it) }
+        }
+    }
+
 }

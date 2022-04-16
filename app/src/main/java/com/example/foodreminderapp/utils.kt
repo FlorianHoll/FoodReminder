@@ -1,6 +1,7 @@
 package com.example.foodreminderapp
 
 import android.os.Build
+import androidx.appcompat.widget.SearchView
 import androidx.annotation.RequiresApi
 import com.example.foodreminderapp.current_items.data.FoodItem
 import java.text.SimpleDateFormat
@@ -50,4 +51,18 @@ fun setShortDaysLeftText(daysLeft: Int): String {
         else -> { "$daysLeft T"}
     }
     return daysLeftText
+}
+
+inline fun SearchView.onQueryTextChanged(crossinline listener: (String) -> Unit) {
+    this.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
+        override fun onQueryTextSubmit(query: String?): Boolean {
+            return true
+        }
+
+        override fun onQueryTextChange(newText: String?): Boolean {
+            listener(newText.orEmpty())
+            return true
+        }
+
+    })
 }

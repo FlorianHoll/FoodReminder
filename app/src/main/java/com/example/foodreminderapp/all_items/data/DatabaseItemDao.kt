@@ -21,6 +21,9 @@ interface DatabaseItemDao {
     @Query("SELECT * from itemsdatabase WHERE id = :id")
     fun getItem(id: Int): Flow<DatabaseItem>
 
+    @Query("SELECT * FROM itemsdatabase WHERE name LIKE '%' || :searchQuery || '%' ")
+    fun searchDatabase(searchQuery: String): Flow<List<DatabaseItem>>
+
     @Query("SELECT * from itemsdatabase WHERE location = :location ORDER BY name ASC")
     fun getItemsByLocation(location: String): Flow<List<DatabaseItem>>
 

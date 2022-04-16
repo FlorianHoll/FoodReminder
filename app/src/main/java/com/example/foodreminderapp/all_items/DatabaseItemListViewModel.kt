@@ -40,6 +40,10 @@ class DatabaseItemListViewModel(private val itemDao: DatabaseItemDao) : ViewMode
         insertItem(newItem)
     }
 
+    fun searchDatabase(query: String): LiveData<List<DatabaseItem>> {
+        return itemDao.searchDatabase(query).asLiveData()
+    }
+
     fun updateItemAmount(item: DatabaseItem, newAmount: Int) {
         viewModelScope.launch {
             itemDao.update(item.copy(defaultAmount = newAmount))

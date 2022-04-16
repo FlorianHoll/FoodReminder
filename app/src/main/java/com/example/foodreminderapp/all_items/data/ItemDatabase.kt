@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 
 /**
- * Database class with a singleton INSTANCE object.
+ * Prepopulated database from file.
  */
 @Database(entities = [DatabaseItem::class], version = 1, exportSchema = true)
 abstract class ItemDatabase : RoomDatabase() {
