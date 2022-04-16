@@ -2,12 +2,12 @@ package com.example.foodreminderapp.all_items
 
 import android.content.Context
 import android.graphics.Color
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.*
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
-import androidx.core.content.res.TypedArrayUtils.getString
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -19,9 +19,12 @@ import com.example.foodreminderapp.setShortDaysLeftText
 import kotlin.math.max
 
 
+private const val TAG = "DatabaseItemListAdapter"
+
 class DatabaseItemListAdapter(
     private val context: Context,
-    private val CurrentItemsViewModel: FoodItemListViewModel
+    private val databaseItemViewModel: DatabaseItemListViewModel,
+    private val currentItemsViewModel: FoodItemListViewModel
 ) : ListAdapter<DatabaseItem, DatabaseItemListAdapter.ItemViewHolder>(DiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
@@ -30,6 +33,43 @@ class DatabaseItemListAdapter(
                 LayoutInflater.from(parent.context), parent, false
             )
         )
+    }
+
+    fun addSelectedItems() {
+        val allItems = this.currentList
+        var checkedCount = 0
+        for (item in allItems) {
+            if (item.checked) {
+                checkedCount++
+                Log.d(
+                    TAG,
+                    "Adding item to current items with following information: " +
+                            "name: ${item.itemName}; " +
+                            "location: ${item.currentLocation}; " +
+                            "\"amount: ${item.currentAmount}."
+                )
+
+                // Update item in database
+                databaseItemViewModel.updateItemLocation(item, item.currentLocation)
+                val weightedAmount = (
+                        (item.timesEaten * item.defaultAmount + item.currentAmount) /
+                                (item.timesEaten + 1)
+                        )
+                databaseItemViewModel.updateItemAmount(item, weightedAmount)
+                databaseItemViewModel.addOneAmount(item)
+
+                // Add item to current database
+                currentItemsViewModel.addNewItem(
+                    itemName = item.itemName,
+                    itemDaysLeft = item.durability,
+                    itemLocation = item.currentLocation,
+                    itemAmount = item.currentAmount
+                )
+            }
+        }
+        Toast.makeText(
+            context, "$checkedCount Lebensmittel hinzugefügt.", Toast.LENGTH_LONG
+        ).show()
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
@@ -41,6 +81,8 @@ class DatabaseItemListAdapter(
             val oldAmount = holder.itemAmount.text.toString().toInt()
             val newAmount = max(oldAmount + amount, 1)
             holder.itemAmount.text = newAmount.toString()
+            // Save amount to object as well
+            current.currentAmount = newAmount
         }
 
         fun changeLocation() {
@@ -53,6 +95,8 @@ class DatabaseItemListAdapter(
                 else -> fridge
             }
             holder.itemLocation.text = newLocation
+            // Save to object as well
+            current.currentLocation = newLocation
         }
 
         fun toggleChecked() {
@@ -62,10 +106,6 @@ class DatabaseItemListAdapter(
                 else -> Color.WHITE
             }
             holder.itemCard.setCardBackgroundColor(cardColor)
-
-            Toast.makeText(
-                context, "${current.itemName}, ${current.checked}", Toast.LENGTH_SHORT
-            ).show()
         }
 
         holder.itemCard.setOnClickListener {
@@ -89,9 +129,6 @@ class DatabaseItemListAdapter(
         }
 
         holder.itemLocation.setOnClickListener { changeLocation() }
-
-        // TODO: Find out how to store and access the "checked" attribute of each object.
-        // https://stackoverflow.com/questions/55638675/kotlin-data-class-with-additional-properties-not-in-constructor
 
         // this.currentList
         // https://developer.android.com/reference/androidx/recyclerview/widget/ListAdapter

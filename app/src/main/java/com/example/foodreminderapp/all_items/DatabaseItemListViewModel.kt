@@ -5,8 +5,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import androidx.room.Database
 import com.example.foodreminderapp.all_items.data.DatabaseItem
 import com.example.foodreminderapp.all_items.data.DatabaseItemDao
+import com.example.foodreminderapp.calculateBestBefore
+import com.example.foodreminderapp.current_items.data.FoodItem
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.util.*
@@ -37,9 +40,21 @@ class DatabaseItemListViewModel(private val itemDao: DatabaseItemDao) : ViewMode
         insertItem(newItem)
     }
 
-    private fun updateItem(item: DatabaseItem) {
+    fun updateItemAmount(item: DatabaseItem, newAmount: Int) {
         viewModelScope.launch {
-            itemDao.update(item.copy(defaultAmount = item.defaultAmount + 1))
+            itemDao.update(item.copy(defaultAmount = newAmount))
+        }
+    }
+
+    fun updateItemLocation(item: DatabaseItem, newLocation: String) {
+        viewModelScope.launch {
+            itemDao.update(item.copy(location = newLocation))
+        }
+    }
+
+    fun addOneAmount(item: DatabaseItem) {
+        viewModelScope.launch {
+            itemDao.update(item.copy(timesEaten = item.timesEaten + 1))
         }
     }
 

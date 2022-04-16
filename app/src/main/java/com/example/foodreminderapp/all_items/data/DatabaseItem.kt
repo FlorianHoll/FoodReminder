@@ -23,4 +23,6 @@ data class DatabaseItem(
     val lastAdded: String
 ) {
     @Ignore var checked: Boolean = false
+    @Ignore var currentAmount: Int = defaultAmount
+    @Ignore var currentLocation: String = location
 }

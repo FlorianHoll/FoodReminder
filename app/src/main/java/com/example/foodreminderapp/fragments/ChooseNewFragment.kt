@@ -11,6 +11,7 @@ import com.example.foodreminderapp.all_items.DatabaseItemListAdapter
 import com.example.foodreminderapp.all_items.DatabaseItemListViewModel
 import com.example.foodreminderapp.all_items.DatabaseItemViewModelFactory
 import com.example.foodreminderapp.FoodReminderApplication
+import com.example.foodreminderapp.R
 import com.example.foodreminderapp.current_items.FoodItemListViewModel
 import com.example.foodreminderapp.current_items.FoodItemViewModelFactory
 import com.example.foodreminderapp.databinding.FragmentChooseNewBinding
@@ -50,7 +51,11 @@ class ChooseNewFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = DatabaseItemListAdapter(requireActivity(), currentItemsViewModel)
+        val adapter = DatabaseItemListAdapter(
+            requireActivity(),
+            viewModel,
+            currentItemsViewModel
+        )
         binding.rvDatabaseItems.adapter = adapter
 
         viewModel.allItems.observe(this.viewLifecycleOwner) { items ->
@@ -59,9 +64,16 @@ class ChooseNewFragment : Fragment() {
 
         binding.btnNewItem.setOnClickListener {
             val action = ChooseNewFragmentDirections
-                .actionChooseNewToCreateEditFragment()
+                .actionChooseNewToCreateEditFragment(fromChoose = true)
             this.findNavController().navigate(action)
         }
+        binding.btnAddSelected.setOnClickListener {
+            adapter.addSelectedItems()
+            val action = ChooseNewFragmentDirections
+                .actionChooseNewToFoodItemList(getString(R.string.chooseListAllItems))
+            findNavController().navigate(action)
+        }
+
     }
 
     override fun onDestroyView() {

@@ -4,12 +4,14 @@ import android.app.DatePickerDialog
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.os.Bundle
 import android.text.Editable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -21,6 +23,8 @@ import com.example.foodreminderapp.FoodReminderApplication
 import com.example.foodreminderapp.current_items.FoodItemListViewModel
 import com.example.foodreminderapp.current_items.FoodItemViewModelFactory
 import java.util.*
+
+private const val TAG = "CreateEditFragment"
 
 /**
  * Fragment to add or update an item in the database.
@@ -156,6 +160,10 @@ class CreateEditItemFragment : Fragment() {
                 itemLocation = getLocation(),
                 itemAmount = getAmount()
             )
+            val fromChooseNew = navigationArgs.fromChoose
+            if (fromChooseNew) {
+                findNavController().popBackStack()
+            }
             findNavController().navigateUp()
         } else {
             hintAllFieldsRequired()
