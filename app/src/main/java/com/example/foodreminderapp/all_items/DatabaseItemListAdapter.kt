@@ -39,60 +39,38 @@ class DatabaseItemListAdapter(
         )
     }
 
+    fun checkIfSelectionIsEmpty(): Boolean {
+        return selectedItems.isEmpty()
+    }
+
     fun addSelectedItems() {
-        Log.d(TAG, "$selectedItems")
-        selectedItems.forEach { item ->
+        selectedItems.forEach { (_, item) ->
             Log.d(
                 TAG,
                 "Adding item to current items with following information: " +
-                        "name: ${item.value.itemName}; " +
-                        "location: ${item.value.location}; " +
-                        "\"amount: ${item.value.defaultAmount}."
+                        "name: ${item.itemName}; " +
+                        "location: ${item.location}; " +
+                        "\"amount: ${item.defaultAmount}."
             )
+
+            // Update item in item database.
+            databaseItemViewModel.updateItemLocation(item, item.location)
+
+            // Add item to database of current items.
             currentItemsViewModel.addNewItem(
-                itemName = item.value.itemName,
-                itemDaysLeft = item.value.durability,
-                itemLocation = item.value.location,
-                itemAmount = item.value.defaultAmount
+                itemName = item.itemName,
+                itemDaysLeft = item.durability,
+                itemLocation = item.location,
+                itemAmount = item.defaultAmount
             )
         }
-        Toast.makeText(
-            context, "${selectedItems.size} Lebensmittel hinzugefügt.", Toast.LENGTH_LONG
-        ).show()
-//
-//
-//        val allItems = this.currentList
-//        var checkedCount = 0
-//        for (item in allItems) {
-//            if (item.checked) {
-//                checkedCount++
-//                Log.d(
-//                    TAG,
-//                    "Adding item to current items with following information: " +
-//                            "name: ${item.itemName}; " +
-//                            "location: ${item.currentLocation}; " +
-//                            "\"amount: ${item.currentAmount}."
-//                )
-//
-//                // Update item in database
-//                databaseItemViewModel.updateItemLocation(item, item.currentLocation)
-//                val weightedAmount = (
-//                        (item.timesEaten * item.defaultAmount + item.currentAmount) /
-//                                (item.timesEaten + 1)
-//                        )
-//                databaseItemViewModel.updateItemAmount(item, weightedAmount)
-//                databaseItemViewModel.addOneAmount(item)
-//
-//                // Add item to current database
-//                currentItemsViewModel.addNewItem(
-//                    itemName = item.itemName,
-//                    itemDaysLeft = item.durability,
-//                    itemLocation = item.currentLocation,
-//                    itemAmount = item.currentAmount
-//                )
-//            }
-//        }
 
+        // Give user feedback how many items have been added.
+        Toast.makeText(
+            context,
+            "${selectedItems.size} Lebensmittel hinzugefügt.",
+            Toast.LENGTH_LONG
+        ).show()
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {

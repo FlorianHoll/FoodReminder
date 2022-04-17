@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -58,9 +59,7 @@ class ChooseNewFragment : Fragment(), SearchView.OnQueryTextListener {
             viewModel,
             currentItemsViewModel
         )
-
         binding.rvDatabaseItems.adapter = adapter
-
         viewModel.allItems.observe(this.viewLifecycleOwner) { items ->
             items.let { adapter.submitList(it) }
         }
@@ -68,16 +67,37 @@ class ChooseNewFragment : Fragment(), SearchView.OnQueryTextListener {
         val searchView = binding.searchItems
         searchView.setOnQueryTextListener(this)
 
-        binding.btnNewItem.setOnClickListener { navigateToAddItem() }
-
-        binding.btnAddSelected.setOnClickListener {
-            adapter.addSelectedItems()
-            val action = ChooseNewFragmentDirections
-                .actionChooseNewToFoodItemList(getString(R.string.chooseListAllItems))
-            viewModel.selectedItems.clear()
-            findNavController().navigate(action)
+        // Navigate to completely new item if button is pressed
+        binding.btnNewItem.setOnClickListener {
+            navigateToAddItem()
         }
 
+        // If take over selection button is clicked, check if selection is not empty.
+        binding.btnAddSelected.setOnClickListener {
+            val selectionIsEmpty = adapter.checkIfSelectionIsEmpty()
+            if (selectionIsEmpty) {
+                showHintSelectionIsEmpty()
+            } else {
+                addItemsAndNavigate()
+            }
+        }
+
+    }
+
+    private fun showHintSelectionIsEmpty() {
+        Toast.makeText(
+            context,
+            "Es ist kein Item ausgewählt.",
+            Toast.LENGTH_SHORT
+        ).show()
+    }
+
+    private fun addItemsAndNavigate() {
+        adapter.addSelectedItems()
+        val action = ChooseNewFragmentDirections
+            .actionChooseNewToFoodItemList(getString(R.string.chooseListAllItems))
+        viewModel.selectedItems.clear()
+        findNavController().navigate(action)
     }
 
     override fun onDestroyView() {

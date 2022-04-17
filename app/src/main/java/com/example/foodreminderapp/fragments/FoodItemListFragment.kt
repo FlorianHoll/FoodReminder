@@ -71,7 +71,7 @@ class FoodItemListFragment : Fragment() {
 
         binding.buttonAddItem.setOnClickListener {
             val action = FoodItemListFragmentDirections
-                .actionListFragmentToCreateEditFragment()
+                .actionFoodItemListFragmentToChooseNewFragment()
             this.findNavController().navigate(action)
         }
     }

@@ -1,5 +1,7 @@
 package com.example.foodreminderapp.all_items
 
+import android.provider.ContactsContract
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -7,7 +9,8 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.foodreminderapp.all_items.data.DatabaseItem
 import com.example.foodreminderapp.all_items.data.DatabaseItemDao
-import kotlinx.coroutines.launch
+import com.example.foodreminderapp.current_items.data.FoodItem
+import kotlinx.coroutines.*
 import java.time.LocalDate
 
 private const val TAG = "DatbaseItemListViewModel"
@@ -24,36 +27,81 @@ class DatabaseItemListViewModel(private val itemDao: DatabaseItemDao) : ViewMode
     val allItems: LiveData<List<DatabaseItem>> = itemDao.getItems().asLiveData()
 
     // Insert a new item into the database.
-    fun addNewItem(
+    private fun addNewItem(
         itemName: String,
-        itemDaysLeft: Int,
+        itemDurability: Int,
         itemLocation: String,
         itemAmount: Int
     ) {
         val newItem = DatabaseItem(
             itemName = itemName,
             location = itemLocation,
-            durability = itemDaysLeft,
+            durability = itemDurability,
             defaultAmount = itemAmount,
             lastAdded = LocalDate.now().toString()
         )
         insertItem(newItem)
     }
 
-
-    fun updateItemName(item: DatabaseItem) {
-        viewModelScope.launch {
-            itemDao.update(item.copy(itemName = "Test"))
+    fun searchDatabase(query: String): LiveData<List<DatabaseItem>> {
+        return runBlocking {
+            itemDao.searchDatabase(query).asLiveData()
         }
     }
 
-    fun searchDatabase(query: String): LiveData<List<DatabaseItem>> {
-        return itemDao.searchDatabase(query).asLiveData()
-    }
-
-    fun updateItemAmount(item: DatabaseItem, newAmount: Int) {
+    fun updateItemDatabase(item: FoodItem) {
         viewModelScope.launch {
-            itemDao.update(item.copy(defaultAmount = newAmount))
+            // Check if item exists; if so, update it; else, create it.
+            val itemExists = itemDao.itemNameExists(item.itemName.lowercase())
+            if (itemExists) {
+                Log.d(TAG, "Item ${item.itemName} does exist already, updating item.")
+
+                // Retrieve item from database in order to update it.
+                val databaseItem = itemDao.getItemByName(item.itemName)
+
+                // new default amount is the weighted mean
+                val newDefaultAmount = (
+                        (
+                                databaseItem.timesEaten *
+                                        databaseItem.defaultAmount +
+                                        item.amount) /
+                                (databaseItem.timesEaten + 1)
+                        )
+
+                // default new durability is also the weighted mean
+                val newDefaultDurability = (
+                        (
+                                databaseItem.durability *
+                                        databaseItem.timesEaten +
+                                        item.durability) /
+                                (databaseItem.timesEaten + 1)
+                        )
+
+                // Update item in database
+                itemDao.update(
+                    // copy in order to keep the ID intact.
+                    databaseItem.copy(
+                        timesEaten = databaseItem.timesEaten + 1,
+                        defaultAmount = newDefaultAmount,
+                        location = item.location,  // update default location as well
+                        durability = newDefaultDurability,
+                        lastAdded = LocalDate.now().toString()
+                    )
+                )
+
+            } else {
+                Log.d(TAG, "Item does not exist yet, adding item to database.")
+
+                // create new item, ID is automatically incremented.
+                val newItem = DatabaseItem(
+                    itemName = item.itemName,
+                    location = item.location,
+                    durability = item.durability,
+                    defaultAmount = item.amount,
+                    lastAdded = LocalDate.now().toString()
+                )
+                insertItem(newItem)
+            }
         }
     }
 
@@ -89,7 +137,7 @@ class DatabaseItemListViewModel(private val itemDao: DatabaseItemDao) : ViewMode
 
 class DatabaseItemViewModelFactory(
     private val databaseItemDao: DatabaseItemDao
-    ) : ViewModelProvider.Factory {
+) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(DatabaseItemListViewModel::class.java)) {
             return DatabaseItemListViewModel(databaseItemDao) as T

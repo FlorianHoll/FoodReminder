@@ -21,6 +21,11 @@
         <action
             android:id="@+id/action_listFragment_to_itemDetailsFragment"
             app:destination="@id/itemDetailFragment" />
+
+        <action
+            android:id="@+id/action_foodItemListFragment_to_chooseNewFragment"
+            app:destination="@id/chooseNewFragment" />
+
     </fragment>
 
     <fragment
