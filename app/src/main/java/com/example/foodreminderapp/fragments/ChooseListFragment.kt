@@ -1,16 +1,15 @@
 package com.example.foodreminderapp.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import com.example.foodreminderapp.FoodItemListApplication
-import com.example.foodreminderapp.FoodItemListViewModel
-import com.example.foodreminderapp.FoodItemViewModelFactory
+import com.example.foodreminderapp.FoodReminderApplication
+import com.example.foodreminderapp.current_items.FoodItemListViewModel
+import com.example.foodreminderapp.current_items.FoodItemViewModelFactory
 import com.example.foodreminderapp.R
 import com.example.foodreminderapp.databinding.FragmentChooseListBinding
 
@@ -21,7 +20,7 @@ class ChooseListFragment : Fragment() {
 
     private val viewModel: FoodItemListViewModel by activityViewModels {
         FoodItemViewModelFactory(
-            (activity?.application as FoodItemListApplication).database.foodItemDao()
+            (activity?.application as FoodReminderApplication).database.foodItemDao()
         )
     }
 
@@ -46,7 +45,7 @@ class ChooseListFragment : Fragment() {
 
     private fun navigateToAddItem() {
         val action = ChooseListFragmentDirections
-            .actionChooseListToCreateEditFragment()
+            .actionChooseListToChooseNewFragment()
         findNavController().navigate(action)
     }
 

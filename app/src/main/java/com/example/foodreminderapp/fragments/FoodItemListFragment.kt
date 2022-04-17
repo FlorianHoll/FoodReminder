@@ -1,17 +1,24 @@
 package com.example.foodreminderapp.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.foodreminderapp.*
 import com.example.foodreminderapp.databinding.FragmentItemListBinding
+import com.example.foodreminderapp.current_items.FoodItemListAdapter
+import com.example.foodreminderapp.FoodReminderApplication
+import com.example.foodreminderapp.current_items.FoodItemListViewModel
+import com.example.foodreminderapp.current_items.FoodItemViewModelFactory
+
+private const val TAG = "FoodItemListFragment"
 
 /**
  * Main fragment displaying details for all items in the database.
@@ -19,7 +26,7 @@ import com.example.foodreminderapp.databinding.FragmentItemListBinding
 class FoodItemListFragment : Fragment() {
     private val viewModel: FoodItemListViewModel by activityViewModels {
         FoodItemViewModelFactory(
-            (activity?.application as FoodItemListApplication).database.foodItemDao()
+            (activity?.application as FoodReminderApplication).database.foodItemDao()
         )
     }
 
@@ -64,9 +71,28 @@ class FoodItemListFragment : Fragment() {
 
         binding.buttonAddItem.setOnClickListener {
             val action = FoodItemListFragmentDirections
-                .actionListFragmentToCreateEditFragment()
+                .actionFoodItemListFragmentToChooseNewFragment()
             this.findNavController().navigate(action)
         }
-
     }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        requireActivity()
+            .onBackPressedDispatcher
+            .addCallback(this, object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    Log.d(TAG, "Fragment back pressed invoked")
+                    findNavController().popBackStack()
+
+                    if (isEnabled) {
+                        isEnabled = false
+                        requireActivity().onBackPressed()
+                    }
+                }
+            }
+            )
+    }
+
 }

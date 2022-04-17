@@ -4,6 +4,7 @@ import android.app.DatePickerDialog
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.os.Bundle
 import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,9 +16,16 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.foodreminderapp.*
-import com.example.foodreminderapp.data.FoodItem
+import com.example.foodreminderapp.current_items.data.FoodItem
 import com.example.foodreminderapp.databinding.FragmentCreateEditItemBinding
+import com.example.foodreminderapp.FoodReminderApplication
+import com.example.foodreminderapp.all_items.DatabaseItemListViewModel
+import com.example.foodreminderapp.all_items.DatabaseItemViewModelFactory
+import com.example.foodreminderapp.current_items.FoodItemListViewModel
+import com.example.foodreminderapp.current_items.FoodItemViewModelFactory
 import java.util.*
+
+private const val TAG = "CreateEditFragment"
 
 /**
  * Fragment to add or update an item in the database.
@@ -26,9 +34,20 @@ class CreateEditItemFragment : Fragment() {
 
     private val viewModel: FoodItemListViewModel by activityViewModels {
         FoodItemViewModelFactory(
-            (activity?.application as FoodItemListApplication).database.foodItemDao()
+            (activity?.application as FoodReminderApplication)
+                .database
+                .foodItemDao()
         )
     }
+
+    private val databaseItemViewModel: DatabaseItemListViewModel by activityViewModels {
+        DatabaseItemViewModelFactory(
+            (activity?.application as FoodReminderApplication)
+                .itemDatabase
+                .itemDatabaseDao()
+        )
+    }
+
     private val navigationArgs: CreateEditItemFragmentArgs by navArgs()
 
     lateinit var item: FoodItem
@@ -46,7 +65,7 @@ class CreateEditItemFragment : Fragment() {
         return binding.root
     }
 
-    // Check if entries are valid; if so, returns true.
+    // Check if entries are valid.
     private fun isEntryValid(): Boolean {
         return viewModel.isEntryValid(
             binding.itemName.text.toString(),
@@ -54,11 +73,78 @@ class CreateEditItemFragment : Fragment() {
         )
     }
 
+    private fun isNewItem(): Boolean {
+        // The default id that is passed is -1;
+        // therefore, if the id is -1, it is a new item; else not.
+        return navigationArgs.itemId < 0
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // if the item is new, it will be saved upon press on the save button.
+        if (isNewItem()) {
+            binding.apply {
+                ivCalendar.setOnClickListener { chooseDate() }
+                btnSaveFoodItem.setOnClickListener { addNewItem() }
+                waitForDaysLeftInput()
+            }
+            // if the item is not new, the information is pre-filled
+            // and will be updated upon press on the save button.
+        } else {
+            val id = navigationArgs.itemId
+            viewModel
+                .retrieveItem(id)
+                .observe(this.viewLifecycleOwner) { selectedItem ->
+                    bind(selectedItem)
+                }
+        }
+
+        // Hide keyboard when radio groups are selected (for nicer user experience).
+        binding.apply {
+            amount.setOnCheckedChangeListener { _, _ -> hideKeyboard() }
+            location.setOnCheckedChangeListener { _, _ -> hideKeyboard() }
+        }
+    }
+
+    private fun waitForDaysLeftInput() {
+        binding.daysLeft.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable) {
+                if (binding.daysLeft.text.isNullOrEmpty()) {
+                    binding.tvDaysLeftHint.text = ""
+                }
+            }
+
+            override fun beforeTextChanged(
+                s: CharSequence, start: Int,
+                count: Int, after: Int
+            ) {
+            }
+
+            override fun onTextChanged(
+                s: CharSequence, start: Int,
+                before: Int, count: Int
+            ) {
+                if (binding.daysLeft.text!!.isNotEmpty()) {
+                    displayDateHint()
+                }
+            }
+        })
+    }
+
     // Bind views with passed information.
     private fun bind(item: FoodItem) {
         binding.apply {
             itemName.setText(item.itemName, TextView.BufferType.SPANNABLE)
-            daysLeft.setText(getDaysLeft(item.bestBefore).toString(), TextView.BufferType.SPANNABLE)
+
+            // Set the days left and set hint for user.
+            daysLeft.setText(
+                getDaysLeft(item.bestBefore).toString(),
+                TextView.BufferType.SPANNABLE
+            )
+            displayDateHint()
+
+            // Check the location.
             val checkedLocationId = when (item.location) {
                 getString(R.string.chooseListShelf) -> R.id.option_regal
                 getString(R.string.chooseListFridge) -> R.id.option_kuehlschrank
@@ -89,6 +175,7 @@ class CreateEditItemFragment : Fragment() {
         }
     }
 
+    // Choose the date from the calendar and bind the new information.
     private fun chooseDate() {
         hideKeyboard()
         val myCalendar = Calendar.getInstance()
@@ -109,6 +196,7 @@ class CreateEditItemFragment : Fragment() {
                     Toast.LENGTH_LONG
                 ).show()
                 binding.daysLeft.setText(daysLeft.toString(), TextView.BufferType.SPANNABLE)
+                displayDateHint()
             },
             year,
             month,
@@ -116,8 +204,16 @@ class CreateEditItemFragment : Fragment() {
         ).show()
     }
 
-    private fun getAmount(): Int {
+    private fun displayDateHint() {
+        val daysLeft = binding.daysLeft.text.toString().toInt()
+        val daysLeftText = setDaysLeftText(daysLeft)
+        val bestBeforeDate = calculateBestBeforeInGermanDate(daysLeft)
+        val daysLeftHint = "Noch $daysLeftText haltbar (bis $bestBeforeDate)."
+        binding.tvDaysLeftHint.text = daysLeftHint
+    }
 
+    // Get the selected amount from the radio group.
+    private fun getAmount(): Int {
         val enteredAmount: Editable? = binding.amountElse.text
         val amount = if (!enteredAmount.isNullOrEmpty()) {
             enteredAmount.toString().toInt()
@@ -132,7 +228,7 @@ class CreateEditItemFragment : Fragment() {
         return amount
     }
 
-    // Return which option was checked in the radio group.
+    // Get the selected location from the radio group.
     private fun getLocation(): String {
         val foodItemLocation = when (
             binding.location.checkedRadioButtonId
@@ -147,12 +243,36 @@ class CreateEditItemFragment : Fragment() {
     // Insert the new item into the database and navigate back to the list.
     private fun addNewItem() {
         if (isEntryValid()) {
+
+            // Add to database that contains the current items.
+            val itemName = binding.itemName.text.toString()
+            val daysLeft = binding.daysLeft.text.toString().toInt()
+            val location = getLocation()
+            val amount = getAmount()
             viewModel.addNewItem(
-                itemName = binding.itemName.text.toString(),
-                itemDaysLeft = binding.daysLeft.text.toString().toInt(),
+                itemName = itemName,
+                itemDaysLeft = daysLeft,
                 itemLocation = getLocation(),
                 itemAmount = getAmount()
             )
+
+            // Update the item database (i.e. add or update the current item).
+            databaseItemViewModel.updateItemDatabase(
+                FoodItem(
+                    id = 1000,
+                    itemName = itemName,
+                    bestBefore = calculateBestBefore(daysLeft),
+                    location = location,
+                    amount = amount,
+                    durability = daysLeft
+                )
+            )
+
+            // If the last screen in the backstack is the Choosing screen, pop back stack.
+            val fromChooseNew = navigationArgs.fromChoose
+            if (fromChooseNew) {
+                findNavController().popBackStack()
+            }
             findNavController().navigateUp()
         } else {
             hintAllFieldsRequired()
@@ -180,26 +300,6 @@ class CreateEditItemFragment : Fragment() {
         Toast.makeText(
             context, "Alle Felder müssen ausgefüllt werden.", Toast.LENGTH_LONG
         ).show()
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        val id = navigationArgs.itemId
-        // The default id that is passed is -1;
-        // therefore, if an id is passed, it is not a new item.
-        if (id > 0) {
-            viewModel
-                .retrieveItem(id)
-                .observe(this.viewLifecycleOwner) { selectedItem ->
-                    bind(selectedItem)
-                }
-        } else {
-            binding.apply {
-                ivCalendar.setOnClickListener { chooseDate() }
-                btnSaveFoodItem.setOnClickListener { addNewItem() }
-            }
-        }
     }
 
     private fun hideKeyboard() {

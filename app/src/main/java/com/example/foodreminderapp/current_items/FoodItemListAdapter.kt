@@ -1,21 +1,19 @@
-package com.example.foodreminderapp
+package com.example.foodreminderapp.current_items
 
-import android.annotation.SuppressLint
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.fragment.app.FragmentManager
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.foodreminderapp.data.FoodItem
+import com.example.foodreminderapp.R
+import com.example.foodreminderapp.current_items.data.FoodItem
 import com.example.foodreminderapp.databinding.ListItemBinding
 import com.example.foodreminderapp.fragments.FoodItemListFragmentDirections
-import com.example.foodreminderapp.fragments.ItemDetailFragment
+import com.example.foodreminderapp.setBestBeforeText
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 private const val TAG = "FoodItemListAdapter"

@@ -1,6 +1,5 @@
 package com.example.foodreminderapp.fragments
 
-import android.annotation.SuppressLint
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,8 +12,12 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.foodreminderapp.*
-import com.example.foodreminderapp.data.FoodItem
+import com.example.foodreminderapp.current_items.data.FoodItem
 import com.example.foodreminderapp.databinding.FragmentItemDetailsBinding
+import com.example.foodreminderapp.FoodReminderApplication
+import com.example.foodreminderapp.current_items.FoodItemListViewModel
+import com.example.foodreminderapp.current_items.FoodItemViewModelFactory
+import java.lang.NullPointerException
 
 /**
  * Fragment to see item details.
@@ -23,7 +26,7 @@ class ItemDetailFragment : DialogFragment() {
 
     private val viewModel: FoodItemListViewModel by activityViewModels {
         FoodItemViewModelFactory(
-            (activity?.application as FoodItemListApplication).database.foodItemDao()
+            (activity?.application as FoodReminderApplication).database.foodItemDao()
         )
     }
     private val navigationArgs: ItemDetailFragmentArgs by navArgs()
@@ -122,12 +125,8 @@ class ItemDetailFragment : DialogFragment() {
 
     // Navigate back to the list fragment.
     private fun deleteAndNavigateBack(item: FoodItem): Boolean {
-        findNavController().navigateUp()
-        // findNavController().popBackStack()
         deleteItem(item)
-//        val action = ItemDetailFragmentDirections
-//            .actionDetailFragmentToListFragment()
-//        findNavController().navigate(action)
+        findNavController().navigateUp()
         return true
     }
 
@@ -136,7 +135,9 @@ class ItemDetailFragment : DialogFragment() {
 
         val id: Int = navigationArgs.itemId
         viewModel.retrieveItem(id).observe(this.viewLifecycleOwner) { selectedItem ->
-            bind(selectedItem)
+            try {
+                bind(selectedItem)
+            } catch (e: NullPointerException) {  }
         }
     }
 

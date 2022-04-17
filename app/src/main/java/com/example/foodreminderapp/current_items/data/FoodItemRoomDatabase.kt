@@ -1,4 +1,4 @@
-package com.example.foodreminderapp.data
+package com.example.foodreminderapp.current_items.data
 
 import android.content.Context
 import androidx.room.Database
