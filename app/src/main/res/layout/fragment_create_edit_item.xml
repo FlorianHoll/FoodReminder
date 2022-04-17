@@ -26,39 +26,40 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/ItemNameLayout"
-        android:layout_width="320dp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginTop="30dp"
-        android:textSize="15sp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="30dp"
         android:ems="10"
         android:inputType="textPersonName"
-        app:layout_constraintStart_toEndOf="@id/iv_ramen"
-        app:layout_constraintTop_toTopOf="parent"
+        android:textSize="15sp"
         app:endIconMode="clear_text"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox" >
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/iv_ramen"
+        app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/item_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/createEditName"
-            />
+            android:hint="@string/createEditName" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/item_days_left_layout"
-        android:layout_width="320dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
+        android:layout_marginStart="10dp"
         android:layout_marginEnd="20dp"
         android:layout_marginTop="30dp"
         android:textSize="15sp"
         android:ems="10"
         android:inputType="textPersonName"
         app:layout_constraintTop_toBottomOf="@id/ItemNameLayout"
+        app:layout_constraintEnd_toStartOf="@id/iv_calendar"
         app:layout_constraintStart_toEndOf="@id/iv_fridge"
         app:endIconMode="clear_text"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox" >
@@ -74,16 +75,25 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
+        android:id="@+id/tv_days_left_hint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/item_days_left_layout"
+        tools:text="3 Tage haltbar (bis 23.04.2022)"
+        app:layout_constraintStart_toStartOf="@id/item_days_left_layout"
+        android:textColor="@color/primary_variant_dark"
+        android:textSize="13sp" />
+
+    <TextView
         android:id="@+id/tv_location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@id/iv_fridge"
-        app:layout_constraintTop_toBottomOf="@id/item_days_left_layout"
-        android:text="@string/createEditLocation"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="30dp"
-        android:layout_marginStart="5dp"
+        android:text="@string/createEditLocation"
         android:textSize="20sp"
-        />
+        app:layout_constraintStart_toEndOf="@id/iv_fridge"
+        app:layout_constraintTop_toBottomOf="@+id/item_days_left_layout" />
 
         <RadioGroup
             android:id="@+id/location"
@@ -92,8 +102,8 @@
             android:checkedButton="@id/option_kuehlschrank"
             app:layout_constraintTop_toBottomOf="@id/tv_location"
             app:layout_constraintStart_toEndOf="@id/iv_fridge"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="20dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="0dp"
             android:orientation="vertical">
 
             <RadioButton
@@ -109,12 +119,90 @@
                 android:text="@string/createEditKuehlschrank"/>
 
             <RadioButton
-                android:id="@+id/option_tiefkuehlschrank"
+                android:id="@+id/option_tiefkuehltruhe"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/createEditTiefkuehlschrank"/>
 
         </RadioGroup>
+
+
+    <TextView
+        android:id="@+id/tv_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/iv_fridge"
+        app:layout_constraintTop_toBottomOf="@id/location"
+        android:text="@string/createEditAmount"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="10dp"
+        android:textSize="20sp"
+        />
+
+    <RadioGroup
+        android:id="@+id/amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:checkedButton="@id/option_amount_1"
+        app:layout_constraintTop_toBottomOf="@id/tv_amount"
+        app:layout_constraintStart_toEndOf="@id/iv_fridge"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="20dp"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/option_amount_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/createEditAmount1"/>
+
+        <RadioButton
+            android:id="@+id/option_amount_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/createEditAmount2"/>
+
+        <RadioButton
+            android:id="@+id/option_amount_5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/createEditAmount5"/>
+
+        <RadioButton
+            android:id="@+id/option_amount_10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/createEditAmount10"/>
+
+    </RadioGroup>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/amount_else_layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:textSize="15sp"
+        app:endIconMode="clear_text"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="30dp"
+        app:layout_constraintBottom_toBottomOf="@+id/amount"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/amount"
+        app:layout_constraintTop_toTopOf="@+id/amount">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/amount_else"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/createEditAmountElse"
+            android:inputType="numberDecimal" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
 
     <ImageView
         android:id="@+id/iv_fridge"
@@ -129,13 +217,24 @@
         />
 
     <ImageView
-        android:id="@+id/iv_calendar"
+        android:id="@+id/iv_days"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        app:srcCompat="@drawable/ic_calendar_item"
+        app:srcCompat="@drawable/ic_has_to_go"
         app:layout_constraintBottom_toBottomOf="@id/item_days_left_layout"
         app:layout_constraintTop_toTopOf="@id/item_days_left_layout"
         app:layout_constraintStart_toStartOf="parent"
+        app:tint="@color/primary_variant_dark"
+        />
+
+    <ImageView
+        android:id="@+id/iv_amount"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:srcCompat="@drawable/ic_amount"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_amount"
+        app:layout_constraintBottom_toBottomOf="@id/tv_amount"
         app:tint="@color/primary_variant_dark"
         />
 
@@ -149,6 +248,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:tint="@color/primary_variant_dark"
         />
+
+    <ImageView
+        android:id="@+id/iv_calendar"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="30dp"
+        app:layout_constraintBottom_toBottomOf="@id/item_days_left_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/item_days_left_layout"
+        app:layout_constraintTop_toTopOf="@id/item_days_left_layout"
+        app:srcCompat="@drawable/ic_datepicker"
+        app:tint="@color/primary_variant_dark" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

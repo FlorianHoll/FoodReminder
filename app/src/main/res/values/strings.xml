@@ -15,7 +15,7 @@
     <!-- Strings for choosing list -->
     <string name="chooseListAllItems">Alle Lebensmittel</string>
     <string name="chooseListFridge">Kühlschrank</string>
-    <string name="chooseListFreezer">Tiefkühl-\ntruhe</string>
+    <string name="chooseListFreezer">Tiefkühltruhe</string>
     <string name="chooseListShelf">Regal</string>
     <string name="chooseListAddItem">Hinzufügen</string>
 
@@ -23,7 +23,7 @@
     <string name="HasToGoTitle">Muss bald weg</string>
     <string name="hasToGoFridge">Kühlschrank</string>
     <string name="hasToGoShelf">Regal</string>
-    <string name="hasToGoFreezer">Tiefkühlschrank</string>
+    <string name="hasToGoFreezer">Tiefkühltruhe</string>
 
     <!-- Strings for creating or editing an item -->
     <string name="createEditName">Name des Lebensmittels (bspw. Banane)</string>
@@ -32,8 +32,15 @@
     <string name="createEditSave">Speichern</string>
     <string name="createEditTitle">Lebensmittel erstellen oder ändern</string>
     <string name="createEditRegal">Regal</string>
-    <string name="createEditTiefkuehlschrank">Tiefkühlschrank</string>
+    <string name="createEditTiefkuehlschrank">Tiefkühltruhe</string>
     <string name="createEditKuehlschrank">Kühlschrank</string>
+    <string name="createEditAmount">Menge</string>
+    <string name="createEditAmount1">1</string>
+    <string name="createEditAmount2">2</string>
+    <string name="createEditAmount5">5</string>
+    <string name="createEditAmount10">10</string>
+    <string name="createEditAmountElse">Andere Menge</string>
+
 
     <!-- Strings for delete action -->
     <string name="itemDeleteTitle">Item löschen</string>
@@ -47,9 +54,17 @@
     <string name="itemDetailsDaysLeftDate">Haltbar bis %1$s</string>
     <string name="itemDetailsDaysLeftInDays">(noch %1$s Tage)</string>
     <string name="itemDetailsLocation">Kühlschrank</string>
-    <string name="itemDetailsItemEaten">Aufgegessen</string>
+    <string name="itemDetailsEaten">Aufgegessen</string>
     <string name="itemDetailsThrownAway">Weggeworfen</string>
+    <string name="itemDetailsOneEaten">Eins aufgegessen</string>
+    <string name="itemDetailsOneThrownAway">Eins weggeworfen</string>
     <string name="itemDetailsEdit">Bearbeiten</string>
+
+    <!-- Strings for choose new item fragment -->
+    <string name="chooseNewItem">Neues Item erstellen</string>
+    <string name="chooseNewQueryHint">vorhandene durchsuchen</string>
+    <string name="chooseNewAddSelected">Ausgewählte übernehmen</string>
+    <string name="chooseNewOr">oder</string>
 
     <!-- Strings for statistics fragment -->
     <string name="statisticsTitle">Statistiken</string>

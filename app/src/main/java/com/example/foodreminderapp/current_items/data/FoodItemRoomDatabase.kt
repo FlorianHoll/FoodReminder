@@ -1,4 +1,4 @@
-package com.example.foodreminderapp.data
+package com.example.foodreminderapp.current_items.data
 
 import android.content.Context
 import androidx.room.Database
@@ -8,7 +8,7 @@ import androidx.room.RoomDatabase
 /**
  * Database class with a singleton INSTANCE object.
  */
-@Database(entities = [FoodItem::class], version = 2, exportSchema = false)
+@Database(entities = [FoodItem::class], version = 3, exportSchema = false)
 abstract class FoodItemRoomDatabase : RoomDatabase() {
 
     abstract fun foodItemDao(): FoodItemDao

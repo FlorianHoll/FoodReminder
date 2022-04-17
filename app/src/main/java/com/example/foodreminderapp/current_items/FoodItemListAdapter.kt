@@ -1,61 +1,67 @@
-package com.example.foodreminderapp
+package com.example.foodreminderapp.current_items
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.foodreminderapp.data.FoodItem
-import com.example.foodreminderapp.data.getDaysLeft
-import com.example.foodreminderapp.databinding.HasToGoListItemBinding
-import com.example.foodreminderapp.fragments.HasToGoFragmentDirections
+import com.example.foodreminderapp.R
+import com.example.foodreminderapp.current_items.data.FoodItem
+import com.example.foodreminderapp.databinding.ListItemBinding
+import com.example.foodreminderapp.fragments.FoodItemListFragmentDirections
+import com.example.foodreminderapp.setBestBeforeText
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
-private const val TAG = "HasToGoListAdapter"
+private const val TAG = "FoodItemListAdapter"
 
 
-class HasToGoListAdapter(
+class FoodItemListAdapter(
     private val context: Context,
     private val viewModel: FoodItemListViewModel
-) : ListAdapter<FoodItem, HasToGoListAdapter.ItemViewHolder>(DiffCallback) {
+    ) : ListAdapter<FoodItem, FoodItemListAdapter.ItemViewHolder>(DiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         return ItemViewHolder(
-            HasToGoListItemBinding.inflate(
+            ListItemBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
             )
         )
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-        val item = getItem(position)
+        val current = getItem(position)
 
-        holder.bind(item)
+        holder.bind(current)
 
         holder.itemView.setOnClickListener {
-            val action = HasToGoFragmentDirections
-                .actionHasToGoToItemDetailFragment(item.id)
-            Log.d(TAG, "Navigated with ID ${item.id}.")
+            val action = FoodItemListFragmentDirections
+                .actionListFragmentToItemDetailsFragment(current.id)
             it.findNavController().navigate(action)
         }
 
-        // delete (with warning) when item was thrown away
+        // delete when delete button is clicked.
         holder.btnDeleteItem.setOnClickListener {
-            confirmDeleteAction(item)
+            confirmDeleteAction(current)
         }
 
-        // delete (without warning) when item was eaten
         holder.btnItemEaten.setOnClickListener {
-            viewModel.deleteItem(item)
+            confirmDeleteAction(current)
+        }
+
+        // go to editing fragment when edit button is pressed.
+        holder.btnEditItem.setOnClickListener {
+            val action = FoodItemListFragmentDirections
+                .actionListFragmentToCreateEditFragment(current.id)
+            it.findNavController().navigate(action)
         }
 
     }
 
-    // Show alert and confirm deletion
+    // Show alert and confirm deletion.
     private fun confirmDeleteAction(item: FoodItem) {
         MaterialAlertDialogBuilder(context)
             .setTitle(R.string.itemDeleteTitle)
@@ -68,18 +74,25 @@ class HasToGoListAdapter(
             .show()
     }
 
-    class ItemViewHolder(private var binding: HasToGoListItemBinding) :
+    class ItemViewHolder(private var binding: ListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
+        private val itemTitle: TextView = binding.itemTitle
+        private val itemDaysLeft: TextView = binding.itemDaysLeft
+        private val itemLocation: TextView = binding.itemLocation
         val btnDeleteItem: ImageView = binding.deleteItem
+        val btnEditItem: ImageView = binding.editItem
         val btnItemEaten: ImageView = binding.itemEaten
 
         fun bind(item: FoodItem) {
             val daysLeftText = setBestBeforeText(item)
-            binding.apply {
-                itemTitle.text = item.itemName
-                itemDaysLeft.text = daysLeftText
+            val displayedItemName = when (item.amount) {
+                1 -> item.itemName
+                else -> "${item.itemName} (${item.amount})"
             }
-
+            itemTitle.text = displayedItemName
+            itemDaysLeft.text = daysLeftText
+            itemLocation.text = item.location
         }
     }
 

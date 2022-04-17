@@ -1,4 +1,4 @@
-package com.example.foodreminderapp.data
+package com.example.foodreminderapp.current_items.data
 
 import androidx.room.Dao
 import androidx.room.Delete
@@ -9,12 +9,12 @@ import androidx.room.Update
 import kotlinx.coroutines.flow.Flow
 
 /**
- * Database access object to access the Inventory database
+ * Database access object to access the database
  */
 @Dao
 interface FoodItemDao {
 
-    @Query("SELECT * from fooditem ORDER BY name ASC")
+    @Query("SELECT * from fooditem ORDER BY UPPER(name) ASC")
     fun getItems(): Flow<List<FoodItem>>
 
     @Query("SELECT * from fooditem WHERE best_before <= :date ORDER BY best_before ASC")

@@ -6,9 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.fragment.findNavController
-import com.example.foodreminderapp.*
+import com.example.foodreminderapp.current_items.FoodItemListViewModel
+import com.example.foodreminderapp.current_items.FoodItemViewModelFactory
 import com.example.foodreminderapp.databinding.FragmentHasToGoBinding
+import com.example.foodreminderapp.FoodReminderApplication
+import com.example.foodreminderapp.current_items.HasToGoListAdapter
 
 /**
  * Fragment displaying those items that need to go.
@@ -16,7 +18,7 @@ import com.example.foodreminderapp.databinding.FragmentHasToGoBinding
 class HasToGoFragment : Fragment() {
     private val viewModel: FoodItemListViewModel by activityViewModels {
         FoodItemViewModelFactory(
-            (activity?.application as FoodItemListApplication).database.foodItemDao()
+            (activity?.application as FoodReminderApplication).database.foodItemDao()
         )
     }
 
@@ -35,24 +37,15 @@ class HasToGoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val fridgeAdapter = HasToGoListAdapter(requireActivity(), viewModel)
-        val shelfAdapter = HasToGoListAdapter(requireActivity(), viewModel)
-        val freezerAdapter = HasToGoListAdapter(requireActivity(), viewModel)
+        val adapter = HasToGoListAdapter(requireActivity(), viewModel)
 
-        binding.rvItemsHaveToGo.adapter = fridgeAdapter
+        binding.rvItemsHaveToGo.adapter = adapter
 
         // Attach an observer on the allItems list to
         // update the UI automatically when the data changes.
         viewModel.allHasToGoItems.observe(this.viewLifecycleOwner) { items ->
-            items.let { fridgeAdapter.submitList(it) }
+            items.let { adapter.submitList(it) }
         }
-//
-//        viewModel.hasToGoByLocation("Kühlschrank")
-//            .observe(this.viewLifecycleOwner) { items ->
-//                items.let {
-//                    fridgeAdapter.submitList(it)
-//                }
-//            }
 
     }
 }

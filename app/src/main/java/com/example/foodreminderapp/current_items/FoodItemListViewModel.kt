@@ -1,12 +1,13 @@
-package com.example.foodreminderapp
+package com.example.foodreminderapp.current_items
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.foodreminderapp.data.FoodItem
-import com.example.foodreminderapp.data.FoodItemDao
+import com.example.foodreminderapp.calculateBestBefore
+import com.example.foodreminderapp.current_items.data.FoodItem
+import com.example.foodreminderapp.current_items.data.FoodItemDao
 import kotlinx.coroutines.launch
 
 /**
@@ -29,22 +30,32 @@ class FoodItemListViewModel(private val itemDao: FoodItemDao) : ViewModel() {
         itemName: String,
         itemDaysLeft: Int,
         itemLocation: String,
+        itemAmount: Int
     ) {
         val updatedItem = FoodItem(
             id = itemId,
             itemName = itemName,
             bestBefore = calculateBestBefore(itemDaysLeft),
-            location = itemLocation
+            location = itemLocation,
+            durability = itemDaysLeft,
+            amount = itemAmount
         )
         updateItem(updatedItem)
     }
 
     // Insert a new item into the database.
-    fun addNewItem(itemName: String, itemDaysLeft: Int, itemLocation: String) {
+    fun addNewItem(
+        itemName: String,
+        itemDaysLeft: Int,
+        itemLocation: String,
+        itemAmount: Int
+    ) {
         val newItem = FoodItem(
             itemName = itemName,
             bestBefore = calculateBestBefore(itemDaysLeft),
-            location = itemLocation
+            location = itemLocation,
+            durability = itemDaysLeft,
+            amount = itemAmount
         )
         insertItem(newItem)
     }
