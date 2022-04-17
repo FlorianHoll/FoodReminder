@@ -5,20 +5,20 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import androidx.room.Database
 import com.example.foodreminderapp.all_items.data.DatabaseItem
 import com.example.foodreminderapp.all_items.data.DatabaseItemDao
-import com.example.foodreminderapp.calculateBestBefore
-import com.example.foodreminderapp.current_items.data.FoodItem
 import kotlinx.coroutines.launch
 import java.time.LocalDate
-import java.util.*
+
+private const val TAG = "DatbaseItemListViewModel"
 
 /**
  * View Model to keep a reference to the Inventory repository and an up-to-date list of all items.
  *
  */
 class DatabaseItemListViewModel(private val itemDao: DatabaseItemDao) : ViewModel() {
+
+    var selectedItems: MutableMap<Int, DatabaseItem> = mutableMapOf()
 
     // Cache all items form the database using LiveData.
     val allItems: LiveData<List<DatabaseItem>> = itemDao.getItems().asLiveData()
@@ -38,6 +38,13 @@ class DatabaseItemListViewModel(private val itemDao: DatabaseItemDao) : ViewMode
             lastAdded = LocalDate.now().toString()
         )
         insertItem(newItem)
+    }
+
+
+    fun updateItemName(item: DatabaseItem) {
+        viewModelScope.launch {
+            itemDao.update(item.copy(itemName = "Test"))
+        }
     }
 
     fun searchDatabase(query: String): LiveData<List<DatabaseItem>> {

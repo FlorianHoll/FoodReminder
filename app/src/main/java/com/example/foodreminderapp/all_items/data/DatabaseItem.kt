@@ -2,7 +2,6 @@ package com.example.foodreminderapp.all_items.data
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
-import androidx.room.Ignore
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "ItemsDatabase")
@@ -21,8 +20,4 @@ data class DatabaseItem(
     val timesEaten: Int = 1,
     @ColumnInfo(name = "last_added")
     val lastAdded: String
-) {
-    @Ignore var checked: Boolean = false
-    @Ignore var currentAmount: Int = defaultAmount
-    @Ignore var currentLocation: String = location
-}
+)

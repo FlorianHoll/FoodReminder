@@ -105,12 +105,12 @@
         tools:layout="@layout/fragment_choose_new" >
 
         <action
-            android:id="@+id/action_chooseNew_to_createEditFragment"
-            app:destination="@id/createEditFragment" />
-
-        <action
             android:id="@+id/action_chooseNew_to_foodItemList"
             app:destination="@id/foodItemListFragment" />
+
+        <action
+            android:id="@+id/action_chooseNewFragment_to_createEditFragment"
+            app:destination="@id/createEditFragment" />
 
     </fragment>
 

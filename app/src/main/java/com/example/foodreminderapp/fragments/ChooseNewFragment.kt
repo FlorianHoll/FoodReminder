@@ -16,7 +16,6 @@ import com.example.foodreminderapp.R
 import com.example.foodreminderapp.current_items.FoodItemListViewModel
 import com.example.foodreminderapp.current_items.FoodItemViewModelFactory
 import com.example.foodreminderapp.databinding.FragmentChooseNewBinding
-import com.example.foodreminderapp.onQueryTextChanged
 
 class ChooseNewFragment : Fragment(), SearchView.OnQueryTextListener {
 
@@ -46,8 +45,8 @@ class ChooseNewFragment : Fragment(), SearchView.OnQueryTextListener {
     }
 
     private fun navigateToAddItem() {
-        val action = ChooseListFragmentDirections
-            .actionChooseListToCreateEditFragment(fromChoose = true)
+        val action = ChooseNewFragmentDirections
+            .actionChooseNewFragmentToCreateEditFragment(fromChoose = true)
         findNavController().navigate(action)
     }
 
@@ -66,22 +65,16 @@ class ChooseNewFragment : Fragment(), SearchView.OnQueryTextListener {
             items.let { adapter.submitList(it) }
         }
 
-        val searchView = binding.searchItems as SearchView
-
-        searchView.onQueryTextChanged {
-
-        }
-
+        val searchView = binding.searchItems
         searchView.setOnQueryTextListener(this)
 
-        binding.btnNewItem.setOnClickListener {
-            navigateToAddItem()
-        }
+        binding.btnNewItem.setOnClickListener { navigateToAddItem() }
 
         binding.btnAddSelected.setOnClickListener {
             adapter.addSelectedItems()
             val action = ChooseNewFragmentDirections
                 .actionChooseNewToFoodItemList(getString(R.string.chooseListAllItems))
+            viewModel.selectedItems.clear()
             findNavController().navigate(action)
         }
 
@@ -89,13 +82,12 @@ class ChooseNewFragment : Fragment(), SearchView.OnQueryTextListener {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        // Clear viewModel UI data.
+        viewModel.selectedItems.clear()
         _binding = null
     }
 
     override fun onQueryTextSubmit(query: String?): Boolean {
-        if (query != null) {
-            searchDatabase(query)
-        }
         return true
     }
 
@@ -108,7 +100,8 @@ class ChooseNewFragment : Fragment(), SearchView.OnQueryTextListener {
 
     private fun searchDatabase(query: String) {
         val searchQuery = "%$query%"
-        viewModel.searchDatabase(searchQuery).observe(this
+        viewModel.searchDatabase(searchQuery).observe(
+            this
         ) { list ->
             list.let { adapter.submitList(it) }
         }
