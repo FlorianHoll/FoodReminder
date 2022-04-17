@@ -1,7 +1,6 @@
 package com.example.foodreminderapp
 
 import android.os.Build
-import androidx.appcompat.widget.SearchView
 import androidx.annotation.RequiresApi
 import com.example.foodreminderapp.current_items.data.FoodItem
 import java.text.SimpleDateFormat
@@ -12,6 +11,15 @@ fun calculateBestBefore(days: Int): String {
     val dates = SimpleDateFormat("yyyy-MM-dd")
     val targetDate = dates.parse(LocalDate.now().plusDays(days.toLong()).toString())
     return dates.format(targetDate!!)
+}
+
+fun calculateBestBeforeInGermanDate(days: Int): String {
+    // hard-coded since the date format is always the same.
+    val date = calculateBestBefore(days)
+    val year = date.take(4)
+    val month = date.substring(5, 7)
+    val day = date.takeLast(2)
+    return "$day.$month.$year"
 }
 
 @RequiresApi(Build.VERSION_CODES.O)

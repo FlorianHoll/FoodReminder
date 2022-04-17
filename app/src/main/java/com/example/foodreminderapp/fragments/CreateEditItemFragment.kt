@@ -4,6 +4,7 @@ import android.app.DatePickerDialog
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.os.Bundle
 import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -86,9 +87,10 @@ class CreateEditItemFragment : Fragment() {
             binding.apply {
                 ivCalendar.setOnClickListener { chooseDate() }
                 btnSaveFoodItem.setOnClickListener { addNewItem() }
+                waitForDaysLeftInput()
             }
-        // if the item is not new, the information is pre-filled
-        // and will be updated upon press on the save button.
+            // if the item is not new, the information is pre-filled
+            // and will be updated upon press on the save button.
         } else {
             val id = navigationArgs.itemId
             viewModel
@@ -105,14 +107,44 @@ class CreateEditItemFragment : Fragment() {
         }
     }
 
+    private fun waitForDaysLeftInput() {
+        binding.daysLeft.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable) {
+                if (binding.daysLeft.text.isNullOrEmpty()) {
+                    binding.tvDaysLeftHint.text = ""
+                }
+            }
+
+            override fun beforeTextChanged(
+                s: CharSequence, start: Int,
+                count: Int, after: Int
+            ) {
+            }
+
+            override fun onTextChanged(
+                s: CharSequence, start: Int,
+                before: Int, count: Int
+            ) {
+                if (binding.daysLeft.text!!.isNotEmpty()) {
+                    displayDateHint()
+                }
+            }
+        })
+    }
+
     // Bind views with passed information.
     private fun bind(item: FoodItem) {
         binding.apply {
             itemName.setText(item.itemName, TextView.BufferType.SPANNABLE)
+
+            // Set the days left and set hint for user.
             daysLeft.setText(
                 getDaysLeft(item.bestBefore).toString(),
                 TextView.BufferType.SPANNABLE
             )
+            displayDateHint()
+
+            // Check the location.
             val checkedLocationId = when (item.location) {
                 getString(R.string.chooseListShelf) -> R.id.option_regal
                 getString(R.string.chooseListFridge) -> R.id.option_kuehlschrank
@@ -164,11 +196,20 @@ class CreateEditItemFragment : Fragment() {
                     Toast.LENGTH_LONG
                 ).show()
                 binding.daysLeft.setText(daysLeft.toString(), TextView.BufferType.SPANNABLE)
+                displayDateHint()
             },
             year,
             month,
             day
         ).show()
+    }
+
+    private fun displayDateHint() {
+        val daysLeft = binding.daysLeft.text.toString().toInt()
+        val daysLeftText = setDaysLeftText(daysLeft)
+        val bestBeforeDate = calculateBestBeforeInGermanDate(daysLeft)
+        val daysLeftHint = "Noch $daysLeftText haltbar (bis $bestBeforeDate)."
+        binding.tvDaysLeftHint.text = daysLeftHint
     }
 
     // Get the selected amount from the radio group.
