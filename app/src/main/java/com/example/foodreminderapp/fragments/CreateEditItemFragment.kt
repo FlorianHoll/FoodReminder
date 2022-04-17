@@ -87,7 +87,6 @@ class CreateEditItemFragment : Fragment() {
             binding.apply {
                 ivCalendar.setOnClickListener { chooseDate() }
                 btnSaveFoodItem.setOnClickListener { addNewItem() }
-                waitForDaysLeftInput()
             }
             // if the item is not new, the information is pre-filled
             // and will be updated upon press on the save button.
@@ -102,6 +101,7 @@ class CreateEditItemFragment : Fragment() {
 
         // Hide keyboard when radio groups are selected (for nicer user experience).
         binding.apply {
+            waitForDaysLeftInput()
             amount.setOnCheckedChangeListener { _, _ -> hideKeyboard() }
             location.setOnCheckedChangeListener { _, _ -> hideKeyboard() }
         }

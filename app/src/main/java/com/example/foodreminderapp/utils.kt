@@ -14,8 +14,12 @@ fun calculateBestBefore(days: Int): String {
 }
 
 fun calculateBestBeforeInGermanDate(days: Int): String {
-    // hard-coded since the date format is always the same.
     val date = calculateBestBefore(days)
+    return convertToGermanDate(date)
+}
+
+fun convertToGermanDate(date: String): String {
+    // hard-coded since the date format is always the same.
     val year = date.take(4)
     val month = date.substring(5, 7)
     val day = date.takeLast(2)

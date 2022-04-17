@@ -51,7 +51,10 @@ class ItemDetailFragment : DialogFragment() {
         val daysLeftText = setBestBeforeText(item)
         binding.apply {
             tvItemName.setText(item.itemName, TextView.BufferType.SPANNABLE)
-            tvDaysLeftDate.setText(item.bestBefore, TextView.BufferType.SPANNABLE)
+            tvDaysLeftDate.setText(
+                convertToGermanDate(item.bestBefore),
+                TextView.BufferType.SPANNABLE
+            )
             tvDaysLeftInDays.setText(daysLeftText, TextView.BufferType.SPANNABLE)
             tvLocation.setText(item.location, TextView.BufferType.SPANNABLE)
             tvAmount.setText("Menge: ${item.amount}", TextView.BufferType.SPANNABLE)
