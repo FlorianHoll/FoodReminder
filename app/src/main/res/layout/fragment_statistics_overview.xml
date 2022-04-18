@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.CreateEditItemFragment">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardView"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_margin="10dp"
+        app:cardCornerRadius="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeColor="@color/secondary"
+        app:strokeWidth="2dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <View
+                android:id="@+id/dividerWeekMonth"
+                android:layout_width="2dp"
+                android:layout_height="match_parent"
+                android:background="@color/secondary"
+                app:layout_constraintStart_toEndOf="@id/tv_chooseTimeWeek"
+                app:layout_constraintEnd_toStartOf="@id/tv_chooseTimeMonth"
+                />
+
+            <View
+                android:id="@+id/dividerMonthYear"
+                android:layout_width="2dp"
+                android:layout_height="match_parent"
+                android:background="@color/secondary"
+                app:layout_constraintStart_toEndOf="@id/tv_chooseTimeMonth"
+                app:layout_constraintEnd_toStartOf="@id/tv_chooseTimeYear"
+                />
+
+            <View
+                android:id="@+id/dividerYearAll"
+                android:layout_width="2dp"
+                android:layout_height="match_parent"
+                android:background="@color/secondary"
+                app:layout_constraintStart_toEndOf="@id/tv_chooseTimeYear"
+                app:layout_constraintEnd_toStartOf="@id/tv_chooseTimeAll"
+                />
+
+            <TextView
+                android:id="@+id/tv_chooseTimeWeek"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="@string/statisticsChooseWeek"
+                android:textSize="18sp"
+                android:translationZ="90dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/dividerWeekMonth"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_chooseTimeMonth"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="@string/statisticsChooseMonth"
+                android:textSize="18sp"
+                android:translationZ="90dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/tv_chooseTimeYear"
+                app:layout_constraintStart_toEndOf="@id/tv_chooseTimeWeek"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_chooseTimeYear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="@string/statisticsChooseYear"
+                android:textSize="18sp"
+                android:translationZ="90dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/tv_chooseTimeAll"
+                app:layout_constraintStart_toEndOf="@+id/tv_chooseTimeMonth"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_chooseTimeAll"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="@string/statisticsChooseAll"
+                android:textSize="18sp"
+                android:translationZ="90dp"
+                app:layout_constraintStart_toEndOf="@id/dividerYearAll"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

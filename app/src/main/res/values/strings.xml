@@ -69,6 +69,10 @@
     <!-- Strings for statistics fragment -->
     <string name="statisticsTitle">Statistiken</string>
     <string name="statisticsInProgress">Statistik-Fragment. Muss noch aufgebaut werden.</string>
+    <string name="statisticsChooseWeek">Woche</string>
+    <string name="statisticsChooseMonth">Monat</string>
+    <string name="statisticsChooseYear">Jahr</string>
+    <string name="statisticsChooseAll">Alles</string>
 
     <!-- Strings for content descriptions -->
     <string name="contentDescriptionAddItem">Item hinzufügen</string>
