@@ -73,6 +73,9 @@
     <string name="statisticsChooseMonth">Monat</string>
     <string name="statisticsChooseYear">Jahr</string>
     <string name="statisticsChooseAll">Alles</string>
+    <string name="statisticsThrownAway">weggeworfen</string>
+    <string name="statisticsEaten">gegessen</string>
+    <string name="statisticsPercentageThrownAway">der Lebensmittel \nweggeworfen</string>
 
     <!-- Strings for content descriptions -->
     <string name="contentDescriptionAddItem">Item hinzufügen</string>
