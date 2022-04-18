@@ -22,13 +22,15 @@ class ChooseNewFragment : Fragment(), SearchView.OnQueryTextListener {
 
     private val viewModel: DatabaseItemListViewModel by activityViewModels {
         DatabaseItemViewModelFactory(
-            (activity?.application as FoodReminderApplication).itemDatabase.itemDatabaseDao()
+            (activity?.application as FoodReminderApplication)
+                .itemDatabase.itemDatabaseDao()
         )
     }
 
     private val currentItemsViewModel: FoodItemListViewModel by activityViewModels {
         FoodItemViewModelFactory(
-            (activity?.application as FoodReminderApplication).database.foodItemDao()
+            (activity?.application as FoodReminderApplication)
+                .database.foodItemDao()
         )
     }
 

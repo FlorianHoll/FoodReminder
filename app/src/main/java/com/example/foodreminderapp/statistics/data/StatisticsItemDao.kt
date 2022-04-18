@@ -13,21 +13,40 @@ import java.time.LocalDate
  */
 @Dao
 interface StatisticsItemDao {
-    @Query("SELECT * from itemsdatabase")
+    @Query("SELECT * from statisticsDatabase")
     fun getItems(): Flow<List<StatisticsItem>>
 
     @Query(
         "SELECT * from statisticsDatabase " +
-                "WHERE endedTime > :startTime " +
-                "AND endedTime <= :endTime "
+                "WHERE endedDate > :startTime " +
+                "AND endedDate <= :endTime "
     )
     fun getItemsForTimeInterval(
         startTime: String ,
-        endTime: String = LocalDate.now().toString()
-    )
+        endTime: String
+    ): Flow<List<StatisticsItem>>
 
-    @Query("SELECT * from statisticsDatabase WHERE name = :itemName")
-    fun getItem(itemName: String): Flow<StatisticsItem>
+    @Query(
+        "SELECT SUM(amount) from statisticsDatabase " +
+                "WHERE endedDate > :startTime " +
+                "AND endedDate <= :endTime " +
+                "AND status = 'thrown' "
+    )
+    fun getNrThrownAwayForInterval(
+        startTime: String,
+        endTime: String
+    ): Int
+
+    @Query(
+        "SELECT SUM(amount) from statisticsDatabase " +
+                "WHERE endedDate > :startTime " +
+                "AND endedDate <= :endTime " +
+                "AND status = 'eaten' "
+    )
+    fun getNrEatenForInterval(
+        startTime: String,
+        endTime: String
+    ): Int
 
     @Query("SELECT * from statisticsDatabase WHERE id = :id")
     fun getItem(id: Int): Flow<StatisticsItem>
@@ -37,9 +56,6 @@ interface StatisticsItemDao {
                 "WHERE name LIKE '%' || :searchQuery || '%' "
     )
     fun searchDatabase(searchQuery: String): Flow<List<StatisticsItem>>
-
-    @Query("SELECT EXISTS (SELECT 1 FROM itemsdatabase WHERE LOWER(name) = :itemName)")
-    suspend fun itemNameExists(itemName: String): Boolean
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(item: StatisticsItem)

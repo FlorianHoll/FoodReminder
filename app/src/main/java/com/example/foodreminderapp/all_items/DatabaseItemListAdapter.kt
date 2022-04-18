@@ -2,7 +2,6 @@ package com.example.foodreminderapp.all_items
 
 import android.content.Context
 import android.content.res.Configuration
-import android.graphics.Bitmap
 import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
@@ -15,11 +14,11 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.foodreminderapp.R
 import com.example.foodreminderapp.all_items.data.DatabaseItem
-import com.example.foodreminderapp.calculateBestBefore
 import com.example.foodreminderapp.current_items.FoodItemListViewModel
 import com.example.foodreminderapp.current_items.data.FoodItem
 import com.example.foodreminderapp.databinding.DatabaseItemBinding
-import com.example.foodreminderapp.setShortDaysLeftText
+import com.example.foodreminderapp.utils.calculateTargetDate
+import com.example.foodreminderapp.utils.setShortTimeLeftText
 import java.time.LocalDate
 import kotlin.math.max
 
@@ -63,7 +62,7 @@ class DatabaseItemListAdapter(
             databaseItemViewModel.updateItemDatabase(
                 FoodItem(
                     itemName = item.itemName,
-                    bestBefore = calculateBestBefore(item.durability),
+                    bestBefore = calculateTargetDate(item.durability),
                     location = item.location,
                     durability = item.durability,
                     amount = item.defaultAmount,
@@ -129,19 +128,23 @@ class DatabaseItemListAdapter(
         holder.checkedAdd.setOnClickListener {
             // store (or delete) item from selected Items map and set color
             if (selectedItems.containsKey(current.id)) {
+                Log.d(TAG, "Item ${current.itemName} removed from selected, set to white.")
                 selectedItems.remove(current.id)
                 if (isInDarkMode()) {
                     holder.itemCard.setCardBackgroundColor(
                         ContextCompat.getColor(context, R.color.secondary)
                     )
                 } else {
-                    holder.itemCard.setBackgroundColor(Color.WHITE)
+                    holder.itemCard.setBackgroundColor(
+                        ContextCompat.getColor(context, R.color.white)
+                    )
                 }
             } else {
                 databaseItemViewModel.selectedItems[current.id] = current
                 holder.itemCard.setCardBackgroundColor(
                     ContextCompat.getColor(context, R.color.primary_variant_dark)
                 )
+                Log.d(TAG, "Color for item ${current.itemName} set to orange.")
             }
         }
 
@@ -200,9 +203,10 @@ class DatabaseItemListAdapter(
                         ContextCompat.getColor(context, R.color.secondary)
                     )
                 } else {
-                    itemCard.setBackgroundColor(Color.WHITE)
+                    itemCard.setBackgroundColor(
+                        ContextCompat.getColor(context, R.color.white)
+                    )
                 }
-
 
                 itemAmount.text = item.defaultAmount.toString()
                 itemLocation.text = item.location
@@ -210,7 +214,7 @@ class DatabaseItemListAdapter(
 
             binding.apply {
                 itemTitle.text = item.itemName
-                val durability = setShortDaysLeftText(item.durability)
+                val durability = setShortTimeLeftText(item.durability)
                 itemDurability.text = durability
             }
         }

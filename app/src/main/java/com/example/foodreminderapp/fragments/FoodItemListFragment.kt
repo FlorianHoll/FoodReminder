@@ -17,6 +17,8 @@ import com.example.foodreminderapp.current_items.FoodItemListAdapter
 import com.example.foodreminderapp.FoodReminderApplication
 import com.example.foodreminderapp.current_items.FoodItemListViewModel
 import com.example.foodreminderapp.current_items.FoodItemViewModelFactory
+import com.example.foodreminderapp.statistics.StatisticsItemListViewModel
+import com.example.foodreminderapp.statistics.StatisticsItemViewModelFactory
 
 private const val TAG = "FoodItemListFragment"
 
@@ -24,9 +26,18 @@ private const val TAG = "FoodItemListFragment"
  * Main fragment displaying details for all items in the database.
  */
 class FoodItemListFragment : Fragment() {
+
     private val viewModel: FoodItemListViewModel by activityViewModels {
         FoodItemViewModelFactory(
-            (activity?.application as FoodReminderApplication).database.foodItemDao()
+            (activity?.application as FoodReminderApplication)
+                .database.foodItemDao()
+        )
+    }
+
+    private val statisticsViewModel: StatisticsItemListViewModel by activityViewModels {
+        StatisticsItemViewModelFactory(
+            (activity?.application as FoodReminderApplication)
+                .statisticsDatabase.statisticsItemDao()
         )
     }
 
@@ -52,7 +63,9 @@ class FoodItemListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val location = navigationArgs.itemsLocation
-        val adapter = FoodItemListAdapter(requireActivity(), viewModel)
+        val adapter = FoodItemListAdapter(
+            requireActivity(), viewModel, statisticsViewModel
+        )
 
         binding.rvFoodItems.adapter = adapter
 

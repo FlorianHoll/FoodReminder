@@ -5,15 +5,20 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.foodreminderapp.FoodReminderApplication
 import com.example.foodreminderapp.R
+import com.example.foodreminderapp.all_items.DatabaseItemListViewModel
 import com.example.foodreminderapp.current_items.data.FoodItem
 import com.example.foodreminderapp.databinding.ListItemBinding
 import com.example.foodreminderapp.fragments.FoodItemListFragmentDirections
-import com.example.foodreminderapp.setBestBeforeText
+import com.example.foodreminderapp.statistics.StatisticsItemListViewModel
+import com.example.foodreminderapp.statistics.StatisticsItemViewModelFactory
+import com.example.foodreminderapp.utils.setBestBeforeText
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 private const val TAG = "FoodItemListAdapter"
@@ -21,7 +26,8 @@ private const val TAG = "FoodItemListAdapter"
 
 class FoodItemListAdapter(
     private val context: Context,
-    private val viewModel: FoodItemListViewModel
+    private val viewModel: FoodItemListViewModel,
+    private val statisticsViewModel: StatisticsItemListViewModel
     ) : ListAdapter<FoodItem, FoodItemListAdapter.ItemViewHolder>(DiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
@@ -33,43 +39,52 @@ class FoodItemListAdapter(
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-        val current = getItem(position)
+        val item = getItem(position)
 
-        holder.bind(current)
+        holder.bind(item)
 
         holder.itemView.setOnClickListener {
             val action = FoodItemListFragmentDirections
-                .actionListFragmentToItemDetailsFragment(current.id)
+                .actionListFragmentToItemDetailsFragment(item.id)
             it.findNavController().navigate(action)
         }
 
-        // delete when delete button is clicked.
+        // throw away, i.e. delete and add to statistics as thrown away
         holder.btnDeleteItem.setOnClickListener {
-            confirmDeleteAction(current)
+            confirmDeleteAction(item)
         }
 
+        // delete and add to statistics as eaten.
         holder.btnItemEaten.setOnClickListener {
-            confirmDeleteAction(current)
+            deleteAndAddToStatistics(item, thrownAway = false)
         }
 
         // go to editing fragment when edit button is pressed.
         holder.btnEditItem.setOnClickListener {
             val action = FoodItemListFragmentDirections
-                .actionListFragmentToCreateEditFragment(current.id)
+                .actionListFragmentToCreateEditFragment(item.id)
             it.findNavController().navigate(action)
         }
-
     }
 
-    // Show alert and confirm deletion.
+    private fun deleteAndAddToStatistics(item: FoodItem, thrownAway: Boolean) {
+        viewModel.deleteItem(item)
+        statisticsViewModel.addNewItem(
+            name = item.itemName,
+            thrownAway = thrownAway,
+            amount = item.amount,
+            createdTime = item.added,
+            location = item.location
+        )
+    }
+
+    // Show alert and confirm throwing the item away.
     private fun confirmDeleteAction(item: FoodItem) {
         MaterialAlertDialogBuilder(context)
-            .setTitle(R.string.itemDeleteTitle)
-            .setMessage(R.string.itemDeleteText)
-            .setCancelable(false)
+            .setTitle(R.string.itemDeleteThrowAwayConfirm)
             .setNegativeButton(R.string.itemDeleteNo) { _, _ -> }
             .setPositiveButton(R.string.itemDeleteYes) { _, _ ->
-                viewModel.deleteItem(item)
+                deleteAndAddToStatistics(item, thrownAway = true)
             }
             .show()
     }

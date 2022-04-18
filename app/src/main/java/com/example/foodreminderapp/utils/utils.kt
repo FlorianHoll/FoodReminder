@@ -1,4 +1,4 @@
-package com.example.foodreminderapp
+package com.example.foodreminderapp.utils
 
 import android.os.Build
 import androidx.annotation.RequiresApi
@@ -7,14 +7,14 @@ import java.text.SimpleDateFormat
 import java.time.LocalDate
 
 @RequiresApi(Build.VERSION_CODES.O)
-fun calculateBestBefore(days: Int): String {
+fun calculateTargetDate(days: Int): String {
     val dates = SimpleDateFormat("yyyy-MM-dd")
     val targetDate = dates.parse(LocalDate.now().plusDays(days.toLong()).toString())
     return dates.format(targetDate!!)
 }
 
-fun calculateBestBeforeInGermanDate(days: Int): String {
-    val date = calculateBestBefore(days)
+fun calculateTargetDateInGermanFormat(days: Int): String {
+    val date = calculateTargetDate(days)
     return convertToGermanDate(date)
 }
 
@@ -27,7 +27,7 @@ fun convertToGermanDate(date: String): String {
 }
 
 @RequiresApi(Build.VERSION_CODES.O)
-fun getDaysLeft(bestBefore: String): Int {
+fun getDifferenceInDays(bestBefore: String): Int {
     val dateFormat = SimpleDateFormat("yyyy-MM-dd")
     // Get date of today and the best before date
     val dateNow = dateFormat.parse(LocalDate.now().toString())
@@ -41,11 +41,11 @@ fun getDaysLeft(bestBefore: String): Int {
 }
 
 fun setBestBeforeText(item: FoodItem): String {
-    val daysLeft = getDaysLeft(item.bestBefore)
-    return setDaysLeftText(daysLeft)
+    val daysLeft = getDifferenceInDays(item.bestBefore)
+    return setTimeLeftText(daysLeft)
 }
 
-fun setDaysLeftText(daysLeft: Int): String {
+fun setTimeLeftText(daysLeft: Int): String {
     val daysLeftText: String = when {
         daysLeft >= 365*2 -> { "${daysLeft / 365} Jahre" }
         (daysLeft < 365*2) and (daysLeft >= 365) -> { "1 Jahr" }
@@ -56,7 +56,7 @@ fun setDaysLeftText(daysLeft: Int): String {
     return daysLeftText
 }
 
-fun setShortDaysLeftText(daysLeft: Int): String {
+fun setShortTimeLeftText(daysLeft: Int): String {
     val daysLeftText: String = when {
         daysLeft >= 365 -> { "${daysLeft / 365} J" }
         (daysLeft < 365) and (daysLeft >= 30) -> { "${daysLeft / 30} M" }

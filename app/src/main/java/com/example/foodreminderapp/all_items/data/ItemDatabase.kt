@@ -18,50 +18,6 @@ abstract class ItemDatabase : RoomDatabase() {
         @Volatile
         private var INSTANCE: ItemDatabase? = null
 
-//        // this instantiaion is called the first time the software is updated
-//        fun getInstanceAfterSoftwareUpdate(context: Context): ItemDatabase {
-//
-//            synchronized(this) {
-//                var instance = INSTANCE
-//
-//                if (instance == null) {
-//                    instance = Room.databaseBuilder(
-//                        context.applicationContext,
-//                        ItemDatabase::class.java,
-//                        "item_database")
-//                        .createFromAsset("itemdatabase/all_items.db")
-//                        .build()
-//
-//                    INSTANCE = instance
-//                }
-//                return instance
-//            }
-//        }
-//
-//        fun getInstance(context: Context): ItemDatabase {
-//
-//            synchronized(this) {
-//
-//                var instance = INSTANCE
-//
-//                if (instance == null) {
-//
-//                    Log.i("MyRoom", "reading locally")
-//                    instance = Room.databaseBuilder(
-//                        context.applicationContext,
-//                        ItemDatabase:: class.java,
-//                        "item_database"
-//                    )
-//                        .fallbackToDestructiveMigration()
-//                        .build()
-//
-//                    INSTANCE = instance
-//                }
-//
-//                return instance
-//            }
-//        }
-
         fun getDatabase(context: Context): ItemDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(

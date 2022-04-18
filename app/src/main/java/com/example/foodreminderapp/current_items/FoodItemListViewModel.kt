@@ -5,9 +5,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.foodreminderapp.calculateBestBefore
 import com.example.foodreminderapp.current_items.data.FoodItem
 import com.example.foodreminderapp.current_items.data.FoodItemDao
+import com.example.foodreminderapp.utils.calculateTargetDate
 import kotlinx.coroutines.launch
 
 /**
@@ -19,7 +19,7 @@ class FoodItemListViewModel(private val itemDao: FoodItemDao) : ViewModel() {
     // Cache all items form the database using LiveData.
     val allItems: LiveData<List<FoodItem>> = itemDao.getItems().asLiveData()
 
-    private val date = calculateBestBefore(3)
+    private val date = calculateTargetDate(3)
     val allHasToGoItems: LiveData<List<FoodItem>> = (
             itemDao.getItemsForNextDays(date).asLiveData()
             )
@@ -36,7 +36,7 @@ class FoodItemListViewModel(private val itemDao: FoodItemDao) : ViewModel() {
         val updatedItem = FoodItem(
             id = itemId,
             itemName = itemName,
-            bestBefore = calculateBestBefore(itemDaysLeft),
+            bestBefore = calculateTargetDate(itemDaysLeft),
             location = itemLocation,
             durability = itemDaysLeft,
             amount = itemAmount,
@@ -55,7 +55,7 @@ class FoodItemListViewModel(private val itemDao: FoodItemDao) : ViewModel() {
     ) {
         val newItem = FoodItem(
             itemName = itemName,
-            bestBefore = calculateBestBefore(itemDaysLeft),
+            bestBefore = calculateTargetDate(itemDaysLeft),
             location = itemLocation,
             durability = itemDaysLeft,
             amount = itemAmount,

@@ -23,6 +23,10 @@ import com.example.foodreminderapp.all_items.DatabaseItemListViewModel
 import com.example.foodreminderapp.all_items.DatabaseItemViewModelFactory
 import com.example.foodreminderapp.current_items.FoodItemListViewModel
 import com.example.foodreminderapp.current_items.FoodItemViewModelFactory
+import com.example.foodreminderapp.utils.calculateTargetDate
+import com.example.foodreminderapp.utils.calculateTargetDateInGermanFormat
+import com.example.foodreminderapp.utils.getDifferenceInDays
+import com.example.foodreminderapp.utils.setTimeLeftText
 import java.time.LocalDate
 import java.util.*
 
@@ -36,16 +40,14 @@ class CreateEditItemFragment : Fragment() {
     private val viewModel: FoodItemListViewModel by activityViewModels {
         FoodItemViewModelFactory(
             (activity?.application as FoodReminderApplication)
-                .database
-                .foodItemDao()
+                .database.foodItemDao()
         )
     }
 
     private val databaseItemViewModel: DatabaseItemListViewModel by activityViewModels {
         DatabaseItemViewModelFactory(
             (activity?.application as FoodReminderApplication)
-                .itemDatabase
-                .itemDatabaseDao()
+                .itemDatabase.itemDatabaseDao()
         )
     }
 
@@ -141,7 +143,7 @@ class CreateEditItemFragment : Fragment() {
 
             // Set the days left and set hint for user.
             daysLeft.setText(
-                getDaysLeft(item.bestBefore).toString(),
+                getDifferenceInDays(item.bestBefore).toString(),
                 TextView.BufferType.SPANNABLE
             )
             displayDateHint()
@@ -190,7 +192,7 @@ class CreateEditItemFragment : Fragment() {
                 selectedDate = (
                         "$selectedYear-${selectedMonth + 1}-$selectedDayOfMonth"
                         )
-                val daysLeft = getDaysLeft(selectedDate!!)
+                val daysLeft = getDifferenceInDays(selectedDate!!)
                 Toast.makeText(
                     requireActivity(),
                     "Haltbar bis $selectedDayOfMonth.${selectedMonth + 1}.$selectedYear" +
@@ -208,8 +210,8 @@ class CreateEditItemFragment : Fragment() {
 
     private fun displayDateHint() {
         val daysLeft = binding.daysLeft.text.toString().toInt()
-        val daysLeftText = setDaysLeftText(daysLeft)
-        val bestBeforeDate = calculateBestBeforeInGermanDate(daysLeft)
+        val daysLeftText = setTimeLeftText(daysLeft)
+        val bestBeforeDate = calculateTargetDateInGermanFormat(daysLeft)
         val daysLeftHint = "Noch $daysLeftText haltbar (bis $bestBeforeDate)."
         binding.tvDaysLeftHint.text = daysLeftHint
     }
@@ -264,7 +266,7 @@ class CreateEditItemFragment : Fragment() {
                 FoodItem(
                     id = 100000,
                     itemName = itemName,
-                    bestBefore = calculateBestBefore(daysLeft),
+                    bestBefore = calculateTargetDate(daysLeft),
                     location = location,
                     amount = amount,
                     durability = daysLeft,

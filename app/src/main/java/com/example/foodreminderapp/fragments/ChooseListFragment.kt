@@ -20,7 +20,6 @@ class ChooseListFragment : Fragment() {
 
     private var _binding: FragmentChooseListBinding? = null
     private val binding get() = _binding!!
-    private lateinit var chosenList: String
 
     override fun onCreateView(
         inflater: LayoutInflater,

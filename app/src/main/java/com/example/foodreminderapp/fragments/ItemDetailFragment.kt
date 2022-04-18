@@ -17,6 +17,11 @@ import com.example.foodreminderapp.databinding.FragmentItemDetailsBinding
 import com.example.foodreminderapp.FoodReminderApplication
 import com.example.foodreminderapp.current_items.FoodItemListViewModel
 import com.example.foodreminderapp.current_items.FoodItemViewModelFactory
+import com.example.foodreminderapp.statistics.StatisticsItemListViewModel
+import com.example.foodreminderapp.statistics.StatisticsItemViewModelFactory
+import com.example.foodreminderapp.utils.convertToGermanDate
+import com.example.foodreminderapp.utils.getDifferenceInDays
+import com.example.foodreminderapp.utils.setBestBeforeText
 import java.lang.NullPointerException
 
 /**
@@ -26,9 +31,18 @@ class ItemDetailFragment : DialogFragment() {
 
     private val viewModel: FoodItemListViewModel by activityViewModels {
         FoodItemViewModelFactory(
-            (activity?.application as FoodReminderApplication).database.foodItemDao()
+            (activity?.application as FoodReminderApplication)
+                .database.foodItemDao()
         )
     }
+
+    private val statisticsViewModel: StatisticsItemListViewModel by activityViewModels {
+        StatisticsItemViewModelFactory(
+            (activity?.application as FoodReminderApplication)
+                .statisticsDatabase.statisticsItemDao()
+        )
+    }
+
     private val navigationArgs: ItemDetailFragmentArgs by navArgs()
 
     lateinit var item: FoodItem
@@ -50,6 +64,8 @@ class ItemDetailFragment : DialogFragment() {
 
         val daysLeftText = setBestBeforeText(item)
         binding.apply {
+
+            // Set basic item information.
             tvItemName.setText(item.itemName, TextView.BufferType.SPANNABLE)
             tvDaysLeftDate.setText(
                 convertToGermanDate(item.bestBefore),
@@ -57,7 +73,10 @@ class ItemDetailFragment : DialogFragment() {
             )
             tvDaysLeftInDays.setText(daysLeftText, TextView.BufferType.SPANNABLE)
             tvLocation.setText(item.location, TextView.BufferType.SPANNABLE)
-            tvAmount.setText("Menge: ${item.amount}", TextView.BufferType.SPANNABLE)
+
+            // Set correct amount and corresponding button text.
+            val amount = "Menge: ${item.amount}"
+            tvAmount.setText(amount, TextView.BufferType.SPANNABLE)
             if (item.amount > 1) {
                 btnEaten.text = getString(R.string.itemDetailsOneEaten)
                 btnThrownAway.text = getString(R.string.itemDetailsOneThrownAway)
@@ -81,35 +100,41 @@ class ItemDetailFragment : DialogFragment() {
                 findNavController().navigate(action)
             }
 
-            // Delete item if eaten.
+            // On press, delete or decrease by one and add to statistics as eaten.
             btnEaten.setOnClickListener {
                 when (item.amount) {
-                    1 -> deleteAndNavigateBack(item)
-                    else -> decreaseAmountAndUpdate(item)
+                    1 -> deleteAndNavigateBack(item, thrownAway = false)
+                    else -> decreaseAmountAndUpdate(item, thrownAway = false)
                 }
             }
 
+            // On long press, delete item and add to statistics as eaten.
             btnEaten.setOnLongClickListener {
-                deleteAndNavigateBack(item)
+                deleteAndNavigateBack(item, thrownAway = false)
             }
 
-            // Delete item if thrown away.
+            // On press, delete or decrease by one and add to statistics as thrown away.
             btnThrownAway.setOnClickListener {
                 when (item.amount) {
-                    1 -> deleteAndNavigateBack(item)
-                    else -> decreaseAmountAndUpdate(item)
+                    1 -> deleteAndNavigateBack(item, thrownAway = true)
+                    else -> decreaseAmountAndUpdate(item, thrownAway = true)
                 }
             }
 
+            // On long press, delete item and add to statistics as thrown away.
             btnThrownAway.setOnLongClickListener {
-                deleteAndNavigateBack(item)
+                deleteAndNavigateBack(item, thrownAway = true)
             }
         }
     }
 
-    private fun decreaseAmountAndUpdate(item: FoodItem) {
+    private fun decreaseAmountAndUpdate(item: FoodItem, thrownAway: Boolean) {
         val newItem = item.copy(amount = item.amount - 1)
         updateItem(newItem)
+        addItemToStatisticsDatabase(
+            item = item,
+            thrownAway = thrownAway
+        )
     }
 
     // The food item that is passed has already been decreased by the specified amount
@@ -117,22 +142,44 @@ class ItemDetailFragment : DialogFragment() {
         viewModel.updateItem(
             itemId = item.id,
             itemName = item.itemName,
-            itemDaysLeft = getDaysLeft(item.bestBefore),
+            itemDaysLeft = getDifferenceInDays(item.bestBefore),
             itemLocation = item.location,
             itemAmount = item.amount,
             itemAdded = item.added
         )
     }
 
-    private fun deleteItem(item: FoodItem) {
+    private fun deleteItem(item: FoodItem, thrownAway: Boolean) {
         viewModel.deleteItem(item)
+        statisticsViewModel.addNewItem(
+            name = item.itemName,
+            thrownAway = thrownAway,
+            amount = item.amount,
+            createdTime = item.added,
+            location = item.location
+        )
     }
 
     // Navigate back to the list fragment.
-    private fun deleteAndNavigateBack(item: FoodItem): Boolean {
-        deleteItem(item)
+    private fun deleteAndNavigateBack(
+        item: FoodItem, thrownAway: Boolean
+    ): Boolean {
+        deleteItem(item, thrownAway = thrownAway)
         findNavController().navigateUp()
         return true
+    }
+
+    private fun addItemToStatisticsDatabase(
+        item: FoodItem,
+        thrownAway: Boolean
+    ) {
+        statisticsViewModel.addNewItem(
+            name = item.itemName,
+            thrownAway = thrownAway,
+            amount = 1,
+            createdTime = item.added,
+            location = item.location
+        )
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -142,7 +189,8 @@ class ItemDetailFragment : DialogFragment() {
         viewModel.retrieveItem(id).observe(this.viewLifecycleOwner) { selectedItem ->
             try {
                 bind(selectedItem)
-            } catch (e: NullPointerException) {  }
+            } catch (e: NullPointerException) {
+            }
         }
     }
 

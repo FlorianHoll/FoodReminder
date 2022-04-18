@@ -11,16 +11,28 @@ import com.example.foodreminderapp.current_items.FoodItemViewModelFactory
 import com.example.foodreminderapp.databinding.FragmentHasToGoBinding
 import com.example.foodreminderapp.FoodReminderApplication
 import com.example.foodreminderapp.current_items.HasToGoListAdapter
+import com.example.foodreminderapp.statistics.StatisticsItemListViewModel
+import com.example.foodreminderapp.statistics.StatisticsItemViewModelFactory
 
 /**
  * Fragment displaying those items that need to go.
  */
 class HasToGoFragment : Fragment() {
+
     private val viewModel: FoodItemListViewModel by activityViewModels {
         FoodItemViewModelFactory(
-            (activity?.application as FoodReminderApplication).database.foodItemDao()
+            (activity?.application as FoodReminderApplication)
+                .database.foodItemDao()
         )
     }
+
+    private val statisticsViewModel: StatisticsItemListViewModel by activityViewModels {
+        StatisticsItemViewModelFactory(
+            (activity?.application as FoodReminderApplication)
+                .statisticsDatabase.statisticsItemDao()
+        )
+    }
+
 
     private var _binding: FragmentHasToGoBinding? = null
     private val binding get() = _binding!!
@@ -30,14 +42,18 @@ class HasToGoFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentHasToGoBinding.inflate(inflater, container, false)
+        _binding = FragmentHasToGoBinding.inflate(
+            inflater, container, false
+        )
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = HasToGoListAdapter(requireActivity(), viewModel)
+        val adapter = HasToGoListAdapter(
+            requireActivity(), viewModel, statisticsViewModel
+        )
 
         binding.rvItemsHaveToGo.adapter = adapter
 
