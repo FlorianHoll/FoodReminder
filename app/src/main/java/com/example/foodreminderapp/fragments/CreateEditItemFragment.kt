@@ -23,6 +23,7 @@ import com.example.foodreminderapp.all_items.DatabaseItemListViewModel
 import com.example.foodreminderapp.all_items.DatabaseItemViewModelFactory
 import com.example.foodreminderapp.current_items.FoodItemListViewModel
 import com.example.foodreminderapp.current_items.FoodItemViewModelFactory
+import java.time.LocalDate
 import java.util.*
 
 private const val TAG = "CreateEditFragment"
@@ -107,6 +108,7 @@ class CreateEditItemFragment : Fragment() {
         }
     }
 
+    // Overridden textChangedListener to inform user about days left and date of item.
     private fun waitForDaysLeftInput() {
         binding.daysLeft.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable) {
@@ -170,7 +172,7 @@ class CreateEditItemFragment : Fragment() {
             ivCalendar.setOnClickListener { chooseDate() }
 
             // Update item when save button is clicked.
-            btnSaveFoodItem.setOnClickListener { updateItem() }
+            btnSaveFoodItem.setOnClickListener { updateItem(item) }
 
         }
     }
@@ -253,18 +255,20 @@ class CreateEditItemFragment : Fragment() {
                 itemName = itemName,
                 itemDaysLeft = daysLeft,
                 itemLocation = getLocation(),
-                itemAmount = getAmount()
+                itemAmount = getAmount(),
+                itemAdded = LocalDate.now().toString()
             )
 
             // Update the item database (i.e. add or update the current item).
             databaseItemViewModel.updateItemDatabase(
                 FoodItem(
-                    id = 1000,
+                    id = 100000,
                     itemName = itemName,
                     bestBefore = calculateBestBefore(daysLeft),
                     location = location,
                     amount = amount,
-                    durability = daysLeft
+                    durability = daysLeft,
+                    added = LocalDate.now().toString()
                 )
             )
 
@@ -280,14 +284,15 @@ class CreateEditItemFragment : Fragment() {
     }
 
     // Update an existing item in the database and navigates back to the list.
-    private fun updateItem() {
+    private fun updateItem(itemToUpdate: FoodItem) {
         if (isEntryValid()) {
             viewModel.updateItem(
-                itemId = this.navigationArgs.itemId,
-                itemName = this.binding.itemName.text.toString(),
+                itemId = itemToUpdate.id,
+                itemName = binding.itemName.text.toString(),
                 itemDaysLeft = binding.daysLeft.text.toString().toInt(),
                 itemLocation = getLocation(),
-                itemAmount = getAmount()
+                itemAmount = getAmount(),
+                itemAdded = itemToUpdate.added
             )
             findNavController().navigateUp()
         } else {

@@ -18,12 +18,6 @@ import com.example.foodreminderapp.databinding.FragmentChooseListBinding
  */
 class ChooseListFragment : Fragment() {
 
-    private val viewModel: FoodItemListViewModel by activityViewModels {
-        FoodItemViewModelFactory(
-            (activity?.application as FoodReminderApplication).database.foodItemDao()
-        )
-    }
-
     private var _binding: FragmentChooseListBinding? = null
     private val binding get() = _binding!!
     private lateinit var chosenList: String

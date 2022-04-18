@@ -112,13 +112,15 @@ class ItemDetailFragment : DialogFragment() {
         updateItem(newItem)
     }
 
+    // The food item that is passed has already been decreased by the specified amount
     private fun updateItem(item: FoodItem) {
         viewModel.updateItem(
             itemId = item.id,
             itemName = item.itemName,
             itemDaysLeft = getDaysLeft(item.bestBefore),
             itemLocation = item.location,
-            itemAmount = item.amount
+            itemAmount = item.amount,
+            itemAdded = item.added
         )
     }
 

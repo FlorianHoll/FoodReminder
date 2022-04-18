@@ -30,7 +30,8 @@ class FoodItemListViewModel(private val itemDao: FoodItemDao) : ViewModel() {
         itemName: String,
         itemDaysLeft: Int,
         itemLocation: String,
-        itemAmount: Int
+        itemAmount: Int,
+        itemAdded: String
     ) {
         val updatedItem = FoodItem(
             id = itemId,
@@ -38,7 +39,8 @@ class FoodItemListViewModel(private val itemDao: FoodItemDao) : ViewModel() {
             bestBefore = calculateBestBefore(itemDaysLeft),
             location = itemLocation,
             durability = itemDaysLeft,
-            amount = itemAmount
+            amount = itemAmount,
+            added = itemAdded
         )
         updateItem(updatedItem)
     }
@@ -48,14 +50,16 @@ class FoodItemListViewModel(private val itemDao: FoodItemDao) : ViewModel() {
         itemName: String,
         itemDaysLeft: Int,
         itemLocation: String,
-        itemAmount: Int
+        itemAmount: Int,
+        itemAdded: String
     ) {
         val newItem = FoodItem(
             itemName = itemName,
             bestBefore = calculateBestBefore(itemDaysLeft),
             location = itemLocation,
             durability = itemDaysLeft,
-            amount = itemAmount
+            amount = itemAmount,
+            added = itemAdded
         )
         insertItem(newItem)
     }

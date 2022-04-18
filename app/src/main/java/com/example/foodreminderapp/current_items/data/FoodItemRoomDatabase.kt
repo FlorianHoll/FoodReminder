@@ -8,7 +8,7 @@ import androidx.room.RoomDatabase
 /**
  * Database class with a singleton INSTANCE object.
  */
-@Database(entities = [FoodItem::class], version = 3, exportSchema = false)
+@Database(entities = [FoodItem::class], version = 4, exportSchema = false)
 abstract class FoodItemRoomDatabase : RoomDatabase() {
 
     abstract fun foodItemDao(): FoodItemDao

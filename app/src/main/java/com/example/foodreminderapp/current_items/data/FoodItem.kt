@@ -12,10 +12,8 @@ data class FoodItem(
     val itemName: String,
     @ColumnInfo(name = "best_before")
     val bestBefore: String,
-    @ColumnInfo(name = "location")
     val location: String,
-    @ColumnInfo(name = "durability")
     val durability: Int,
-    @ColumnInfo(name = "amount")
-    val amount: Int = 1
+    val amount: Int = 1,
+    val added: String
 )

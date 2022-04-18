@@ -75,24 +75,4 @@ class FoodItemListFragment : Fragment() {
             this.findNavController().navigate(action)
         }
     }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        requireActivity()
-            .onBackPressedDispatcher
-            .addCallback(this, object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    Log.d(TAG, "Fragment back pressed invoked")
-                    findNavController().popBackStack()
-
-                    if (isEnabled) {
-                        isEnabled = false
-                        requireActivity().onBackPressed()
-                    }
-                }
-            }
-            )
-    }
-
 }

@@ -1,6 +1,8 @@
 package com.example.foodreminderapp.all_items
 
 import android.content.Context
+import android.content.res.Configuration
+import android.graphics.Bitmap
 import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,9 +15,12 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.foodreminderapp.R
 import com.example.foodreminderapp.all_items.data.DatabaseItem
+import com.example.foodreminderapp.calculateBestBefore
 import com.example.foodreminderapp.current_items.FoodItemListViewModel
+import com.example.foodreminderapp.current_items.data.FoodItem
 import com.example.foodreminderapp.databinding.DatabaseItemBinding
 import com.example.foodreminderapp.setShortDaysLeftText
+import java.time.LocalDate
 import kotlin.math.max
 
 
@@ -35,7 +40,8 @@ class DatabaseItemListAdapter(
                 LayoutInflater.from(parent.context), parent, false
             ),
             context,
-            databaseItemViewModel
+            databaseItemViewModel,
+            isInDarkMode()
         )
     }
 
@@ -54,14 +60,24 @@ class DatabaseItemListAdapter(
             )
 
             // Update item in item database.
-            databaseItemViewModel.updateItemLocation(item, item.location)
+            databaseItemViewModel.updateItemDatabase(
+                FoodItem(
+                    itemName = item.itemName,
+                    bestBefore = calculateBestBefore(item.durability),
+                    location = item.location,
+                    durability = item.durability,
+                    amount = item.defaultAmount,
+                    added = LocalDate.now().toString()
+                )
+            )
 
             // Add item to database of current items.
             currentItemsViewModel.addNewItem(
                 itemName = item.itemName,
                 itemDaysLeft = item.durability,
                 itemLocation = item.location,
-                itemAmount = item.defaultAmount
+                itemAmount = item.defaultAmount,
+                itemAdded = LocalDate.now().toString()
             )
         }
 
@@ -114,7 +130,13 @@ class DatabaseItemListAdapter(
             // store (or delete) item from selected Items map and set color
             if (selectedItems.containsKey(current.id)) {
                 selectedItems.remove(current.id)
-                holder.itemCard.setCardBackgroundColor(Color.WHITE)
+                if (isInDarkMode()) {
+                    holder.itemCard.setCardBackgroundColor(
+                        ContextCompat.getColor(context, R.color.secondary)
+                    )
+                } else {
+                    holder.itemCard.setBackgroundColor(Color.WHITE)
+                }
             } else {
                 databaseItemViewModel.selectedItems[current.id] = current
                 holder.itemCard.setCardBackgroundColor(
@@ -137,10 +159,16 @@ class DatabaseItemListAdapter(
 
     }
 
+    private fun isInDarkMode(): Boolean {
+        return context.resources.configuration.uiMode and
+                Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
+    }
+
     class ItemViewHolder(
         private var binding: DatabaseItemBinding,
         private val context: Context,
         private val databaseItemViewModel: DatabaseItemListViewModel,
+        private val isInDarkMode: Boolean,
     ) :
         RecyclerView.ViewHolder(binding.root) {
 
@@ -167,7 +195,15 @@ class DatabaseItemListAdapter(
                 }
             } else {
                 binding.apply { checkItem.isChecked = false }
-                itemCard.setCardBackgroundColor(Color.WHITE)
+                if (isInDarkMode) {
+                    itemCard.setCardBackgroundColor(
+                        ContextCompat.getColor(context, R.color.secondary)
+                    )
+                } else {
+                    itemCard.setBackgroundColor(Color.WHITE)
+                }
+
+
                 itemAmount.text = item.defaultAmount.toString()
                 itemLocation.text = item.location
             }
