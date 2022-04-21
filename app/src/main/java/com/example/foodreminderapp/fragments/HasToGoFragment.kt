@@ -11,8 +11,8 @@ import com.example.foodreminderapp.current_items.FoodItemViewModelFactory
 import com.example.foodreminderapp.databinding.FragmentHasToGoBinding
 import com.example.foodreminderapp.FoodReminderApplication
 import com.example.foodreminderapp.current_items.HasToGoListAdapter
-import com.example.foodreminderapp.statistics.StatisticsItemListViewModel
-import com.example.foodreminderapp.statistics.StatisticsItemViewModelFactory
+import com.example.foodreminderapp.statistics.StatisticsViewModel
+import com.example.foodreminderapp.statistics.StatisticsViewModelFactory
 
 /**
  * Fragment displaying those items that need to go.
@@ -26,8 +26,8 @@ class HasToGoFragment : Fragment() {
         )
     }
 
-    private val statisticsViewModel: StatisticsItemListViewModel by activityViewModels {
-        StatisticsItemViewModelFactory(
+    private val statisticsViewModel: StatisticsViewModel by activityViewModels {
+        StatisticsViewModelFactory(
             (activity?.application as FoodReminderApplication)
                 .statisticsDatabase.statisticsItemDao()
         )

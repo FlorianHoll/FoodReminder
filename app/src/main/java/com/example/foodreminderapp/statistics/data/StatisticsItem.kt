@@ -9,7 +9,7 @@ data class StatisticsItem(
     val id: Int = 0,
     val name: String,
     val amount: Int,
-    val status: String,
+    val thrownAway: Boolean,
     val createdTime: String,
     val endedDate: String,
     val endedDayOfMonth: Int,

@@ -9,7 +9,7 @@ import androidx.room.RoomDatabase
 /**
  * Database class with a singleton INSTANCE object.
  */
-@Database(entities = [StatisticsItem::class], version = 1, exportSchema = false)
+@Database(entities = [StatisticsItem::class], version = 3, exportSchema = false)
 abstract class StatisticsDatabase : RoomDatabase() {
 
     abstract fun statisticsItemDao(): StatisticsItemDao

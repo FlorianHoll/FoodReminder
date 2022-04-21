@@ -17,8 +17,8 @@ import com.example.foodreminderapp.databinding.FragmentItemDetailsBinding
 import com.example.foodreminderapp.FoodReminderApplication
 import com.example.foodreminderapp.current_items.FoodItemListViewModel
 import com.example.foodreminderapp.current_items.FoodItemViewModelFactory
-import com.example.foodreminderapp.statistics.StatisticsItemListViewModel
-import com.example.foodreminderapp.statistics.StatisticsItemViewModelFactory
+import com.example.foodreminderapp.statistics.StatisticsViewModel
+import com.example.foodreminderapp.statistics.StatisticsViewModelFactory
 import com.example.foodreminderapp.utils.convertToGermanDate
 import com.example.foodreminderapp.utils.getDifferenceInDays
 import com.example.foodreminderapp.utils.setBestBeforeText
@@ -36,8 +36,8 @@ class ItemDetailFragment : DialogFragment() {
         )
     }
 
-    private val statisticsViewModel: StatisticsItemListViewModel by activityViewModels {
-        StatisticsItemViewModelFactory(
+    private val statisticsViewModel: StatisticsViewModel by activityViewModels {
+        StatisticsViewModelFactory(
             (activity?.application as FoodReminderApplication)
                 .statisticsDatabase.statisticsItemDao()
         )

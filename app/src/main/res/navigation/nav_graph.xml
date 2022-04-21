@@ -121,9 +121,9 @@
 
     <fragment
         android:id="@+id/statisticsFragment"
-        android:name="com.example.foodreminderapp.fragments.StatisticsFragment"
+        android:name="com.example.foodreminderapp.fragments.StatisticsOverviewFragment"
         android:label="@string/statisticsTitle"
-        tools:layout="@layout/fragment_statistics" />
+        tools:layout="@layout/fragment_statistics_overview" />
 
 
 </navigation>

@@ -1,11 +1,9 @@
 package com.example.foodreminderapp.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -17,8 +15,8 @@ import com.example.foodreminderapp.current_items.FoodItemListAdapter
 import com.example.foodreminderapp.FoodReminderApplication
 import com.example.foodreminderapp.current_items.FoodItemListViewModel
 import com.example.foodreminderapp.current_items.FoodItemViewModelFactory
-import com.example.foodreminderapp.statistics.StatisticsItemListViewModel
-import com.example.foodreminderapp.statistics.StatisticsItemViewModelFactory
+import com.example.foodreminderapp.statistics.StatisticsViewModel
+import com.example.foodreminderapp.statistics.StatisticsViewModelFactory
 
 private const val TAG = "FoodItemListFragment"
 
@@ -34,8 +32,8 @@ class FoodItemListFragment : Fragment() {
         )
     }
 
-    private val statisticsViewModel: StatisticsItemListViewModel by activityViewModels {
-        StatisticsItemViewModelFactory(
+    private val statisticsViewModel: StatisticsViewModel by activityViewModels {
+        StatisticsViewModelFactory(
             (activity?.application as FoodReminderApplication)
                 .statisticsDatabase.statisticsItemDao()
         )

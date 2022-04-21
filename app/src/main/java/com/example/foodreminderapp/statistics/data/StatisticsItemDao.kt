@@ -30,20 +30,20 @@ interface StatisticsItemDao {
         "SELECT SUM(amount) from statisticsDatabase " +
                 "WHERE endedDate > :startTime " +
                 "AND endedDate <= :endTime " +
-                "AND status = 'thrown' "
+                "AND thrownAway = :thrownAway "
     )
-    fun getNrThrownAwayForInterval(
+    suspend fun getAmountForInterval(
         startTime: String,
-        endTime: String
+        endTime: String,
+        thrownAway: Boolean
     ): Int
 
     @Query(
-        "SELECT SUM(amount) from statisticsDatabase " +
+        "SELECT CAST(AVG(thrownAway) * 100 AS INT)  FROM statisticsDatabase " +
                 "WHERE endedDate > :startTime " +
-                "AND endedDate <= :endTime " +
-                "AND status = 'eaten' "
+                "AND endedDate <= :endTime "
     )
-    fun getNrEatenForInterval(
+    suspend fun getPercentageForInterval(
         startTime: String,
         endTime: String
     ): Int

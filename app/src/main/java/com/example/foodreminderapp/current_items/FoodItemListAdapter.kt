@@ -5,19 +5,15 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.foodreminderapp.FoodReminderApplication
 import com.example.foodreminderapp.R
-import com.example.foodreminderapp.all_items.DatabaseItemListViewModel
 import com.example.foodreminderapp.current_items.data.FoodItem
 import com.example.foodreminderapp.databinding.ListItemBinding
 import com.example.foodreminderapp.fragments.FoodItemListFragmentDirections
-import com.example.foodreminderapp.statistics.StatisticsItemListViewModel
-import com.example.foodreminderapp.statistics.StatisticsItemViewModelFactory
+import com.example.foodreminderapp.statistics.StatisticsViewModel
 import com.example.foodreminderapp.utils.setBestBeforeText
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
@@ -27,7 +23,7 @@ private const val TAG = "FoodItemListAdapter"
 class FoodItemListAdapter(
     private val context: Context,
     private val viewModel: FoodItemListViewModel,
-    private val statisticsViewModel: StatisticsItemListViewModel
+    private val statisticsViewModel: StatisticsViewModel
     ) : ListAdapter<FoodItem, FoodItemListAdapter.ItemViewHolder>(DiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {

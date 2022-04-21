@@ -75,7 +75,10 @@
     <string name="statisticsChooseAll">Alles</string>
     <string name="statisticsThrownAway">weggeworfen</string>
     <string name="statisticsEaten">gegessen</string>
-    <string name="statisticsPercentageThrownAway">der Lebensmittel \nweggeworfen</string>
+    <string name="statisticsPercentageThrownAway">weggeworfen</string>
+    <string name="statisticsOverviewTitle">Übersicht</string>
+    <string name="statisticsMostThrownAwayTitle">Am häufigsten weggeworfen</string>
+    <string name="statisticsAllItemsTitle">Alle Lebensmittel</string>
 
     <!-- Strings for content descriptions -->
     <string name="contentDescriptionAddItem">Item hinzufügen</string>

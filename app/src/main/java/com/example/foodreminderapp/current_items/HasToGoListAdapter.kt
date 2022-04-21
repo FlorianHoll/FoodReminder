@@ -9,12 +9,11 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.foodreminderapp.current_items.FoodItemListViewModel
 import com.example.foodreminderapp.R
 import com.example.foodreminderapp.current_items.data.FoodItem
 import com.example.foodreminderapp.databinding.HasToGoListItemBinding
 import com.example.foodreminderapp.fragments.HasToGoFragmentDirections
-import com.example.foodreminderapp.statistics.StatisticsItemListViewModel
+import com.example.foodreminderapp.statistics.StatisticsViewModel
 import com.example.foodreminderapp.utils.setBestBeforeText
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
@@ -24,7 +23,7 @@ private const val TAG = "HasToGoListAdapter"
 class HasToGoListAdapter(
     private val context: Context,
     private val viewModel: FoodItemListViewModel,
-    private val statisticsViewModel: StatisticsItemListViewModel
+    private val statisticsViewModel: StatisticsViewModel
 ) : ListAdapter<FoodItem, HasToGoListAdapter.ItemViewHolder>(DiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
