@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="5dp"
+    tools:context=".fragments.StatisticsOverviewFragment">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/radioGroupCard"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="5dp"
+        app:cardCornerRadius="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeColor="@color/secondary"
+        app:strokeWidth="2dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="10dp">
+
+            <RadioGroup
+                android:id="@+id/time_interval"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:checkedButton="@id/option_week"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <RadioButton
+                    android:id="@+id/option_week"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/statisticsChooseWeek"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+                <!--            android:button="@null"-->
+
+                <RadioButton
+                    android:id="@+id/option_month"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/statisticsChooseMonth"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/option_year"
+                    app:layout_constraintStart_toEndOf="@id/option_week"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <RadioButton
+                    android:id="@+id/option_year"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/statisticsChooseYear"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/option_all"
+                    app:layout_constraintStart_toEndOf="@id/option_month"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <RadioButton
+                    android:id="@+id/option_all"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/statisticsChooseAll"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </RadioGroup>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardDashboardMain"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="5dp"
+        app:cardCornerRadius="12dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_padding"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/radioGroupCard"
+        app:strokeColor="@color/secondary"
+        app:strokeWidth="2dp" />
+
+    <ImageView
+        android:id="@+id/iv_arrow"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="10dp"
+        android:translationZ="20dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_percentage_eaten"
+        app:layout_constraintStart_toStartOf="@id/cardDashboardMain"
+        app:layout_constraintTop_toTopOf="@+id/tv_percentage_eaten"
+        app:srcCompat="@drawable/ic_arrow"
+        app:tint="@color/primary_variant_dark" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:text="@string/statisticsOverviewTitle"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+        android:textColor="@color/primary_variant_dark"
+        app:layout_constraintStart_toStartOf="parent"
+        android:translationZ="20dp"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroupCard" />
+
+    <TextView
+        android:id="@+id/tv_percentage_eaten"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline3"
+        android:translationZ="20dp"
+        app:layout_constraintStart_toEndOf="@+id/iv_arrow"
+        app:layout_constraintTop_toBottomOf="@+id/textView3"
+        tools:text="100%" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="0dp"
+        android:layout_height="2dp"
+        android:background="@color/secondary_variant_dark"
+        android:translationZ="20dp"
+        app:layout_constraintEnd_toEndOf="@+id/textPercentageThrownAway"
+        app:layout_constraintStart_toStartOf="@id/tv_percentage_eaten"
+        app:layout_constraintTop_toBottomOf="@id/tv_percentage_eaten" />
+
+    <TextView
+        android:id="@+id/textPercentageThrownAway"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:text="@string/statisticsPercentageThrownAway"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+        android:translationZ="20dp"
+
+        app:layout_constraintBottom_toTopOf="@+id/view"
+        app:layout_constraintStart_toEndOf="@+id/tv_percentage_eaten"
+        app:layout_constraintTop_toTopOf="@+id/tv_percentage_eaten"
+        app:layout_constraintVertical_bias="0.74" />
+
+    <TextView
+        android:id="@+id/tv_thrown_away"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
+        android:translationZ="20dp"
+        app:layout_constraintBottom_toTopOf="@id/tv_eaten"
+        app:layout_constraintStart_toStartOf="@+id/tv_percentage_eaten"
+        app:layout_constraintTop_toBottomOf="@+id/textPercentageThrownAway"
+        tools:text="2" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:text="@string/statisticsThrownAway"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+        android:translationZ="20dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_thrown_away"
+        app:layout_constraintStart_toEndOf="@+id/tv_thrown_away"
+        app:layout_constraintTop_toTopOf="@+id/tv_thrown_away" />
+
+    <TextView
+        android:id="@+id/tv_eaten"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
+        android:translationZ="20dp"
+        app:layout_constraintStart_toStartOf="@+id/tv_percentage_eaten"
+        app:layout_constraintTop_toBottomOf="@id/tv_thrown_away"
+        tools:text="45" />
+
+    <TextView
+        android:id="@+id/tv_padding"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
+        android:translationZ="20dp"
+        android:paddingBottom="20dp"
+        app:layout_constraintEnd_toStartOf="@+id/tv_percentage_eaten"
+        app:layout_constraintTop_toBottomOf="@id/tv_thrown_away"
+        tools:text="" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:text="@string/statisticsEaten"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+        android:translationZ="20dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_eaten"
+        app:layout_constraintStart_toEndOf="@+id/tv_eaten"
+        app:layout_constraintTop_toTopOf="@id/tv_eaten" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/items_fridge_card"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="5dp"
+        app:cardCornerRadius="10dp"
+        app:layout_constraintBottom_toTopOf="@id/allItemsCard"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cardDashboardMain"
+        app:strokeColor="@color/secondary"
+        app:strokeWidth="2dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_margin="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/primary_variant_dark"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+                android:text="@string/statisticsMostThrownAwayTitle" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvDatabaseItems"
+                android:layout_margin="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="vertical"
+                app:layoutManager="LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:listitem="@layout/statistics_item" />
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/allItemsCard"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="5dp"
+        app:cardCornerRadius="12dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:strokeColor="@color/secondary"
+        app:strokeWidth="2dp" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:text="@string/statisticsAllItemsTitle"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+        android:textColor="@color/primary_variant_dark"
+        android:translationZ="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/allItemsCard"
+        app:layout_constraintVertical_bias="0.36" />
+
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="50dp"
+        android:translationZ="20dp"
+        android:layout_marginStart="5dp"
+        app:layout_constraintBottom_toBottomOf="@id/allItemsCard"
+        app:layout_constraintStart_toEndOf="@+id/textView5"
+        app:layout_constraintTop_toTopOf="@id/allItemsCard"
+        app:srcCompat="@drawable/ic_right"
+        app:tint="@color/primary_variant_dark" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

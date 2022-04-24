@@ -1,11 +1,9 @@
 package com.example.foodreminderapp.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -17,6 +15,8 @@ import com.example.foodreminderapp.current_items.FoodItemListAdapter
 import com.example.foodreminderapp.FoodReminderApplication
 import com.example.foodreminderapp.current_items.FoodItemListViewModel
 import com.example.foodreminderapp.current_items.FoodItemViewModelFactory
+import com.example.foodreminderapp.statistics.StatisticsViewModel
+import com.example.foodreminderapp.statistics.StatisticsViewModelFactory
 
 private const val TAG = "FoodItemListFragment"
 
@@ -24,9 +24,18 @@ private const val TAG = "FoodItemListFragment"
  * Main fragment displaying details for all items in the database.
  */
 class FoodItemListFragment : Fragment() {
+
     private val viewModel: FoodItemListViewModel by activityViewModels {
         FoodItemViewModelFactory(
-            (activity?.application as FoodReminderApplication).database.foodItemDao()
+            (activity?.application as FoodReminderApplication)
+                .database.foodItemDao()
+        )
+    }
+
+    private val statisticsViewModel: StatisticsViewModel by activityViewModels {
+        StatisticsViewModelFactory(
+            (activity?.application as FoodReminderApplication)
+                .statisticsDatabase.statisticsItemDao()
         )
     }
 
@@ -52,7 +61,9 @@ class FoodItemListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val location = navigationArgs.itemsLocation
-        val adapter = FoodItemListAdapter(requireActivity(), viewModel)
+        val adapter = FoodItemListAdapter(
+            requireActivity(), viewModel, statisticsViewModel
+        )
 
         binding.rvFoodItems.adapter = adapter
 
@@ -75,24 +86,4 @@ class FoodItemListFragment : Fragment() {
             this.findNavController().navigate(action)
         }
     }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        requireActivity()
-            .onBackPressedDispatcher
-            .addCallback(this, object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    Log.d(TAG, "Fragment back pressed invoked")
-                    findNavController().popBackStack()
-
-                    if (isEnabled) {
-                        isEnabled = false
-                        requireActivity().onBackPressed()
-                    }
-                }
-            }
-            )
-    }
-
 }

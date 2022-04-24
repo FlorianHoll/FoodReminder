@@ -9,12 +9,12 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.foodreminderapp.current_items.FoodItemListViewModel
 import com.example.foodreminderapp.R
 import com.example.foodreminderapp.current_items.data.FoodItem
 import com.example.foodreminderapp.databinding.HasToGoListItemBinding
 import com.example.foodreminderapp.fragments.HasToGoFragmentDirections
-import com.example.foodreminderapp.setBestBeforeText
+import com.example.foodreminderapp.statistics.StatisticsViewModel
+import com.example.foodreminderapp.utils.setBestBeforeText
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 private const val TAG = "HasToGoListAdapter"
@@ -22,7 +22,8 @@ private const val TAG = "HasToGoListAdapter"
 
 class HasToGoListAdapter(
     private val context: Context,
-    private val viewModel: FoodItemListViewModel
+    private val viewModel: FoodItemListViewModel,
+    private val statisticsViewModel: StatisticsViewModel
 ) : ListAdapter<FoodItem, HasToGoListAdapter.ItemViewHolder>(DiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
@@ -45,27 +46,36 @@ class HasToGoListAdapter(
             it.findNavController().navigate(action)
         }
 
-        // delete (with warning) when item was thrown away
+        // throw away, i.e. delete and add to statistics as thrown away
         holder.btnDeleteItem.setOnClickListener {
             confirmDeleteAction(item)
         }
 
-        // delete (without warning) when item was eaten
+        // delete and add to statistics as eaten.
         holder.btnItemEaten.setOnClickListener {
-            viewModel.deleteItem(item)
+            deleteAndAddToStatistics(item, thrownAway = false)
         }
 
     }
 
-    // Show alert and confirm deletion
+    private fun deleteAndAddToStatistics(item: FoodItem, thrownAway: Boolean) {
+        viewModel.deleteItem(item)
+        statisticsViewModel.addNewItem(
+            name = item.itemName,
+            thrownAway = thrownAway,
+            amount = item.amount,
+            createdTime = item.added,
+            location = item.location
+        )
+    }
+
+    // Show alert and confirm throwing the item away.
     private fun confirmDeleteAction(item: FoodItem) {
         MaterialAlertDialogBuilder(context)
-            .setTitle(R.string.itemDeleteTitle)
-            .setMessage(R.string.itemDeleteText)
-            .setCancelable(false)
+            .setTitle(R.string.itemDeleteThrowAwayConfirm)
             .setNegativeButton(R.string.itemDeleteNo) { _, _ -> }
             .setPositiveButton(R.string.itemDeleteYes) { _, _ ->
-                viewModel.deleteItem(item)
+                deleteAndAddToStatistics(item, thrownAway = true)
             }
             .show()
     }

@@ -23,6 +23,11 @@ import com.example.foodreminderapp.all_items.DatabaseItemListViewModel
 import com.example.foodreminderapp.all_items.DatabaseItemViewModelFactory
 import com.example.foodreminderapp.current_items.FoodItemListViewModel
 import com.example.foodreminderapp.current_items.FoodItemViewModelFactory
+import com.example.foodreminderapp.utils.calculateTargetDate
+import com.example.foodreminderapp.utils.calculateTargetDateInGermanFormat
+import com.example.foodreminderapp.utils.getDifferenceInDays
+import com.example.foodreminderapp.utils.setTimeLeftText
+import java.time.LocalDate
 import java.util.*
 
 private const val TAG = "CreateEditFragment"
@@ -35,16 +40,14 @@ class CreateEditItemFragment : Fragment() {
     private val viewModel: FoodItemListViewModel by activityViewModels {
         FoodItemViewModelFactory(
             (activity?.application as FoodReminderApplication)
-                .database
-                .foodItemDao()
+                .database.foodItemDao()
         )
     }
 
     private val databaseItemViewModel: DatabaseItemListViewModel by activityViewModels {
         DatabaseItemViewModelFactory(
             (activity?.application as FoodReminderApplication)
-                .itemDatabase
-                .itemDatabaseDao()
+                .itemDatabase.itemDatabaseDao()
         )
     }
 
@@ -107,6 +110,7 @@ class CreateEditItemFragment : Fragment() {
         }
     }
 
+    // Overridden textChangedListener to inform user about days left and date of item.
     private fun waitForDaysLeftInput() {
         binding.daysLeft.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable) {
@@ -139,7 +143,7 @@ class CreateEditItemFragment : Fragment() {
 
             // Set the days left and set hint for user.
             daysLeft.setText(
-                getDaysLeft(item.bestBefore).toString(),
+                getDifferenceInDays(item.bestBefore).toString(),
                 TextView.BufferType.SPANNABLE
             )
             displayDateHint()
@@ -170,7 +174,7 @@ class CreateEditItemFragment : Fragment() {
             ivCalendar.setOnClickListener { chooseDate() }
 
             // Update item when save button is clicked.
-            btnSaveFoodItem.setOnClickListener { updateItem() }
+            btnSaveFoodItem.setOnClickListener { updateItem(item) }
 
         }
     }
@@ -188,7 +192,7 @@ class CreateEditItemFragment : Fragment() {
                 selectedDate = (
                         "$selectedYear-${selectedMonth + 1}-$selectedDayOfMonth"
                         )
-                val daysLeft = getDaysLeft(selectedDate!!)
+                val daysLeft = getDifferenceInDays(selectedDate!!)
                 Toast.makeText(
                     requireActivity(),
                     "Haltbar bis $selectedDayOfMonth.${selectedMonth + 1}.$selectedYear" +
@@ -206,8 +210,8 @@ class CreateEditItemFragment : Fragment() {
 
     private fun displayDateHint() {
         val daysLeft = binding.daysLeft.text.toString().toInt()
-        val daysLeftText = setDaysLeftText(daysLeft)
-        val bestBeforeDate = calculateBestBeforeInGermanDate(daysLeft)
+        val daysLeftText = setTimeLeftText(daysLeft)
+        val bestBeforeDate = calculateTargetDateInGermanFormat(daysLeft)
         val daysLeftHint = "Noch $daysLeftText haltbar (bis $bestBeforeDate)."
         binding.tvDaysLeftHint.text = daysLeftHint
     }
@@ -253,18 +257,20 @@ class CreateEditItemFragment : Fragment() {
                 itemName = itemName,
                 itemDaysLeft = daysLeft,
                 itemLocation = getLocation(),
-                itemAmount = getAmount()
+                itemAmount = getAmount(),
+                itemAdded = LocalDate.now().toString()
             )
 
             // Update the item database (i.e. add or update the current item).
             databaseItemViewModel.updateItemDatabase(
                 FoodItem(
-                    id = 1000,
+                    id = 100000,
                     itemName = itemName,
-                    bestBefore = calculateBestBefore(daysLeft),
+                    bestBefore = calculateTargetDate(daysLeft),
                     location = location,
                     amount = amount,
-                    durability = daysLeft
+                    durability = daysLeft,
+                    added = LocalDate.now().toString()
                 )
             )
 
@@ -280,14 +286,15 @@ class CreateEditItemFragment : Fragment() {
     }
 
     // Update an existing item in the database and navigates back to the list.
-    private fun updateItem() {
+    private fun updateItem(itemToUpdate: FoodItem) {
         if (isEntryValid()) {
             viewModel.updateItem(
-                itemId = this.navigationArgs.itemId,
-                itemName = this.binding.itemName.text.toString(),
+                itemId = itemToUpdate.id,
+                itemName = binding.itemName.text.toString(),
                 itemDaysLeft = binding.daysLeft.text.toString().toInt(),
                 itemLocation = getLocation(),
-                itemAmount = getAmount()
+                itemAmount = getAmount(),
+                itemAdded = itemToUpdate.added
             )
             findNavController().navigateUp()
         } else {

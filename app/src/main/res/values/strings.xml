@@ -44,7 +44,7 @@
 
     <!-- Strings for delete action -->
     <string name="itemDeleteTitle">Item löschen</string>
-    <string name="itemDeleteText">Möchten Sie das Item wirklich löschen?</string>
+    <string name="itemDeleteThrowAwayConfirm">Item wegwerfen?</string>
     <string name="itemDeleteYes">Ja</string>
     <string name="itemDeleteNo">Nein</string>
 
@@ -69,14 +69,21 @@
     <!-- Strings for statistics fragment -->
     <string name="statisticsTitle">Statistiken</string>
     <string name="statisticsInProgress">Statistik-Fragment. Muss noch aufgebaut werden.</string>
+    <string name="statisticsChooseWeek">Woche</string>
+    <string name="statisticsChooseMonth">Monat</string>
+    <string name="statisticsChooseYear">Jahr</string>
+    <string name="statisticsChooseAll">Alles</string>
+    <string name="statisticsThrownAway">weggeworfen</string>
+    <string name="statisticsEaten">gegessen</string>
+    <string name="statisticsPercentageThrownAway">weggeworfen</string>
+    <string name="statisticsOverviewTitle">Übersicht</string>
+    <string name="statisticsMostThrownAwayTitle">Am häufigsten weggeworfen</string>
+    <string name="statisticsAllItemsTitle">Alle Lebensmittel</string>
 
     <!-- Strings for content descriptions -->
     <string name="contentDescriptionAddItem">Item hinzufügen</string>
     <string name="contentDescriptionEdit">Item bearbeiten</string>
     <string name="contentDescriptionDelete">Item löschen</string>
     <string name="contentDescriptionCalendar">Wie viele Tage ist Artikel noch haltbar?</string>
-
-
-
 
 </resources>

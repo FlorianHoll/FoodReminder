@@ -121,9 +121,21 @@
 
     <fragment
         android:id="@+id/statisticsFragment"
-        android:name="com.example.foodreminderapp.fragments.StatisticsFragment"
+        android:name="com.example.foodreminderapp.fragments.StatisticsOverviewFragment"
         android:label="@string/statisticsTitle"
-        tools:layout="@layout/fragment_statistics" />
+        tools:layout="@layout/fragment_statistics_overview" >
 
+        <action
+            android:id="@+id/action_statisticsFragment_to_statisticsAllItemsFragment"
+            app:destination="@id/statisticsAllItemsFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/statisticsAllItemsFragment"
+        android:name="com.example.foodreminderapp.fragments.StatisticsAllItemsFragment"
+        android:label="Statistiken für alle Items"
+        tools:layout="@layout/fragment_statistics_all_items" >
+    </fragment>
 
 </navigation>
