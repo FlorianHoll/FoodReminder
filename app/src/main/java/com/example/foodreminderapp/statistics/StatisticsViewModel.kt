@@ -3,6 +3,7 @@ package com.example.foodreminderapp.statistics
 import androidx.lifecycle.*
 import com.example.foodreminderapp.statistics.data.StatisticsItem
 import com.example.foodreminderapp.statistics.data.StatisticsItemDao
+import com.example.foodreminderapp.statistics.data.StatisticsItemDisplay
 import com.example.foodreminderapp.utils.calculateTargetDate
 import com.example.foodreminderapp.utils.getDifferenceInDays
 import kotlinx.coroutines.*
@@ -69,6 +70,16 @@ class StatisticsViewModel(private val itemDao: StatisticsItemDao) : ViewModel() 
             endTime = LocalDate.now().toString()
         )
     }
+
+    fun getAllItemsForPeriod(
+        startDateThisPeriod: String, startDateLastPeriod: String
+    ): LiveData<List<StatisticsItemDisplay>> {
+        return itemDao.getItemInformationForThisAndLastTimePeriod(
+            startDateThisPeriod,
+            startDateLastPeriod
+        ).asLiveData()
+    }
+
 
     fun getItemsByInterval(
         startTime: String, endTime: String

@@ -4,26 +4,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.foodreminderapp.FoodReminderApplication
 import com.example.foodreminderapp.R
-import com.example.foodreminderapp.current_items.FoodItemListViewModel
-import com.example.foodreminderapp.current_items.FoodItemViewModelFactory
 import com.example.foodreminderapp.databinding.FragmentStatisticsOverviewBinding
+import com.example.foodreminderapp.statistics.StatisticsListAdapter
 import com.example.foodreminderapp.statistics.StatisticsViewModelFactory
 import com.example.foodreminderapp.statistics.StatisticsViewModel
-import java.time.LocalDate
+import com.example.foodreminderapp.utils.calculateTargetDate
 
 class StatisticsOverviewFragment : Fragment() {
-
-    private val viewModel: FoodItemListViewModel by activityViewModels {
-        FoodItemViewModelFactory(
-            (activity?.application as FoodReminderApplication)
-                .database.foodItemDao()
-        )
-    }
 
     private val statisticsViewModel: StatisticsViewModel by activityViewModels {
         StatisticsViewModelFactory(
@@ -32,17 +23,17 @@ class StatisticsOverviewFragment : Fragment() {
         )
     }
 
-    private val endTime: String = LocalDate.now().toString()
     private var _binding: FragmentStatisticsOverviewBinding? = null
     private val binding get() = _binding!!
+    private lateinit var adapter: StatisticsListAdapter
 
-    // Get the beginning (for the SQL query).
+    // Get the time interval.
     private fun getInterval(): Int {
         val daysInterval = when (
             binding.timeInterval.checkedRadioButtonId
         ) {
-            R.id.option_week -> 7
-            R.id.option_month -> 30
+            R.id.option_week -> 1
+            R.id.option_month -> 7
             R.id.option_year -> 365
             else -> 10000
         }
@@ -60,8 +51,19 @@ class StatisticsOverviewFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        // Initial binding.
         bindValuesToTextViews()
+        bindRecyclerView()
+
+        // If time interval is changed, update values.
+        bindOnIntervalChange()
+    }
+
+    private fun bindOnIntervalChange() {
+        binding.timeInterval.setOnCheckedChangeListener { _, _ ->
+            bindValuesToTextViews()
+            bindRecyclerView()
+        }
     }
 
     private fun bindValuesToTextViews() {
@@ -81,6 +83,27 @@ class StatisticsOverviewFragment : Fragment() {
             val percentageText = "$amount%"
             binding.tvPercentageEaten.text = percentageText
         }
-
     }
+
+    private fun bindRecyclerView() {
+        val interval = getInterval()
+
+        // Prepare recycler view.
+        adapter = StatisticsListAdapter(
+            requireActivity(),
+            statisticsViewModel
+        )
+        binding.rvDatabaseItems.adapter = adapter
+
+        // Get all items for the chosen time interval and
+        // compare it to the previous time interval of same length.
+        statisticsViewModel.getAllItemsForPeriod(
+            startDateLastPeriod = calculateTargetDate(days = -interval),
+            startDateThisPeriod = calculateTargetDate(days = (-interval*2))
+        ).observe(viewLifecycleOwner) {items ->
+            items.let { adapter.submitList(it) }
+        }
+    }
+
+
 }

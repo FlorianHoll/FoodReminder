@@ -8,4 +8,5 @@
     <color name="secondary">#424242</color>
     <color name="secondary_variant_light">#1b1b1b</color>
     <color name="secondary_variant_dark">#6d6d6d</color>
+    <color name="separator_line_color">#eeeeee</color>
 </resources>

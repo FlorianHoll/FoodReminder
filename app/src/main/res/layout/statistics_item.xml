@@ -19,11 +19,12 @@
         android:id="@+id/item_location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="5dp"
+        android:text="@string/statisticsPercentageThrownAway"
+        app:layout_constraintBottom_toBottomOf="@+id/tvPercentage"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tvPercentage"
-        tools:text="weggeworfen" />
+        app:layout_constraintTop_toTopOf="@+id/tvPercentage" />
 
     <ImageView
         android:id="@+id/iv_arrow"
@@ -40,7 +41,7 @@
     <View
         android:layout_width="0dp"
         android:layout_height="2dp"
-        android:background="@color/secondary_variant_dark"
+        android:background="@color/separator_line_color"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/item_location"
         app:layout_constraintStart_toEndOf="@+id/item_title"
