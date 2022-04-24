@@ -72,11 +72,18 @@ class StatisticsViewModel(private val itemDao: StatisticsItemDao) : ViewModel() 
     }
 
     fun getAllItemsForPeriod(
-        startDateThisPeriod: String, startDateLastPeriod: String
+        startDateThisPeriod: String,
+        startDateLastPeriod: String,
+        limit: Int = 10,
+        percentageLimit: Int = 1,
+        searchQuery: String = ""
     ): LiveData<List<StatisticsItemDisplay>> {
         return itemDao.getItemInformationForThisAndLastTimePeriod(
             startDateThisPeriod,
-            startDateLastPeriod
+            startDateLastPeriod,
+            limit,
+            percentageLimit,
+            searchQuery
         ).asLiveData()
     }
 

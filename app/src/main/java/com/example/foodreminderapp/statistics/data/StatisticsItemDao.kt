@@ -83,11 +83,17 @@ interface StatisticsItemDao {
             "FROM currenttimeperiod " +
                 "LEFT JOIN lasttimeperiod " +
                 "ON currenttimeperiod.nameThisPeriod = lasttimeperiod.name " +
-                "ORDER BY PercentageThrownThisPeriod DESC"
+                "WHERE percentageThrownThisPeriod >= :percentageLimit " +
+                "AND nameThisPeriod LIKE '%' || :searchQuery  || '%' " +
+                "ORDER BY percentageThrownThisPeriod DESC " +
+                "LIMIT :limit"
     )
     fun getItemInformationForThisAndLastTimePeriod(
         startDateThisPeriod: String,
-        startDateLastPeriod: String
+        startDateLastPeriod: String,
+        limit: Int = 10,
+        percentageLimit: Int = 1,
+        searchQuery: String = ""
     ): Flow<List<StatisticsItemDisplay>>
 
     @Query("SELECT * from statisticsDatabase WHERE id = :id")
