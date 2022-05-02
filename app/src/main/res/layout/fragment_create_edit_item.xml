@@ -85,7 +85,7 @@
         android:textSize="13sp" />
 
     <TextView
-        android:id="@+id/tv_location"
+        android:id="@+id/tvamount_thrown_away_last_period"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -100,7 +100,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checkedButton="@id/option_kuehlschrank"
-            app:layout_constraintTop_toBottomOf="@id/tv_location"
+            app:layout_constraintTop_toBottomOf="@id/tvamount_thrown_away_last_period"
             app:layout_constraintStart_toEndOf="@id/iv_fridge"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="0dp"
@@ -210,9 +210,9 @@
         android:layout_height="30dp"
         app:srcCompat="@drawable/ic_fridge"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/tv_location"
-        app:layout_constraintTop_toTopOf="@id/tv_location"
-        app:layout_constraintBottom_toBottomOf="@id/tv_location"
+        app:layout_constraintEnd_toStartOf="@id/tvamount_thrown_away_last_period"
+        app:layout_constraintTop_toTopOf="@id/tvamount_thrown_away_last_period"
+        app:layout_constraintBottom_toBottomOf="@id/tvamount_thrown_away_last_period"
         app:tint="@color/primary_variant_dark"
         />
 

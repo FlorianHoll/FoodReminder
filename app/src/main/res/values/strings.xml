@@ -68,7 +68,6 @@
 
     <!-- Strings for statistics fragment -->
     <string name="statisticsTitle">Statistiken</string>
-    <string name="statisticsInProgress">Statistik-Fragment. Muss noch aufgebaut werden.</string>
     <string name="statisticsChooseWeek">Woche</string>
     <string name="statisticsChooseMonth">Monat</string>
     <string name="statisticsChooseYear">Jahr</string>
@@ -79,6 +78,10 @@
     <string name="statisticsOverviewTitle">Übersicht</string>
     <string name="statisticsMostThrownAwayTitle">Am häufigsten weggeworfen</string>
     <string name="statisticsAllItemsTitle">Alle Lebensmittel</string>
+
+    <!-- Strings for statistics detail fragment -->
+    <string name="statisticsDetailsThrownAway">Wenn du das Lebensmittel weggeworfen hast, ist das meist nach %1$d Tagen passiert. Vielleicht solltest du versuchen, das Lebensmittel innerhalb dieser Zeit zu essen.</string>
+    <string name="statisticsDetailsEaten">Du hast das Lebensmittel im Schnitt nach %1$d Tagen gegessen. Gut so!</string>
 
     <!-- Strings for content descriptions -->
     <string name="contentDescriptionAddItem">Item hinzufügen</string>

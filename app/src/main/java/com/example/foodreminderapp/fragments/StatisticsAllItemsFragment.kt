@@ -11,6 +11,7 @@ import com.example.foodreminderapp.FoodReminderApplication
 import com.example.foodreminderapp.R
 import com.example.foodreminderapp.databinding.FragmentStatisticsAllItemsBinding
 import com.example.foodreminderapp.statistics.StatisticsListAdapter
+import com.example.foodreminderapp.statistics.StatisticsListAdapterFromAllItems
 import com.example.foodreminderapp.statistics.StatisticsViewModelFactory
 import com.example.foodreminderapp.statistics.StatisticsViewModel
 import com.example.foodreminderapp.utils.calculateTargetDate
@@ -33,8 +34,8 @@ class StatisticsAllItemsFragment : Fragment(), SearchView.OnQueryTextListener {
         val daysInterval = when (
             binding.timeInterval.checkedRadioButtonId
         ) {
-            R.id.option_week -> 1
-            R.id.option_month -> 7
+            R.id.option_week -> 7
+            R.id.option_month -> 30
             R.id.option_year -> 365
             else -> 10000
         }
@@ -74,7 +75,9 @@ class StatisticsAllItemsFragment : Fragment(), SearchView.OnQueryTextListener {
         val interval = getInterval()
 
         // Prepare recycler view.
-        adapter = StatisticsListAdapter(requireContext(), statisticsViewModel)
+        adapter = StatisticsListAdapterFromAllItems(
+            requireContext(), statisticsViewModel, interval
+        )
         binding.rvStatisticsItems.adapter = adapter
 
         // Get all items for the chosen time interval and

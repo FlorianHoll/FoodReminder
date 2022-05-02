@@ -96,8 +96,51 @@ interface StatisticsItemDao {
         searchQuery: String = ""
     ): Flow<List<StatisticsItemDisplay>>
 
-    @Query("SELECT * from statisticsDatabase WHERE id = :id")
-    fun getItem(id: Int): Flow<StatisticsItem>
+    @Query(
+        "WITH currenttimeperiod AS (" +
+                "SELECT " +
+                "   name AS nameThisPeriod, " +
+                "   CAST(AVG(thrownAway) * 100 AS INT) AS percentageThrownThisPeriod, " +
+                "   SUM(amount) AS amountThisPeriod, " +
+                "   SUM(thrownAway = 1) AS NrThrownThisPeriod, " +
+                "   SUM(thrownAway = 0) AS NrEatenThisPeriod " +
+                "FROM statisticsDatabase " +
+                "WHERE endedDate > :startDateThisPeriod " +
+                "GROUP BY name ), " +
+                "lasttimeperiod AS (" +
+                "SELECT " +
+                "   name, " +
+                "   CAST(AVG(thrownAway) * 100 AS INT) AS percentageThrownLastPeriod, " +
+                "   SUM(amount) AS amountLastPeriod, " +
+                "   SUM(thrownAway = 1) AS NrThrownLastPeriod, " +
+                "   SUM(thrownAway = 0) AS NrEatenLastPeriod " +
+                "FROM statisticsDatabase " +
+                "WHERE endedDate > :startDateLastPeriod " +
+                "AND endedDate <= :startDateThisPeriod " +
+                "GROUP BY name ) " +
+                "SELECT " +
+                "nameThisPeriod AS name, " +
+                "percentageThrownThisPeriod, " +
+                "amountThisPeriod, " +
+                "NrThrownThisPeriod, " +
+                "NrEatenThisPeriod, " +
+                "percentageThrownLastPeriod, " +
+                "amountLastPeriod, " +
+                "NrThrownLastPeriod, " +
+                "NrEatenLastPeriod " +
+                "FROM currenttimeperiod " +
+                "LEFT JOIN lasttimeperiod " +
+                "ON currenttimeperiod.nameThisPeriod = lasttimeperiod.name " +
+                "WHERE nameThisPeriod LIKE '%' || :searchQuery  || '%' "
+    )
+    fun getItem(
+        startDateThisPeriod: String,
+        startDateLastPeriod: String,
+        searchQuery: String = ""
+    ): Flow<StatisticsItemDisplay>
+//
+//    @Query("SELECT * from statisticsDatabase WHERE id = :id")
+//    fun getItem(id: Int): Flow<StatisticsItem>
 
     @Query(
         "SELECT * FROM statisticsDatabase " +

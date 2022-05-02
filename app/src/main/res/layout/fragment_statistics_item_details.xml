@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragments.ItemDetailFragment">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/radioGroupCard"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        app:cardCornerRadius="12dp"
+        android:paddingBottom="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_amount_thrown_away_hint"
+        app:strokeColor="@color/secondary"
+        app:strokeWidth="2dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="10dp">
+
+            <RadioGroup
+                android:id="@+id/time_interval"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:checkedButton="@id/option_all"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <RadioButton
+                    android:id="@+id/option_week"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/statisticsChooseWeek"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+                <!--            android:button="@null"-->
+
+                <RadioButton
+                    android:id="@+id/option_month"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/statisticsChooseMonth"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/option_year"
+                    app:layout_constraintStart_toEndOf="@id/option_week"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <RadioButton
+                    android:id="@+id/option_year"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/statisticsChooseYear"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/option_all"
+                    app:layout_constraintStart_toEndOf="@id/option_month"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <RadioButton
+                    android:id="@+id/option_all"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/statisticsChooseAll"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </RadioGroup>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <TextView
+        android:id="@+id/tv_item_name"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/iv_ramen"
+        android:textAppearance="?attr/textAppearanceHeadline4"
+        tools:text="Hirtenkäse" />
+
+    <TextView
+        android:id="@+id/tv_amount_eaten_this_period"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_calendar"
+        app:layout_constraintStart_toEndOf="@id/iv_calendar"
+        tools:text="4x" />
+
+
+    <TextView
+        android:id="@+id/tv_amount_eaten_last_period"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:text="@string/itemDetailsDaysLeftInDays"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_calendar"
+        app:layout_constraintStart_toEndOf="@+id/tv_amount_eaten_this_period"
+        tools:text="(2x letzte Woche)" />
+
+    <TextView
+        android:id="@+id/tv_amount_eaten_hint"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/statisticsDetailsEaten"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="@+id/radioGroupCard"
+        app:layout_constraintStart_toStartOf="@+id/tv_amount_eaten_this_period"
+        app:layout_constraintTop_toBottomOf="@+id/tv_amount_eaten_last_period" />
+
+    <TextView
+        android:id="@+id/tv_amount_thrown_away_this_period"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_location"
+        app:layout_constraintStart_toEndOf="@id/iv_location"
+        tools:text="5x" />
+
+    <TextView
+        android:id="@+id/tvamount_thrown_away_last_period"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="15sp"
+        android:layout_marginStart="10dp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_location"
+        app:layout_constraintStart_toEndOf="@+id/tv_amount_thrown_away_this_period"
+        tools:text="(2x letzte Woche)" />
+
+    <TextView
+        android:id="@+id/tv_amount_thrown_away_hint"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/statisticsDetailsThrownAway"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="@+id/radioGroupCard"
+        app:layout_constraintStart_toStartOf="@+id/tv_amount_eaten_this_period"
+        app:layout_constraintTop_toBottomOf="@+id/tvamount_thrown_away_last_period" />
+
+    <ImageView
+        android:id="@+id/iv_location"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="30dp"
+        app:layout_constraintStart_toStartOf="@id/iv_calendar"
+        app:layout_constraintTop_toBottomOf="@+id/tv_amount_eaten_hint"
+        app:srcCompat="@drawable/ic_delete_item"
+        app:tint="@color/primary_variant_dark" />
+
+    <ImageView
+        android:id="@+id/iv_calendar"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="30dp"
+        app:srcCompat="@drawable/ic_item_eaten"
+        app:layout_constraintTop_toBottomOf="@id/tv_item_name"
+        app:layout_constraintStart_toStartOf="@id/tv_item_name"
+        app:tint="@color/primary_variant_dark"
+        />
+
+    <ImageView
+        android:id="@+id/iv_ramen"
+        android:layout_width="60dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="20dp"
+        app:layout_constraintBottom_toBottomOf="@id/tv_item_name"
+        app:layout_constraintStart_toEndOf="@id/tv_item_name"
+        app:layout_constraintTop_toTopOf="@id/tv_item_name"
+        app:srcCompat="@drawable/ic_food_name"
+        app:tint="@color/primary_variant_dark"
+        android:paddingEnd="20dp"
+        tools:ignore="RtlSymmetry" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:text=""
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@id/iv_location"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroupCard" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

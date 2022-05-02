@@ -7,6 +7,7 @@ import com.example.foodreminderapp.statistics.data.StatisticsItemDisplay
 import com.example.foodreminderapp.utils.calculateTargetDate
 import com.example.foodreminderapp.utils.getDifferenceInDays
 import kotlinx.coroutines.*
+import java.lang.NullPointerException
 import java.time.LocalDate
 import java.util.*
 
@@ -33,6 +34,10 @@ class StatisticsViewModel(private val itemDao: StatisticsItemDao) : ViewModel() 
     val percentageThrownAway: LiveData<Int>
         get() = _percentageThrownAway
 
+    private var _changeInThrownAwayPercentage = MutableLiveData<Int>()
+    val changeInThrownAwayPercentage: LiveData<Int>
+        get() = _changeInThrownAwayPercentage
+
     fun getAmountEatenAndThrownAway(
         interval: Int,
     ) {
@@ -41,6 +46,8 @@ class StatisticsViewModel(private val itemDao: StatisticsItemDao) : ViewModel() 
             _nrEaten.value = getAmountInInterval(interval, false)
         }
     }
+
+
 
     private suspend fun getAmountInInterval(
         interval: Int, thrownAway: Boolean
@@ -53,21 +60,56 @@ class StatisticsViewModel(private val itemDao: StatisticsItemDao) : ViewModel() 
         )
     }
 
-    fun getPercentageThrownAway(
+    fun getCurrentPercentageThrownAway(
         interval:Int
     ) {
         CoroutineScope(Dispatchers.Main.immediate).launch {
-            _percentageThrownAway.value = getPercentageInInterval(interval)
+            val startTime = calculateTargetDate(-interval)
+            val endTime = LocalDate.now().toString()
+            _percentageThrownAway.value = getPercentageInPeriod(
+                startTime, endTime
+            )
         }
     }
 
-    private suspend fun getPercentageInInterval(
+    fun getThrownAwayChange(
         interval: Int
+    ) {
+        CoroutineScope(Dispatchers.Main.immediate).launch {
+            val startTimePrevious = calculateTargetDate(-interval*2)
+            val endTimePrevious = calculateTargetDate(-interval)
+            var previousThrownAway = 0
+            var currentThrownAway = 0
+            try {
+                previousThrownAway = getPercentageInPeriod(
+                    startTimePrevious, endTimePrevious
+                )
+            } catch (e: NullPointerException) {  }
+
+            val startTimeCurrent = calculateTargetDate(-interval+1)
+            try {
+                currentThrownAway = getPercentageInPeriod(
+                    startTimeCurrent, LocalDate.now().toString()
+                )
+            } catch (e: NullPointerException) {  }
+
+            if (previousThrownAway == 0) {
+                _changeInThrownAwayPercentage.value = 0
+            } else {
+                _changeInThrownAwayPercentage.value = (
+                        currentThrownAway - previousThrownAway
+                        )
+            }
+
+        }
+    }
+
+    private suspend fun getPercentageInPeriod(
+        startTime: String, endTime: String
     ): Int {
-        val startTime = calculateTargetDate(-interval)
         return itemDao.getPercentageForInterval(
             startTime = startTime,
-            endTime = LocalDate.now().toString()
+            endTime = endTime
         )
     }
 
@@ -87,6 +129,17 @@ class StatisticsViewModel(private val itemDao: StatisticsItemDao) : ViewModel() 
         ).asLiveData()
     }
 
+    fun getItem(
+        startDateThisPeriod: String,
+        startDateLastPeriod: String,
+        itemName: String
+    ): LiveData<StatisticsItemDisplay> {
+        return itemDao.getItem(
+            startDateThisPeriod,
+            startDateLastPeriod,
+            itemName
+        ).asLiveData()
+    }
 
     fun getItemsByInterval(
         startTime: String, endTime: String
@@ -154,10 +207,6 @@ class StatisticsViewModel(private val itemDao: StatisticsItemDao) : ViewModel() 
 
     fun insertItem(item: StatisticsItem) {
         viewModelScope.launch { itemDao.insert(item) }
-    }
-
-    fun retrieveItem(id: Int): LiveData<StatisticsItem> {
-        return itemDao.getItem(id).asLiveData()
     }
 
     fun isEntryValid(itemName: String, itemDaysLeft: String): Boolean {

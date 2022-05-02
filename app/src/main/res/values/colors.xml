@@ -9,4 +9,6 @@
     <color name="secondary_variant_light">#1b1b1b</color>
     <color name="secondary_variant_dark">#6d6d6d</color>
     <color name="separator_line_color">#eeeeee</color>
+    <color name="positive_arrow">#43a047</color>
+    <color name="negative_arrow">#9a0007</color>
 </resources>

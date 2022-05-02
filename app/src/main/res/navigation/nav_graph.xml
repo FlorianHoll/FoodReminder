@@ -128,6 +128,9 @@
         <action
             android:id="@+id/action_statisticsFragment_to_statisticsAllItemsFragment"
             app:destination="@id/statisticsAllItemsFragment" />
+        <action
+            android:id="@+id/action_statisticsFragment_to_statisticsItemDetailsFragment"
+            app:destination="@id/statisticsItemDetailsFragment" />
 
     </fragment>
 
@@ -136,6 +139,24 @@
         android:name="com.example.foodreminderapp.fragments.StatisticsAllItemsFragment"
         android:label="Statistiken für alle Items"
         tools:layout="@layout/fragment_statistics_all_items" >
+
+        <action
+            android:id="@+id/action_statisticsAllItems_to_statisticsItemDetails"
+            app:destination="@id/statisticsItemDetailsFragment" />
     </fragment>
+
+    <dialog
+        android:id="@+id/statisticsItemDetailsFragment"
+        android:name="com.example.foodreminderapp.fragments.StatisticsItemDetailsFragment"
+        android:label="StatisticsItemDetailsFragment"
+        tools:layout="@layout/fragment_statistics_item_details" >
+
+        <argument
+            android:name="item_name"
+            app:argType="string" />
+        <argument
+            android:name="item_interval"
+            app:argType="integer" />
+    </dialog>
 
 </navigation>

@@ -4,18 +4,24 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.*
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.foodreminderapp.databinding.StatisticsItemBinding
+import com.example.foodreminderapp.fragments.FoodItemListFragmentDirections
+import com.example.foodreminderapp.fragments.StatisticsAllItemsFragmentDirections
+import com.example.foodreminderapp.fragments.StatisticsOverviewFragment
+import com.example.foodreminderapp.fragments.StatisticsOverviewFragmentDirections
 import com.example.foodreminderapp.statistics.data.StatisticsItemDisplay
 
 
 private const val TAG = "StatisticsListAdapter"
 
-class StatisticsListAdapter(
+open class StatisticsListAdapter(
     private val context: Context,
-    private val statisticsViewModel: StatisticsViewModel
+    private val statisticsViewModel: StatisticsViewModel,
+    private val interval: Int
 ) : ListAdapter<StatisticsItemDisplay, StatisticsListAdapter.ItemViewHolder>(DiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
@@ -29,8 +35,8 @@ class StatisticsListAdapter(
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-        val current = getItem(position)
-        holder.bind(current)
+        val item = getItem(position)
+        holder.bind(item)
     }
 
     class ItemViewHolder(
@@ -47,7 +53,7 @@ class StatisticsListAdapter(
                                 item.percentageThrownLastPeriod.toFloat()
                         )
                 val rotationForArrow = (
-                        (percentageChange - 100.0 ) * .7
+                        -(percentageChange - 100.0 ) * .45
                         )
                 itemTitle.text = item.name
                 val percentageText =
