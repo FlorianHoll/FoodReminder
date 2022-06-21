@@ -54,6 +54,9 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
 
+    // Graph library
+    implementation "com.androidplot:androidplot-core:1.5.9"
+
     // Room libraries
     implementation "androidx.room:room-runtime:$room_version"
     implementation 'androidx.test.ext:junit-ktx:1.1.3'

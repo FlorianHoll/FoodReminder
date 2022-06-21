@@ -6,7 +6,6 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import kotlinx.coroutines.flow.Flow
-import java.time.LocalDate
 
 /**
  * Database access object to access the database
@@ -94,7 +93,7 @@ interface StatisticsItemDao {
         limit: Int = 10,
         percentageLimit: Int = 1,
         searchQuery: String = ""
-    ): Flow<List<StatisticsItemDisplay>>
+    ): Flow<List<DisplayableStatisticsItem>>
 
     @Query(
         "WITH currenttimeperiod AS (" +
@@ -137,16 +136,27 @@ interface StatisticsItemDao {
         startDateThisPeriod: String,
         startDateLastPeriod: String,
         searchQuery: String = ""
-    ): Flow<StatisticsItemDisplay>
-//
-//    @Query("SELECT * from statisticsDatabase WHERE id = :id")
-//    fun getItem(id: Int): Flow<StatisticsItem>
+    ): Flow<DisplayableStatisticsItem>
 
     @Query(
         "SELECT * FROM statisticsDatabase " +
                 "WHERE name LIKE '%' || :searchQuery || '%' "
     )
     fun searchDatabase(searchQuery: String): Flow<List<StatisticsItem>>
+
+    @Query(
+        "SELECT CAST(AVG(endedAfterNrDays) * 100 AS INT)  FROM statisticsDatabase " +
+                "WHERE endedDate > :startTime " +
+                "AND endedDate <= :endTime " +
+                "AND name = :name " +
+                "AND thrownAway = :thrownAway"
+    )
+    suspend fun getAverageThrownAwayTime(
+        startTime: String,
+        endTime: String,
+        name: String,
+        thrownAway: Boolean
+    ): Int
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(item: StatisticsItem)

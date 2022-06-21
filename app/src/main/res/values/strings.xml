@@ -80,8 +80,8 @@
     <string name="statisticsAllItemsTitle">Alle Lebensmittel</string>
 
     <!-- Strings for statistics detail fragment -->
-    <string name="statisticsDetailsThrownAway">Wenn du das Lebensmittel weggeworfen hast, ist das meist nach %1$d Tagen passiert. Vielleicht solltest du versuchen, das Lebensmittel innerhalb dieser Zeit zu essen.</string>
-    <string name="statisticsDetailsEaten">Du hast das Lebensmittel im Schnitt nach %1$d Tagen gegessen. Gut so!</string>
+    <string name="statisticsDetailsThrownAway">Wenn du das Lebensmittel weggeworfen hast, ist das meist nach %s Tagen passiert. Vielleicht solltest du versuchen, das Lebensmittel innerhalb dieser Zeit zu essen.</string>
+    <string name="statisticsDetailsEaten">Du hast das Lebensmittel im Schnitt nach %s Tagen gegessen. Gut so!</string>
 
     <!-- Strings for content descriptions -->
     <string name="contentDescriptionAddItem">Item hinzufügen</string>

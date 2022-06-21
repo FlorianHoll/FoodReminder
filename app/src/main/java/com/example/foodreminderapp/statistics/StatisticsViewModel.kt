@@ -3,7 +3,7 @@ package com.example.foodreminderapp.statistics
 import androidx.lifecycle.*
 import com.example.foodreminderapp.statistics.data.StatisticsItem
 import com.example.foodreminderapp.statistics.data.StatisticsItemDao
-import com.example.foodreminderapp.statistics.data.StatisticsItemDisplay
+import com.example.foodreminderapp.statistics.data.DisplayableStatisticsItem
 import com.example.foodreminderapp.utils.calculateTargetDate
 import com.example.foodreminderapp.utils.getDifferenceInDays
 import kotlinx.coroutines.*
@@ -38,6 +38,15 @@ class StatisticsViewModel(private val itemDao: StatisticsItemDao) : ViewModel() 
     val changeInThrownAwayPercentage: LiveData<Int>
         get() = _changeInThrownAwayPercentage
 
+    private var _thrownAwayAfterNrDays = MutableLiveData<Int>()
+    val thrownAwayAfterNrDays: LiveData<Int>
+        get() = _thrownAwayAfterNrDays
+
+    private var _eatenAfterNrDays = MutableLiveData<Int>()
+    val eatenAfterNrDays: LiveData<Int>
+        get() = _eatenAfterNrDays
+
+
     fun getAmountEatenAndThrownAway(
         interval: Int,
     ) {
@@ -46,8 +55,6 @@ class StatisticsViewModel(private val itemDao: StatisticsItemDao) : ViewModel() 
             _nrEaten.value = getAmountInInterval(interval, false)
         }
     }
-
-
 
     private suspend fun getAmountInInterval(
         interval: Int, thrownAway: Boolean
@@ -60,8 +67,29 @@ class StatisticsViewModel(private val itemDao: StatisticsItemDao) : ViewModel() 
         )
     }
 
+    fun getAverageEatenAndThrownAwayTime(
+        name: String, interval: Int
+    ) {
+        CoroutineScope(Dispatchers.Main.immediate).launch {
+            _eatenAfterNrDays.value = getAverageNrDays(name, interval, false)
+            _thrownAwayAfterNrDays.value = getAverageNrDays(name, interval, true)
+        }
+    }
+
+    private suspend fun getAverageNrDays(
+        name: String, interval: Int, thrownAway: Boolean
+    ): Int {
+        val startTime = calculateTargetDate(-interval)
+        return itemDao.getAverageThrownAwayTime(
+            startTime = startTime,
+            endTime = LocalDate.now().toString(),
+            name = name,
+            thrownAway = thrownAway
+        )
+    }
+
     fun getCurrentPercentageThrownAway(
-        interval:Int
+        interval: Int
     ) {
         CoroutineScope(Dispatchers.Main.immediate).launch {
             val startTime = calculateTargetDate(-interval)
@@ -76,32 +104,35 @@ class StatisticsViewModel(private val itemDao: StatisticsItemDao) : ViewModel() 
         interval: Int
     ) {
         CoroutineScope(Dispatchers.Main.immediate).launch {
-            val startTimePrevious = calculateTargetDate(-interval*2)
+            // Calculate the percentage of thrown away items for both the
+            // current and the previous time period.
+            val startTimePrevious = calculateTargetDate(-interval * 2)
             val endTimePrevious = calculateTargetDate(-interval)
             var previousThrownAway = 0
             var currentThrownAway = 0
+            // A NullPointerException might occur if the item was not used
+            // in the specified interval.
             try {
                 previousThrownAway = getPercentageInPeriod(
                     startTimePrevious, endTimePrevious
                 )
-            } catch (e: NullPointerException) {  }
+            } catch (e: NullPointerException) {
+            }
 
-            val startTimeCurrent = calculateTargetDate(-interval+1)
+            val startTimeCurrent = calculateTargetDate(-interval + 1)
             try {
                 currentThrownAway = getPercentageInPeriod(
                     startTimeCurrent, LocalDate.now().toString()
                 )
-            } catch (e: NullPointerException) {  }
-
-            if (previousThrownAway == 0) {
-                _changeInThrownAwayPercentage.value = 0
-            } else {
-                _changeInThrownAwayPercentage.value = (
-                        currentThrownAway - previousThrownAway
-                        )
+            } catch (e: NullPointerException) {
             }
 
+            // calculate the change in percentage.
+            _changeInThrownAwayPercentage.value = (
+                    currentThrownAway - previousThrownAway
+                    )
         }
+
     }
 
     private suspend fun getPercentageInPeriod(
@@ -119,7 +150,7 @@ class StatisticsViewModel(private val itemDao: StatisticsItemDao) : ViewModel() 
         limit: Int = 10,
         percentageLimit: Int = 1,
         searchQuery: String = ""
-    ): LiveData<List<StatisticsItemDisplay>> {
+    ): LiveData<List<DisplayableStatisticsItem>> {
         return itemDao.getItemInformationForThisAndLastTimePeriod(
             startDateThisPeriod,
             startDateLastPeriod,
@@ -133,7 +164,7 @@ class StatisticsViewModel(private val itemDao: StatisticsItemDao) : ViewModel() 
         startDateThisPeriod: String,
         startDateLastPeriod: String,
         itemName: String
-    ): LiveData<StatisticsItemDisplay> {
+    ): LiveData<DisplayableStatisticsItem> {
         return itemDao.getItem(
             startDateThisPeriod,
             startDateLastPeriod,

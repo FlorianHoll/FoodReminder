@@ -3,17 +3,11 @@ package com.example.foodreminderapp.statistics
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.*
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.foodreminderapp.databinding.StatisticsItemBinding
-import com.example.foodreminderapp.fragments.FoodItemListFragmentDirections
-import com.example.foodreminderapp.fragments.StatisticsAllItemsFragmentDirections
-import com.example.foodreminderapp.fragments.StatisticsOverviewFragment
-import com.example.foodreminderapp.fragments.StatisticsOverviewFragmentDirections
-import com.example.foodreminderapp.statistics.data.StatisticsItemDisplay
+import com.example.foodreminderapp.statistics.data.DisplayableStatisticsItem
 
 
 private const val TAG = "StatisticsListAdapter"
@@ -22,7 +16,7 @@ open class StatisticsListAdapter(
     private val context: Context,
     private val statisticsViewModel: StatisticsViewModel,
     private val interval: Int
-) : ListAdapter<StatisticsItemDisplay, StatisticsListAdapter.ItemViewHolder>(DiffCallback) {
+) : ListAdapter<DisplayableStatisticsItem, StatisticsListAdapter.ItemViewHolder>(DiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         return ItemViewHolder(
@@ -45,7 +39,7 @@ open class StatisticsListAdapter(
         private val statisticsViewModel: StatisticsViewModel
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: StatisticsItemDisplay) {
+        fun bind(item: DisplayableStatisticsItem) {
 
             binding.apply {
                 val percentageChange = (
@@ -67,17 +61,17 @@ open class StatisticsListAdapter(
     }
 
     companion object {
-        private val DiffCallback = object : DiffUtil.ItemCallback<StatisticsItemDisplay>() {
+        private val DiffCallback = object : DiffUtil.ItemCallback<DisplayableStatisticsItem>() {
             override fun areItemsTheSame(
-                oldItem: StatisticsItemDisplay,
-                newItem: StatisticsItemDisplay
+                oldItem: DisplayableStatisticsItem,
+                newItem: DisplayableStatisticsItem
             ): Boolean {
                 return oldItem === newItem
             }
 
             override fun areContentsTheSame(
-                oldItem: StatisticsItemDisplay,
-                newItem: StatisticsItemDisplay
+                oldItem: DisplayableStatisticsItem,
+                newItem: DisplayableStatisticsItem
             ): Boolean {
                 return oldItem.name == newItem.name
             }

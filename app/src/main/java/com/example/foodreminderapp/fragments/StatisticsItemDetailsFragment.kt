@@ -6,9 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.foodreminderapp.FoodReminderApplication
 import com.example.foodreminderapp.R
@@ -16,8 +14,8 @@ import com.example.foodreminderapp.databinding.FragmentStatisticsItemDetailsBind
 import com.example.foodreminderapp.statistics.StatisticsListAdapter
 import com.example.foodreminderapp.statistics.StatisticsViewModelFactory
 import com.example.foodreminderapp.statistics.StatisticsViewModel
-import com.example.foodreminderapp.statistics.data.StatisticsItemDisplay
 import com.example.foodreminderapp.utils.calculateTargetDate
+import java.util.*
 
 private const val TAG = "StatisticsDetailsFragment"
 
@@ -41,9 +39,9 @@ class StatisticsItemDetailsFragment : DialogFragment() {
         val daysInterval = when (
             binding.timeInterval.checkedRadioButtonId
         ) {
-            R.id.option_week -> 1
-            R.id.option_month -> 7
-            R.id.option_year -> 30
+            R.id.option_week -> 7
+            R.id.option_month -> 30
+            R.id.option_year -> 365
             else -> 10000
         }
         return daysInterval
@@ -74,17 +72,6 @@ class StatisticsItemDetailsFragment : DialogFragment() {
         }
     }
 
-//    private fun bindRadioGroup(item = StatisticsItemDisplay) {
-//        // Check the location.
-//        val checkedLocationId = when (item.location) {
-//            getString(R.string.chooseListShelf) -> R.id.option_regal
-//            getString(R.string.chooseListFridge) -> R.id.option_kuehlschrank
-//            else -> R.id.option_tiefkuehltruhe
-//        }
-//        location.check(checkedLocationId)
-//
-//    }
-
     private fun bindItem() {
 
         val interval = getInterval()
@@ -110,14 +97,30 @@ class StatisticsItemDetailsFragment : DialogFragment() {
             Log.d(TAG, "Item is the following: ${item}.")
 
             if (item != null) {
-                val eatenHintText = getString(
-                    R.string.statisticsDetailsEaten,
-                    item.NrEatenLastPeriod
+                statisticsViewModel.getAverageEatenAndThrownAwayTime(
+                    name, interval
                 )
-                val thrownHintText = getString(
-                    R.string.statisticsDetailsThrownAway,
-                    item.NrThrownLastPeriod
-                )
+
+                // TODO(2022-05-03): Continue here.
+                statisticsViewModel
+                    .thrownAwayAfterNrDays
+                    .observe(viewLifecycleOwner) { amount ->
+                        val thrownHintText = getString(
+                            R.string.statisticsDetailsThrownAway,
+                            amount.toString()
+                        )
+                        binding.tvAmountEatenHint.text = thrownHintText
+                }
+
+                statisticsViewModel
+                    .eatenAfterNrDays
+                    .observe(viewLifecycleOwner) { amount ->
+                        val eatenHintText = getString(
+                            R.string.statisticsDetailsEaten,
+                            amount.toString()
+                        )
+                        binding.tvAmountEatenHint.text = eatenHintText
+                    }
 
                 binding.apply {
 
@@ -134,9 +137,6 @@ class StatisticsItemDetailsFragment : DialogFragment() {
 
                     tvAmountEatenLastPeriod.text = eatenLastPeriod
                     tvamountThrownAwayLastPeriod.text = thrownAwayLastPeriod
-
-                    tvAmountEatenHint.text = eatenHintText
-                    tvAmountThrownAwayHint.text = thrownHintText
 
                 }
             } else {

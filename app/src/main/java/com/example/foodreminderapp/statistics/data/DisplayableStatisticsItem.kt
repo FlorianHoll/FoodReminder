@@ -1,6 +1,6 @@
 package com.example.foodreminderapp.statistics.data
 
-data class StatisticsItemDisplay(
+data class DisplayableStatisticsItem(
     val name: String,
     val percentageThrownThisPeriod: Int,
     val amountThisPeriod: Int,
